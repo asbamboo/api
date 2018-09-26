@@ -11,13 +11,4 @@ use asbamboo\api\apiStore\ApiClassAbstract;
  */
 class ApiFixed extends ApiClassAbstract
 {
-    /**
-     * HTTP GET
-     * 不指定具体id时返回一个列表信息
-     * 指定id时返回一个详情信息
-     */
-    public function get()
-    {
-        return ['get'];
-    }
 }

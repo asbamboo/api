@@ -91,17 +91,17 @@ class ApiStore implements ApiStoreInterface
         $path           = str_replace('.', '/', $api_name);
         $version        = str_replace('.', '_', $version);
         $namespace      = rtrim( $this->getNamespace(), '\\' );
-        $parse_paths    = explode('/', rtrim($path, '/'));
+        $parse_paths    = explode('/', trim($path, '/'));
         foreach($parse_paths AS $key => $parse_path){
             $parse_paths[$key]  = implode('', array_map('ucfirst', explode('-', strtolower($parse_path))));
         }
 
         $path   = implode('\\', $parse_paths);
-        $class  =  $namespace . '\\' . $version . $path;
+        $class  =  $namespace . '\\' . $version . '\\' . $path;
         if(!class_exists($class)){
             $versions   = str_replace('.', '_', $this->findApiVersions(1));
             foreach($versions AS $test_version){
-                $class  = $namespace . '\\' . $test_version . $path;
+                $class  = $namespace . '\\' . $test_version . '\\' . $path;
                 if(class_exists($class) && $test_version < $version){
                     goto CLASS_MATCHED;
                 }
