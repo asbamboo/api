@@ -1,5 +1,5 @@
 <?php
-namespace asbamboo\restfulApi\apiStore;
+namespace asbamboo\api\apiStore;
 
 /**
  * api接口处理类接口。
@@ -9,10 +9,10 @@ namespace asbamboo\restfulApi\apiStore;
  */
 interface ApiClassInterface
 {
-    /**
-     * 执行api请求
+   /**
      *
      * @param ApiRequestParamsInterface $Params
+     * @return ApiResponseParamsInterface|NULL
      */
-    public function exec(ApiRequestParamsInterface $Params) : ApiResponseParamsInterface;
+    public function exec(ApiRequestParamsInterface $Params) : ?ApiResponseParamsInterface;
 }

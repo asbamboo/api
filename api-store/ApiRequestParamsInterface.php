@@ -1,5 +1,5 @@
 <?php
-namespace asbamboo\restfulApi\apiStore;
+namespace asbamboo\api\apiStore;
 
 /**
  * 请求参数管理

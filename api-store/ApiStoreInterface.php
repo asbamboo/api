@@ -26,13 +26,13 @@ interface ApiStoreInterface
     public function getDir() : string;
 
     /**
-     * 查找某个版本的api应该被使用class处理
+     * 查找某个版本的api处理类
      *
      * @param string $version
-     * @param string $path
+     * @param string $api_name
      * @return string
      */
-    public function findApiClass(string $version, string $path) : string;
+    public function findApiClass(string $version, string $api_name) : string;
 
     /**
      * 返回所有的api版本列表

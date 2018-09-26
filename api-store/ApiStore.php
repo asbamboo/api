@@ -41,11 +41,10 @@ class ApiStore implements ApiStoreInterface
      * @param string $dir
      * @param string $format
      */
-    public function __construct(string $namespace, string $dir, string $format = self::FORMAT_JSON)
+    public function __construct(string $namespace, string $dir)
     {
         $this->namespace    = $namespace;
         $this->dir          = $dir;
-        $this->setFormat($format);
     }
 
     /**
@@ -87,8 +86,9 @@ class ApiStore implements ApiStoreInterface
      * {@inheritDoc}
      * @see \asbamboo\restfulApi\apiStore\ApiStoreInterface::findApiClass()
      */
-    public function findApiClass(string $version, string $path) : string
+    public function findApiClass(string $version, string $api_name) : string
     {
+        $path           = str_replace('.', '/', $api_name);
         $version        = str_replace('.', '_', $version);
         $namespace      = rtrim( $this->getNamespace(), '\\' );
         $parse_paths    = explode('/', rtrim($path, '/'));

@@ -1,31 +1,19 @@
 <?php
-namespace asbamboo\restfulApi\apiStore;
-
-use asbamboo\http\ResponseInterface;
+namespace asbamboo\api\apiStore;
 
 /**
- * 一个api请求接口的响应结果
+ * 返回结果中的每个参数
+ *  - 每个属性应该都是私有的，对象初始化后不允许再改变
  *
  * @author 李春寅 <licy2013@aliyun.com>
- * @since 2018年9月24日
+ * @since 2018年9月26日
  */
 interface ApiResponseParamsInterface
 {
     /**
+     * 应该范围get_object_vars($this)
      *
-     * @var string
+     * @return array|NULL
      */
-    const FORMAT_JSON   = 'json';
-
-    /**
-     * 设置响应合适
-     *
-     * @param string $format
-     */
-    public function setFormat(string $format = self::FORMAT_JSON) : ApiResponseParamsInterface;
-
-    /**
-     * 生成响应数据
-     */
-    public function makeResponse() : ResponseInterface;
+    public function getObjectVars() : ?array;
 }
