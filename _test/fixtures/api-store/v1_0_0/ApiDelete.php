@@ -2,6 +2,7 @@
 namespace asbamboo\api\_test\fixtures\apiStore\v1_0_0;
 
 use asbamboo\api\apiStore\ApiClassAbstract;
+use asbamboo\api\apiStore\ApiRequestParamsInterface;
 
 /**
  * 测试在2.0.0版本中删除用
@@ -11,5 +12,8 @@ use asbamboo\api\apiStore\ApiClassAbstract;
  */
 class ApiDelete extends ApiClassAbstract
 {
-
+    public function validate(ApiRequestParamsInterface $Params): bool
+    {
+        return true;
+    }
 }

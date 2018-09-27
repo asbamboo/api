@@ -1,8 +1,11 @@
 <?php
 namespace asbamboo\api\apiStore;
 
+use asbamboo\http\ServerRequest;
+
 /**
  * 请求参数管理
+ *  - 这些参数应该在实例初始化化后只能读取，不能重写。
  *
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月24日
@@ -10,10 +13,24 @@ namespace asbamboo\api\apiStore;
 interface ApiRequestParamsInterface
 {
     /**
-     * 用于验证参数是否的输入是否合法
-     *  - 如果返回false的话apiClassInterface::exec应该不要返回正常结果。
+     * 构造方法主要作用是生成请求的参数列表
+     *  - 这些参数应该在实例初始化化后只能读取，不能重写。
      *
-     * @return bool
+     * @param ServerRequest $Request
      */
-    public function validate() : bool;
+    public function __construct(ServerRequest $Request);
+
+    /**
+     * api 名称
+     *
+     * @return string
+     */
+    public function getApiName() : string;
+
+    /**
+     * api 版本
+     *
+     * @return string
+     */
+    public function getVersion() : string;
 }

@@ -2,6 +2,8 @@
 namespace asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed;
 
 use asbamboo\api\apiStore\ApiRequestParamsInterface;
+use asbamboo\http\ServerRequest;
+use asbamboo\api\apiStore\traits\CommonApiRequestParamsTrait;
 
 /**
  *
@@ -10,9 +12,11 @@ use asbamboo\api\apiStore\ApiRequestParamsInterface;
  */
 class RequestParams implements ApiRequestParamsInterface
 {
-    public function validate(): bool
+    use CommonApiRequestParamsTrait;
+
+    public function __construct(ServerRequest $Request)
     {
-        return true;
+
     }
 }
 

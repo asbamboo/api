@@ -1,1 +1,1 @@
-C:30:"PHPUnit\Runner\TestResultCache":107:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:2:{s:16:"testFindApiClass";d:0.002;s:19:"testNotFindApiClass";d:0;}}}
+C:30:"PHPUnit\Runner\TestResultCache":129:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:3:{s:7:"testApi";d:0.006;s:16:"testFindApiClass";d:0.001;s:19:"testNotFindApiClass";d:0;}}}

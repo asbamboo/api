@@ -2,8 +2,9 @@
 namespace asbamboo\api\_test\fixtures\apiStore\v1_0_0;
 
 use asbamboo\api\apiStore\ApiClassAbstract;
-use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed\RequestParams;
 use asbamboo\api\apiStore\ApiResponseParamsInterface;
+use asbamboo\api\apiStore\ApiRequestParamsInterface;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed\ResponseParams;
 
 /**
  * 测试在2.0.0版本中沿用1.0.0的版本
@@ -13,8 +14,13 @@ use asbamboo\api\apiStore\ApiResponseParamsInterface;
  */
 class ApiFixed extends ApiClassAbstract
 {
-    public function exec(RequestParams $Params) : ?ApiResponseParamsInterface
+    protected function successApiResponseParams() : ?ApiResponseParamsInterface
     {
-        parent::exec($Params);
+        return new ResponseParams();
+    }
+
+    public function validate(ApiRequestParamsInterface $Params): bool
+    {
+        return true;
     }
 }

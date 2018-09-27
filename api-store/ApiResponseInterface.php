@@ -22,7 +22,7 @@ interface ApiResponseInterface
      *
      * @param string $format
      */
-    public function setFormat(string $format = self::FORMAT_JSON) : ApiResponseInterface;
+    public function setFormat(string $format) : ApiResponseInterface;
 
     /**
      *  返回响应格式

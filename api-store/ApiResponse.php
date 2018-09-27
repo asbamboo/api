@@ -37,7 +37,7 @@ class ApiResponse implements ApiResponseInterface
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\ApiResponseInterface::setFormat()
      */
-    public function setFormat(string $format = self::FORMAT_JSON) : ApiResponseParamsInterface
+    public function setFormat(string $format) : ApiResponseInterface
     {
         $this->format   = $format;
         return $this;
@@ -92,7 +92,7 @@ class ApiResponse implements ApiResponseInterface
      */
     public function getMessage() : string
     {
-        return $this->getMessage();
+        return $this->message;
     }
 
 

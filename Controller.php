@@ -1,16 +1,13 @@
 <?php
-namespace asbamboo\restfulApi;
+namespace asbamboo\api;
 
 use asbamboo\http\ResponseInterface;
-use asbamboo\restfulApi\apiStore\ApiStoreInterface;
+use asbamboo\api\apiStore\ApiStoreInterface;
 use asbamboo\di\ContainerInterface;
 use asbamboo\http\ServerRequestInterface;
-use asbamboo\restfulApi\exception\ApiException;
-use asbamboo\restfulApi\document\DocumentInterface;
+use asbamboo\api\exception\ApiException;
 use asbamboo\di\ContainerAwareTrait;
-use asbamboo\restfulApi\document\Document;
 use asbamboo\api\apiStore\ApiResponse;
-use asbamboo\api\apiStore\ApiClassInterface;
 
 /**
  *
@@ -43,37 +40,53 @@ class Controller implements ControllerInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\restfulApi\ControllerInterface::api()
+     * @see \asbamboo\api\ControllerInterface::api()
      */
     public function api(string $version, string $api_name) : ResponseInterface
     {
         try
         {
             /**
-             * @var ApiClassInterface $Api
+             * @var \asbamboo\api\apiStore\ApiClassInterface $Api
              */
-            $ApiResponse        = new ApiResponse();
-            $class              = $this->ApiStore->findApiClass($version, $path);
-            $Api                = $this->Container->get($class);
-//             $ApiRequestParams   =
-            $ApiResponseParams  = $Api->exec($ApiRequestParams);
+            $ApiResponse                = new ApiResponse();
+            $class                      = $this->ApiStore->findApiClass($version, $api_name);
+            $Api                        = $this->Container->get($class);
+            $api_request_params_class   = $Api->getApiRequestParamsClass();
+            $ApiRequestParams           = new $api_request_params_class($this->Request);
+            $ApiResponseParams          = $Api->exec($ApiRequestParams);
+            if(method_exists($ApiRequestParams, 'getFormat')){
+                $ApiResponse->setFormat($ApiRequestParams->getFormat());
+            }
             $ApiResponse->setCode(0);
             $ApiResponse->setMessage('success');
-            $ApiResponse->makeResponse($ApiResponseParams);
         }catch(ApiException $e){
-            $result['code']     = $e->getCode();
-            $result['message']  = $e->getMessage();
+            $ApiResponse->setCode($e->getCode());
+            $ApiResponse->setMessage($e->getMessage());
         }finally{
+            return $ApiResponse->makeResponse($ApiResponseParams);
         }
     }
 
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\restfulApi\ControllerInterface::doc()
+     * @see \asbamboo\api\ControllerInterface::doc()
      */
     public function doc(string $version = '', string $api_name = ''): ResponseInterface
     {
-
+//         /**
+//         *
+//         * @var DocumentInterface $Document
+//         */
+//         $Document       = $this->Container->get(DocumentInterface::class);
+//         $api_versions   = $this->ApiStore->findApiVersions();
+//         if(!in_array($version)){
+//             return $Document->versionList();
+//         }else if($path == ''){
+//             return $Document->apiList($version);
+//         }else{
+//             return $Document->apiDetail($version, $path);
+//         }
     }
 }

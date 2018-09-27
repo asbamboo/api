@@ -1,7 +1,6 @@
 <?php
 namespace asbamboo\api\apiStore;
 
-use asbamboo\http\JsonResponse;
 use asbamboo\api\exception\InvalidArgumentException;
 
 /**
@@ -11,6 +10,22 @@ use asbamboo\api\exception\InvalidArgumentException;
  */
 abstract class ApiClassAbstract implements ApiClassInterface
 {
+    protected $api_request_params_class;
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\apiStore\ApiClassInterface::getApiRequestParamsClass()
+     */
+    public function getApiRequestParamsClass() : string
+    {
+        if(empty($this->api_request_params_class)){
+            $this_class                     = get_class($this);
+            $this->api_request_params_class = $this_class . '\\' . 'RequestParams';
+        }
+        return $this->api_request_params_class;
+    }
+
     /**
      *
      * {@inheritDoc}
@@ -18,7 +33,7 @@ abstract class ApiClassAbstract implements ApiClassInterface
      */
     public function exec(ApiRequestParamsInterface $Params) : ?ApiResponseParamsInterface
     {
-        if($Params->validate()){
+        if($this->validate($Params)){
             return $this->successApiResponseParams($Params);
         }else{
             return $this->invalidApiResponseParams($Params);
@@ -31,7 +46,7 @@ abstract class ApiClassAbstract implements ApiClassInterface
      *
      * @return NULL
      */
-    protected function successApiResponseParams()
+    protected function successApiResponseParams() : ?ApiResponseParamsInterface
     {
         return null;
     }
@@ -46,4 +61,13 @@ abstract class ApiClassAbstract implements ApiClassInterface
     {
         throw new InvalidArgumentException('无效的api请求参数。');
     }
+
+    /**
+     * 验证请求的参数是否合法
+     *  - 通过验证应该返回 true
+     *
+     * @param ApiRequestParamsInterface $Params
+     * @return bool
+     */
+    abstract public function validate(ApiRequestParamsInterface $Params) : bool;
 }
