@@ -8,6 +8,7 @@ use asbamboo\http\ServerRequestInterface;
 use asbamboo\api\exception\ApiException;
 use asbamboo\di\ContainerAwareTrait;
 use asbamboo\api\apiStore\ApiResponse;
+use asbamboo\api\document\DocumentInterface;
 
 /**
  *
@@ -73,20 +74,15 @@ class Controller implements ControllerInterface
      * {@inheritDoc}
      * @see \asbamboo\api\ControllerInterface::doc()
      */
-    public function doc(string $version = '', string $api_name = ''): ResponseInterface
+    public function doc(string $version = '', string $api_name = '') : ResponseInterface
     {
-//         /**
-//         *
-//         * @var DocumentInterface $Document
-//         */
-//         $Document       = $this->Container->get(DocumentInterface::class);
-//         $api_versions   = $this->ApiStore->findApiVersions();
-//         if(!in_array($version)){
-//             return $Document->versionList();
-//         }else if($path == ''){
-//             return $Document->apiList($version);
-//         }else{
-//             return $Document->apiDetail($version, $path);
-//         }
+        /**
+         *
+         * @var DocumentInterface $Document
+         */
+        $Document       = $this->Container->get(DocumentInterface::class);
+        $Document->setApiName($api_name);
+        $Document->setVersion($version);
+        return $Document->response();
     }
 }

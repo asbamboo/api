@@ -2,54 +2,50 @@
 namespace asbamboo\api\document;
 
 use asbamboo\http\ResponseInterface;
-use asbamboo\api\apiStore\ApiStoreInterface;
 
 /**
  * 文档生成器
  *  - 根据获取的api仓库中api类的注释信息解析生成文档。
  *
  * @author 李春寅 <licy2013@aliyun.com>
- * @since 2018年9月12日
+ * @since 2018年9月27日
  */
 interface DocumentInterface
 {
     /**
-     * 获取Api版本库信息
-     *
-     * @return ApiStoreInterface
-     */
-    public function getApiStore() : ApiStoreInterface;
-
-    /**
-     * 版本列表数组
-     *
-     * @return array
-     */
-    public function versionListArray() : array;
-
-    /**
-     * API接口列表数组
+     * 设置当前需要获取那个版本的文档
      *
      * @param string $version
-     * @return ApiClassDocInterface[] 数组的可以是ApiClassDocInterface::getPath()
+     * @return DocumentInterface
      */
-    public function apiListArray(string $version) : array;
+    public function setVersion(string $version) : DocumentInterface;
 
     /**
-     * API接口详情
+     * 获取当前返回的是哪个版本的文档
      *
-     * @param string $version
-     * @param string $path
-     * @return ApiClassDocInterface
+     * @return string
      */
-    public function apiDetailInfo(string $version, string $path) : ApiClassDocInterface;
+    public function getVersion() : string;
 
     /**
-     * API接口详情响应
+     * 设置当前需要获取哪个接口的文档
      *
-     * @param string $version
-     * @param string $path
+     * @param string $api_name
+     * @return DocumentInterface
+     */
+    public function setApiName(string $api_name) : DocumentInterface;
+
+    /**
+     * 获取当前返回的是哪个接口的文档
+     *
+     * @return string
+     */
+    public function getApiName() : string;
+
+    /**
+     * 响应结果
+     *
      * @return ResponseInterface
      */
-    public function response(string $version = '', string $path = '') : ResponseInterface;
+    public function response() : ResponseInterface;
 }
