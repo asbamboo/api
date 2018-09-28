@@ -16,7 +16,7 @@ trait CommonApiRequestParamsTrait
      *
      * @common
      * @desc api名称
-     * @required true
+     * @required 必须
      * @var string
      */
     private $api_name;
