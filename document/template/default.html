@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <title>API 文档</title>
+    <style>
+        .container { 
+            float:left;
+        }
+        .left {
+            width: 30%;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="top">
+        <div class="version-list">
+            <?php FOREACH($all_versions AS $version):?>
+                <?php IF($cur_version == $version): ?>
+                    <a href="?version=<?=$version?>" class="current"><?=$version?></a>
+                <?php ELSE:?>
+                    <a href="?version=<?=$version?>"><?=$version?></a>
+                <?php ENDIF;?>
+            <?php ENDFOREACH;?>
+        </div>
+    </div>
+    <div class="left container">
+        <div class="api-list">
+            <ul>
+                <?php FOREACH($lists AS $api):?>
+                    <?php IF($api->isDelete() == false):?>
+                        <li>
+                            <a href="?version=<?=$cur_version?>&api_name=<?=$api->getApiName()?>">
+                                <?=$api->getLabelName()?><br/><small><?=$api->getApiName()?></small>
+                            </a>
+                        </li>
+                    <?php ENDIF;?>
+                <?php ENDFOREACH;?>
+            </ul>
+        </div>
+    </div>
+    <div class="right container">
+        <?php IF($detail):?>
+            <div class="api-title">
+                <h1><?=$detail->getLabelName()?><small><?=$detail->getApiName()?></small></h1>
+                <?php IF($detail->isDelete()):?>
+                    <p><b>注意:</b> 该接口已经废弃。</p>
+                <?php ENDIF;?>
+            </div>
+            <?php IF($detail->getRequestParamsDoc()):?>
+	            <div class="api-request">
+	                <h3>公共请求参数</h3>
+	                <div>
+		                <table>
+		                    <tr>
+		                        <th>字段</th>
+		                        <th>类型</th>
+		                        <th>取值范围</th>
+		                        <th>必须</th>
+		                        <th>默认值</th>
+		                        <th>说明</th>
+		                    </tr>
+		                    <?php FOREACH($detail->getRequestParamsDoc() AS $ApiRequestParamDoc):?>
+	                               <?php IF($ApiRequestParamDoc->isCommon()):?>
+			                        <tr>
+			                            <td><?=$ApiRequestParamDoc->getName()?></td>
+			                            <td><?=$ApiRequestParamDoc->getVar()?></td>
+			                            <td><?=$ApiRequestParamDoc->getRange()?></td>
+			                            <td><?=$ApiRequestParamDoc->getRequired()?></td>
+			                            <td><?=$ApiRequestParamDoc->getDefaultValue()?></td>
+			                            <td><?=$ApiRequestParamDoc->getDesc()?></td>
+			                        </tr>
+		                        <?php ENDIF;?>
+		                    <?php ENDFOREACH;?>
+		                </table>
+	                </div>
+	                <h3>请求参数</h3>
+	                <div>
+	                    <table>
+	                        <tr>
+	                            <th>字段</th>
+	                            <th>类型</th>
+	                            <th>取值范围</th>
+	                            <th>必须</th>
+	                            <th>默认值</th>
+	                            <th>说明</th>
+	                        </tr>
+	                        <?php FOREACH($detail->getRequestParamsDoc() AS $ApiRequestParamDoc):?>
+	                            <?php IF(!$ApiRequestParamDoc->isCommon()):?>
+	                                <tr>
+	                                    <td><?=$ApiRequestParamDoc->getName()?></td>
+	                                    <td><?=$ApiRequestParamDoc->getVar()?></td>
+	                                    <td><?=$ApiRequestParamDoc->getRange()?></td>
+	                                    <td><?=$ApiRequestParamDoc->getRequired()?></td>
+	                                    <td><?=$ApiRequestParamDoc->getDefaultValue()?></td>
+	                                    <td><?=$ApiRequestParamDoc->getDesc()?></td>
+	                                </tr>
+	                            <?php ENDIF;?>
+	                        <?php ENDFOREACH;?>
+	                    </table>
+	                </div>
+	            </div>
+            <?php ENDIF;?>
+            
+            
+            <?php IF($detail->getResponseParamsDoc()):?>
+                <div class="api-response">
+	                <h3>响应参数</h3>
+	                <table>
+	                   <tr>
+	                       <th>字段名</th>
+                           <th>类型</th>
+                           <th>取值范围</th>
+                           <th>说明</th>
+	                   </tr>
+	                   <tr>
+	                       <td>code</td>
+	                       <td>integer</td>
+	                       <td></td>
+	                       <td>状态码。成功时返回0。</td>
+	                   </tr>
+                       <tr>
+                           <td>message</td>
+                           <td>string</td>
+                           <td></td>
+                           <td>状态说明。成功时是"success", 错误时返回与code对应的错误信息</td>
+                       </tr>
+                       <tr>
+                           <td>data</td>
+                           <td>data</td>
+                           <td></td>
+                           <td>响应数据信息</td>
+                       </tr>
+	                </table>
+                    <h3>响应信息data具体字段</h3>
+                    <table>
+                       <tr>
+                           <th>字段名</th>
+                           <th>类型</th>
+                           <th>取值范围</th>
+                           <th>说明</th>
+                       </tr>
+                       <?php FOREACH($detail->getResponseParamsDoc() AS $ApiResponseParamDoc):?>
+	                       <tr>
+	                           <td><?=$ApiResponseParamDoc->getName()?></td>
+	                           <td><?=$ApiResponseParamDoc->getVar()?></td>
+	                           <td><?=$ApiResponseParamDoc->getRange()?></td>
+	                           <td><?=$ApiResponseParamDoc->getDesc()?></td>
+	                       </tr>
+                        <?php ENDFOREACH;?>
+                    </table>
+                </div>
+            <?php ENDIF;?>
+        <?php ENDIF;?>
+    </div>
+  </body>
+</html>
