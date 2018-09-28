@@ -114,10 +114,11 @@ class Document implements DocumentInterface
     public function response() : ResponseInterface
     {
         $all_versions   = $this->ApiStore->findApiVersions(1);
+        $cur_version    = $this->getVersion();
         $lists          = $this->getApiLists();
-        $detail         = $this->getApiDetail();
+        $detail         = $this->getApiName() ? $this->getApiDetail() : null;
         ob_start();
-        include $this->layout;
+        include $this->template;
         $html   = ob_get_contents();
         ob_end_clean();
         return new TextResponse($html);
@@ -196,10 +197,10 @@ class Document implements DocumentInterface
      * @throws NotFoundApiException
      * @return ApiClassDocInterface
      */
-    public function getApiDetail() : ApiClassDocInterface
+    private function getApiDetail() : ApiClassDocInterface
     {
         $api_lists  = $this->getApiLists();
-        if(isset($api_lists[$this->getApiName()])){
+        if(!isset($api_lists[$this->getApiName()])){
             throw new NotFoundApiException(sprintf('api 接口不存在，版本[%s], api 名称[%s]', $this->getVersion(), $this->getApiName()));
         }
         return $api_lists[$this->getApiName()];

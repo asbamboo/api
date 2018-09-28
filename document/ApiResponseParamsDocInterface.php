@@ -8,7 +8,7 @@ namespace asbamboo\api\document;
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月27日
  */
-interface ApiResponseParamsDocInterface
+interface ApiResponseParamsDocInterface extends \Iterator
 {
 
 }

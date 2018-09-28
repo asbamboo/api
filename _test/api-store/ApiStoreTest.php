@@ -20,13 +20,34 @@ use asbamboo\api\_test\fixtures\apiStore\v2_0_0\api\Inner;
 class ApiStoreTest extends TestCase
 {
     public $ApiStore;
+    public $namespace;
+    public $dir;
 
     public function setUp()
     {
-        $namespace      = 'asbamboo\\api\\_test\\fixtures\\apiStore\\';
-        $dir            = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'api-store';
-        $this->ApiStore = new ApiStore($namespace, $dir);
+        $namespace          = 'asbamboo\\api\\_test\\fixtures\\apiStore\\';
+        $dir                = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . 'api-store';
+        $this->ApiStore     = new ApiStore($namespace, $dir);
+        $this->namespace    = $namespace;
+        $this->dir          = $dir;
     }
+
+    public function testGetNamespace()
+    {
+        $this->assertEquals($this->namespace, $this->ApiStore->getNamespace());
+    }
+
+    public function testGetDir()
+    {
+        $this->assertEquals($this->dir, $this->ApiStore->getDir());
+    }
+
+    public function testFindApiVersions()
+    {
+        $this->assertEquals(['v1.0.0','v2.0.0'], $this->ApiStore->findApiVersions());
+        $this->assertEquals(['v2.0.0','v1.0.0'], $this->ApiStore->findApiVersions(1));
+    }
+
     public function testFindApiClass()
     {
         $this->assertEquals(ApiDelete::class, $this->ApiStore->findApiClass('v1.0.0', '/api-delete/'));

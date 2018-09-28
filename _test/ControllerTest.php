@@ -9,6 +9,7 @@ use asbamboo\di\ServiceMappingCollection;
 use asbamboo\di\ServiceMapping;
 use asbamboo\api\Controller;
 use asbamboo\api\_test\fixtures\apiStore\v1_0_0\ApiFixed;
+use asbamboo\http\ResponseInterface;
 
 /**
  *
@@ -36,11 +37,15 @@ class ControlerTest extends TestCase
 
     public function testApi()
     {
-        $TestApiFixed   = new ApiFixed();
         $response       = $this->Controller->api('v1.0.0', '/api-fixed');
         $this->assertEquals(
-            json_encode(['code'=>0,'message'=>'success','data'=>['api_name'=>'api.fixed']]),
+            json_encode(['code'=>0,'message'=>'success','data'=>['id'=>'test_id']]),
             $response->getBody()->getContents()
         );
+    }
+
+    public function testDoc()
+    {
+        $this->assertInstanceOf(ResponseInterface::class, $this->Controller->doc());
     }
 }

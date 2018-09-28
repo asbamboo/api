@@ -10,6 +10,13 @@ class ApiClassDoc implements ApiClassDocInterface
 {
     /**
      *
+     * @var string
+     */
+    private $api_class;
+
+    /**
+     * 注释信息组成的数组
+     *
      * @var array
      */
     private $docs;
@@ -30,13 +37,71 @@ class ApiClassDoc implements ApiClassDocInterface
 
     /**
      *
+     * @var ApiRequestParamsDocInterface
+     */
+    private $ApiRequestParamsDoc;
+
+    /**
+     *
+     * @var ApiResponseParamsDocInterface
+     */
+    private $ApiResponseParamsDoc;
+
+    /**
+     *
      * @param string $api_class
      * @param string $api_store_namespace
      */
     public function __construct(string $api_class, string $api_store_namespace)
     {
+        $this->api_class    = $api_class;
         $this->parseDoc($api_class);
         $this->parsePath($api_class, $api_store_namespace);
+    }
+
+    /**
+     * 解析注释行
+     *
+     * @param string $api_class ApiClassInterface的一个类
+     */
+    private function parseDoc(string $api_class) : void
+    {
+        $Reflection = new \ReflectionClass($api_class);
+        $document   = $Reflection->getDocComment();
+
+        if(preg_match_all('#@(\w+)(\s(.*))?[\r\n]#siU', $document, $matches)){
+            foreach($matches[1] AS $index => $key){
+                $this->docs[$key][]   = trim($matches[3][$index]);
+            }
+        }
+    }
+
+    /**
+     * 解析以path风格请求接口时，访问接口使用的path
+     *
+     * @param string $api_class api类名
+     * @param string $api_store_namespace API 存放的命名空间
+     */
+    private function parsePath(string $api_class, string $api_store_namespace)
+    {
+        $api_store_namespace    = rtrim($api_store_namespace, '\\');
+        $parsing                = preg_replace(addslashes("@{$api_store_namespace}\\([^\\]+)\\@siU"), '\\', $api_class);
+        $parsing                = explode('\\', $parsing);
+        $parsing                = array_map(function($p){
+            return strtolower(trim(preg_replace('@([A-Z])@', '-$1', $p), '-'));
+        },$parsing);
+
+            $this->path = implode('/', $parsing);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\ApiClassDocInterface::getClassName()
+     */
+    public function getClassName() : string
+    {
+        return $this->api_class;
     }
 
     /**
@@ -93,37 +158,40 @@ class ApiClassDoc implements ApiClassDocInterface
     }
 
     /**
-     * 解析注释行
      *
-     * @param string $api_class ApiClassInterface的一个类
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\ApiClassDocInterface::getRequestParamsDoc()
      */
-    private function parseDoc(string $api_class) : void
+    public function getRequestParamsDoc() : ?ApiRequestParamsDocInterface
     {
-        $Reflection = new \ReflectionClass($api_class);
-        $document   = $Reflection->getDocComment();
-
-        if(preg_match_all('#@(\w+)(\s(.*))?[\r\n]#siU', $document, $matches)){
-            foreach($matches[1] AS $index => $key){
-                $this->docs[$key][]   = trim($matches[3][$index]);
+        if(!$this->ApiRequestParamsDoc){
+            $api_request_params_class   = empty($this->docs['request']) ? null : current($this->docs['request']);
+            if(empty( $api_request_params_class )){
+                $api_request_params_class   = $this->getClassName() . '\\' . 'RequestParams';
+            }
+            if(class_exists( $api_request_params_class )){
+                $this->ApiRequestParamsDoc  = new ApiRequestParamsDoc($api_request_params_class);
             }
         }
+        return $this->ApiRequestParamsDoc;
     }
 
     /**
-     * 解析以path风格请求接口时，访问接口使用的path
      *
-     * @param string $api_class api类名
-     * @param string $api_store_namespace API 存放的命名空间
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\ApiClassDocInterface::getResponseParamsDoc()
      */
-    private function parsePath(string $api_class, string $api_store_namespace)
+    public function getResponseParamsDoc() : ?ApiResponseParamsDocInterface
     {
-        $api_store_namespace    = rtrim($api_store_namespace, '\\');
-        $parsing                = preg_replace(addslashes("@{$api_store_namespace}\\([^\\]+)\\@siU"), '\\', $api_class);
-        $parsing                = explode('\\', $parsing);
-        $parsing                = array_map(function($p){
-            return strtolower(trim(preg_replace('@([A-Z])@', '-$1', $p), '-'));
-        },$parsing);
-
-        $this->path = implode('/', $parsing);
+        if(!$this->ApiResponseParamsDoc){
+            $api_response_params_class   = empty($this->docs['response']) ? null : current($this->docs['response']);
+            if(empty( $api_response_params_class )){
+                $api_response_params_class   = $this->getClassName() . '\\' . 'ResponseParams';
+            }
+            if(class_exists( $api_response_params_class )){
+                $this->ApiResponseParamsDoc  = new ApiResponseParamsDoc($api_response_params_class);
+            }
+        }
+        return $this->ApiResponseParamsDoc;
     }
 }

@@ -5,5 +5,10 @@ use asbamboo\api\apiStore\ApiResponseParams;
 
 class ResponseParams extends ApiResponseParams
 {
-    protected $api_name   = 'api.fixed';
+    /**
+     * @range 0~255
+     * @desc 测试ID
+     * @var string
+     */
+    protected $id   = 'test_id';
 }

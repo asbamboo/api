@@ -9,6 +9,7 @@ use asbamboo\api\exception\ApiException;
 use asbamboo\di\ContainerAwareTrait;
 use asbamboo\api\apiStore\ApiResponse;
 use asbamboo\api\document\DocumentInterface;
+use asbamboo\api\document\ApiClassDoc;
 
 /**
  *
@@ -53,6 +54,7 @@ class Controller implements ControllerInterface
             $ApiResponse                = new ApiResponse();
             $class                      = $this->ApiStore->findApiClass($version, $api_name);
             $Api                        = $this->Container->get($class);
+            $ApiDoc                     = new ApiClassDoc($class, $this->ApiStore->getNamespace());
             $api_request_params_class   = $Api->getApiRequestParamsClass();
             $ApiRequestParams           = new $api_request_params_class($this->Request);
             $ApiResponseParams          = $Api->exec($ApiRequestParams);

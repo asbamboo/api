@@ -74,7 +74,7 @@ class ApiStore implements ApiStoreInterface
      */
     public function findApiVersions(int $sort_type = 0) : array
     {
-        return str_replace('_', '.', array_diff(scandir($this->getDir(), $sort_type), ['.', '..']));
+        return array_values(str_replace('_', '.', array_diff(scandir($this->getDir(), $sort_type), ['.', '..'])));
     }
 
     /**
