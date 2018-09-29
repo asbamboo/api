@@ -19,7 +19,7 @@ trait CommonApiRequestParamsTrait
      * @required 必须
      * @var string
      */
-    private $api_name;
+    private $api_name = '';
 
     /**
      * api版本
@@ -28,7 +28,7 @@ trait CommonApiRequestParamsTrait
      * @desc api版本。如果没传，表示使用最新的版本
      * @var string
      */
-    private $version;
+    private $version = '';
 
     /**
      * 表示需要接口返回什么格式的数据

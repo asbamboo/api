@@ -16,17 +16,7 @@ trait CommonApiRequestSignParamsTrait
      * @common
      * @var string
      */
-    private $app_key;
-
-    /**
-     * 时间戳参数是为了使得过去的请求参数失效
-     *
-     * @desc 时间戳 格式为:yyyy-mm-dd HH:mm:ss,如(2018-09-27 20:01:53)
-     * @required 必须
-     * @common
-     * @var string
-     */
-    private $timestamp;
+    private $app_key = '';
 
     /**
      * api接口处理程序会按规则在服务端生成sign，然后与请求参数sign做比较
@@ -37,5 +27,25 @@ trait CommonApiRequestSignParamsTrait
      * @common
      * @var string
      */
-    private $sign;
+    private $sign = '';
+
+    /**
+     * app_key是一个请求api接口的应用程序的唯一标识符号
+     *
+     * @return string
+     */
+    public function getAppKey() : string
+    {
+        return $this->app_key;
+    }
+
+    /**
+     * api接口处理程序会按规则在服务端生成sign，然后与请求参数sign做比较
+     *
+     * @return string
+     */
+    public function getSign() : string
+    {
+        return $this->sign;
+    }
 }
