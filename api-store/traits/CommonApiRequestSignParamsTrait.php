@@ -16,7 +16,7 @@ trait CommonApiRequestSignParamsTrait
      * @common
      * @var string
      */
-    private $app_key = '';
+    protected $app_key = '';
 
     /**
      * api接口处理程序会按规则在服务端生成sign，然后与请求参数sign做比较
@@ -27,7 +27,7 @@ trait CommonApiRequestSignParamsTrait
      * @common
      * @var string
      */
-    private $sign = '';
+    protected $sign = '';
 
     /**
      * app_key是一个请求api接口的应用程序的唯一标识符号

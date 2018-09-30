@@ -10,5 +10,10 @@ namespace asbamboo\api\document;
  */
 interface ApiRequestParamsDocInterface extends \Iterator
 {
-
+    /**
+     * 获取表示请求参数列表的类
+     *
+     * @return string
+     */
+    public function getClass() : string;
 }

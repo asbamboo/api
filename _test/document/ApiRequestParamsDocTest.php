@@ -5,6 +5,11 @@ use PHPUnit\Framework\TestCase;
 use asbamboo\api\document\ApiRequestParamsDoc;
 use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed\RequestParams;
 
+/**
+ *
+ * @author 李春寅 <licy2013@aliyun.com>
+ * @since 2018年9月30日
+ */
 class ApiRequestParamsDocTest extends TestCase
 {
     public $ApiRequestParamsDoc;
@@ -22,5 +27,10 @@ class ApiRequestParamsDocTest extends TestCase
             $api_request_params[]   = $ApiRequestParamDoc->getName();
         }
         $this->assertCount(3, $api_request_params);
+    }
+
+    public function testGetClass()
+    {
+        $this->assertEquals(RequestParams::class, $this->ApiRequestParamsDoc->getClass());
     }
 }

@@ -65,7 +65,7 @@ class Controller implements ControllerInterface
             $class                      = $this->ApiStore->findApiClass($version, $api_name);
             $Api                        = $this->Container->get($class);
             $ApiDoc                     = new ApiClassDoc($class, $this->ApiStore->getNamespace());
-            $api_request_params_class   = $Api->getApiRequestParamsClass();
+            $api_request_params_class   = $ApiDoc->getRequestParamsDoc()->getClass();
             $ApiRequestParams           = new $api_request_params_class($this->Request);
             $ApiResponseParams          = $Api->exec($ApiRequestParams);
             if(method_exists($ApiRequestParams, 'getFormat')){

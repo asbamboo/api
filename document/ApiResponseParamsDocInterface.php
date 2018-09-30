@@ -10,5 +10,10 @@ namespace asbamboo\api\document;
  */
 interface ApiResponseParamsDocInterface extends \Iterator
 {
-
+    /**
+     * 获取表示响应参数列表的类
+     *
+     * @return string
+     */
+    public function getClass() : string;
 }

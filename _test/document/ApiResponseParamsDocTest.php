@@ -23,4 +23,9 @@ class ApiResponseParamsDocTest extends TestCase
         }
         $this->assertCount(1, $api_response_params);
     }
+
+    public function testGetClass()
+    {
+        $this->assertEquals(ResponseParams::class, $this->ApiResponseParamsDoc->getClass());
+    }
 }

@@ -18,6 +18,12 @@ class ApiRequestParamsDoc implements ApiRequestParamsDocInterface
 
     /**
      *
+     * @var string
+     */
+    private $api_request_params_class;
+
+    /**
+     *
      * @param string $api_request_params_class
      */
     public function __construct(string $api_request_params_class)
@@ -32,10 +38,21 @@ class ApiRequestParamsDoc implements ApiRequestParamsDocInterface
      */
     private function parse(string $api_request_params_class)
     {
-        $Reflection = new \ReflectionClass($api_request_params_class);
+        $this->api_request_params_class = $api_request_params_class;
+        $Reflection                     = new \ReflectionClass($api_request_params_class);
         foreach($Reflection->getProperties() AS $Property){
             $this->api_request_param_docs[] = new ApiRequestParamDoc($Property);
         }
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\ApiRequestParamsDocInterface::getClass()
+     */
+    public function getClass() : string
+    {
+        return $this->api_request_params_class;
     }
 
     /**
