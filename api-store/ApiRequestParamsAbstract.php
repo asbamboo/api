@@ -30,4 +30,22 @@ use asbamboo\api\apiStore\traits\CommonApiRequestParamsTrait;
             $this->{$param} = $File;
         }
     }
+
+    /**
+     * api request params 类可以不用添加与类的属性相关的get方法
+     *  - 这个方法将认为所有类的属性都是可以通过get+属性名的方法获取属性的。
+     *
+     * @param string $method
+     * @param array $arguments
+     */
+    public function __call($method, $arguments)
+    {
+        if(0 === strpos($method, 'get')){
+            $property   = substr($method, 3);
+            $property   = strtolower(ltrim(preg_replace('@([A-Z])@', '_$1', $property), '_'));
+            if(property_exists($this, $property)){
+                return $this->{$property};
+            }
+        }
+    }
 }
