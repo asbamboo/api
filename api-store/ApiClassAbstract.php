@@ -10,22 +10,6 @@ use asbamboo\api\exception\InvalidArgumentException;
  */
 abstract class ApiClassAbstract implements ApiClassInterface
 {
-    protected $api_request_params_class;
-
-    /**
-     *
-     * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiClassInterface::getApiRequestParamsClass()
-     */
-    public function getApiRequestParamsClass() : string
-    {
-        if(empty($this->api_request_params_class)){
-            $this_class                     = get_class($this);
-            $this->api_request_params_class = $this_class . '\\' . 'RequestParams';
-        }
-        return $this->api_request_params_class;
-    }
-
     /**
      *
      * {@inheritDoc}
@@ -46,7 +30,7 @@ abstract class ApiClassAbstract implements ApiClassInterface
      * 成功时返回的响应参数
      *  - 如果有的话继承的类中重载本方法
      *
-     * @return NULL
+     * @return ApiResponseParamsInterface|NULL
      */
     protected function successApiResponseParams() : ?ApiResponseParamsInterface
     {
@@ -58,8 +42,9 @@ abstract class ApiClassAbstract implements ApiClassInterface
      *  - 如果有的话继承的类中重载本方法
      *
      * @throws InvalidArgumentException
+     * @return ApiResponseParamsInterface|NULL
      */
-    protected function invalidApiResponseParams()
+    protected function invalidApiResponseParams() : ?ApiResponseParamsInterface
     {
         throw new InvalidArgumentException('无效的api请求参数。');
     }

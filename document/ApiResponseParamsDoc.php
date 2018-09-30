@@ -15,6 +15,12 @@ class ApiResponseParamsDoc implements ApiResponseParamsDocInterface
 
     /**
      *
+     * @var string
+     */
+    private $api_response_params_class;
+
+    /**
+     *
      * @param string $api_response_params_class
      */
     public function __construct(string $api_response_params_class)
@@ -29,10 +35,21 @@ class ApiResponseParamsDoc implements ApiResponseParamsDocInterface
      */
     private function parse(string $api_response_params_class)
     {
-        $Reflection = new \ReflectionClass($api_response_params_class);
+        $this->api_response_params_class    = $api_response_params_class;
+        $Reflection                         = new \ReflectionClass($api_response_params_class);
         foreach($Reflection->getProperties() AS $Property){
             $this->api_response_param_docs[] = new ApiResponseParamDoc($Property);
         }
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\ApiResponseParamsDocInterface::getClass()
+     */
+    public function getClass() : string
+    {
+        return $this->api_response_params_class;
     }
 
     /**
