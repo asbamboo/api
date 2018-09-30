@@ -1,7 +1,6 @@
 <?php
 namespace asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed;
 
-use asbamboo\http\ServerRequest;
 use asbamboo\api\apiStore\ApiResponseInterface;
 use asbamboo\api\apiStore\ApiRequestParamsAbstract;
 
