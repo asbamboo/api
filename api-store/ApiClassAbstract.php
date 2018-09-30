@@ -33,11 +33,13 @@ abstract class ApiClassAbstract implements ApiClassInterface
      */
     public function exec(ApiRequestParamsInterface $Params) : ?ApiResponseParamsInterface
     {
+        $ApiResponseParams  = null;
         if($this->validate($Params)){
-            return $this->successApiResponseParams($Params);
+            $ApiResponseParams  = $this->successApiResponseParams($Params);
         }else{
-            return $this->invalidApiResponseParams($Params);
+            $ApiResponseParams  = $this->invalidApiResponseParams($Params);
         }
+        return $ApiResponseParams;
     }
 
     /**

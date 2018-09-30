@@ -5,7 +5,8 @@
     "require": {
         "asbamboo/autoload": "^1.0",
         "asbamboo/http": "^1.0",
-        "asbamboo/di": "^1.0"
+        "asbamboo/di": "^1.0",
+        "asbamboo/event": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.3@dev"
