@@ -1,5 +1,5 @@
 <?php
-namespace asbamboo\api\apiStore;
+namespace asbamboo\api\apiStore\validator;
 
 use asbamboo\http\ServerRequestInterface;
 use asbamboo\api\exception\InvalidSignException;
@@ -10,7 +10,7 @@ use asbamboo\api\exception\InvalidSignException;
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月29日
  */
-abstract class SignAbstract implements SignInterface
+abstract class SignCheckerAbstract implements CheckerInterface
 {
     /**
      * 请求信息
@@ -49,7 +49,7 @@ abstract class SignAbstract implements SignInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\SignInterface::check()
+     * @see \asbamboo\api\apiStore\validator\CheckerInterface::check()
      */
     final public function check() : bool
     {
@@ -80,12 +80,12 @@ abstract class SignAbstract implements SignInterface
         $request_params     = $this->Request->getRequestParams();
         ksort($request_params);
         foreach($request_params AS $request_key => $request_value){
-            if($request_key == $this->input_app_key){
+            if($request_key == $this->input_sign){
                 continue;
             }
-            $sign   = $request_key . $request_value;
+            $sign   .= $request_key . $request_value;
         }
-        return md5($sign);
+        return md5($sign . $this->getAppSecurity());
     }
 
     /**

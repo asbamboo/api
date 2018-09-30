@@ -10,6 +10,7 @@ use asbamboo\di\ContainerAwareTrait;
 use asbamboo\api\apiStore\ApiResponse;
 use asbamboo\api\document\DocumentInterface;
 use asbamboo\api\document\ApiClassDoc;
+use asbamboo\event\EventScheduler;
 
 /**
  *
@@ -48,6 +49,15 @@ class Controller implements ControllerInterface
     {
         try
         {
+            /**
+             * 事件触发
+             * 可以通过监听这个事件处理一些事情，比如
+             *  - 写入日志
+             *  - 校验请求参数等
+             * 在api模块内，event-listener定义了几个监听器，如果你有需要的话，请使用EventScheduler::instance()->bind 方法绑定事件监听器
+             */
+            EventScheduler::instance()->trigger(Event::API_CONTROLLER, $this, ...func_get_args());
+
             /**
              * @var \asbamboo\api\apiStore\ApiClassInterface $Api
              */

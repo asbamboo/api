@@ -1,5 +1,5 @@
 <?php
-namespace asbamboo\api\apiStore;
+namespace asbamboo\api\apiStore\validator;
 
 use asbamboo\http\ServerRequestInterface;
 
@@ -9,7 +9,7 @@ use asbamboo\http\ServerRequestInterface;
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月29日
  */
-class SignByFixedSecurity extends SignAbstract
+class SignCheckerByFixedSecurity extends SignCheckerAbstract
 {
     /**
      * app security值，初始化后固定不变
@@ -35,7 +35,7 @@ class SignByFixedSecurity extends SignAbstract
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\SignAbstract::getAppSecurity()
+     * @see \asbamboo\api\apiStore\validator\SignCheckerAbstract::getAppSecurity()
      */
     protected function getAppSecurity() : string
     {

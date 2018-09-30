@@ -1,10 +1,17 @@
 <?php
-namespace asbamboo\api\apiStore;
+namespace asbamboo\api\apiStore\validator;
 
 use asbamboo\http\ServerRequestInterface;
 use asbamboo\api\exception\InvalidTimestampException;
 
-class Timestamp implements TimestampInterface
+/**
+ * 请求参数是否在有效时间内验证
+ *  - 默认timestamp的值必须时服务器时间的10分钟内，才有效
+ *
+ * @author 李春寅 <licy2013@aliyun.com>
+ * @since 2018年9月30日
+ */
+class TimestampChecker implements CheckerInterface
 {
     /**
      *
@@ -42,11 +49,11 @@ class Timestamp implements TimestampInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\SignInterface::check()
+     * @see \asbamboo\api\apiStore\validator\CheckerInterface::check()
      */
     final public function check() : bool
     {
-        if(strtotime($this->getTimestamp()) > time() - $this->lifetime){
+        if(strtotime($this->getTimestamp()) < time() - $this->lifetime){
             throw new InvalidTimestampException('生成的请求参数已经超过有效期');
         }
         return true;
