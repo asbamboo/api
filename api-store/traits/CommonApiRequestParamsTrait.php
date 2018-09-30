@@ -17,6 +17,7 @@ trait CommonApiRequestParamsTrait
      * @common
      * @desc api名称
      * @required 必须
+     * @range api列表中支持的名称
      * @var string
      */
     protected $api_name = '';
@@ -25,6 +26,7 @@ trait CommonApiRequestParamsTrait
      * api版本
      *
      * @common
+     * @range api列表中支持的版本
      * @desc api版本。如果没传，表示使用最新的版本
      * @var string
      */
@@ -35,6 +37,7 @@ trait CommonApiRequestParamsTrait
      *
      * @common
      * @desc 表示需要接口返回什么格式的数据,仅支持json
+     * @range json
      * @var string
      */
     protected $format = ApiResponseInterface::FORMAT_JSON;

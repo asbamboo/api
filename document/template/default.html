@@ -45,6 +45,8 @@
                 <h1><?=$detail->getLabelName()?><small><?=$detail->getApiName()?></small></h1>
                 <?php IF($detail->isDelete()):?>
                     <p><b>注意:</b> 该接口已经废弃。</p>
+                <?php ELSE:?>
+                	<p><?=$detail->getDesc()?></p>
                 <?php ENDIF;?>
             </div>
             <?php IF($detail->getRequestParamsDoc()):?>

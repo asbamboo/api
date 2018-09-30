@@ -15,6 +15,7 @@ trait CommonApiRequestSignParamsTrait
      * @required 必须
      * @common
      * @var string
+     * @range 每个应用唯一
      */
     protected $app_key = '';
 
@@ -26,6 +27,7 @@ trait CommonApiRequestSignParamsTrait
      * @required 必须
      * @common
      * @var string
+     * @range 请查看签名规则
      */
     protected $sign = '';
 

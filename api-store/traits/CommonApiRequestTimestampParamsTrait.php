@@ -14,6 +14,7 @@ trait CommonApiRequestTimestampParamsTrait
      * @desc 时间戳 格式为:yyyy-mm-dd HH:mm:ss,如(2018-09-27 20:01:53)
      * @required 必须
      * @common
+     * @range 10分钟内有效时间戳
      * @var string
      */
     protected $timestamp;
