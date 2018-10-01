@@ -50,10 +50,7 @@ class Controller implements ControllerInterface
         try
         {
             /**
-             * 事件触发
-             * 可以通过监听这个事件处理一些事情，比如
-             *  - 写入日志
-             *  - 校验请求参数等
+             * 事件触发 可以通过监听这个事件处理一些事情，比如:写入日志,校验请求参数等
              * 在api模块内，event-listener定义了几个监听器，如果你有需要的话，请使用EventScheduler::instance()->bind 方法绑定事件监听器
              */
             EventScheduler::instance()->trigger(Event::API_CONTROLLER, $this, ...func_get_args());
@@ -67,6 +64,13 @@ class Controller implements ControllerInterface
             $ApiDoc                     = new ApiClassDoc($class, $this->ApiStore->getNamespace());
             $api_request_params_class   = $ApiDoc->getRequestParamsDoc()->getClass();
             $ApiRequestParams           = new $api_request_params_class($this->Request);
+
+            /**
+             * 事件触发 可以通过监听这个事件处理一些事情，比如:写入日志,校验请求参数等
+             * 在api模块内，event-listener定义了几个监听器，如果你有需要的话，请使用EventScheduler::instance()->bind 方法绑定事件监听器
+             */
+            EventScheduler::instance()->trigger(Event::API_PRE_EXEC, $Api, $ApiRequestParams, $this->Request);
+
             $ApiResponseParams          = $Api->exec($ApiRequestParams);
             if(method_exists($ApiRequestParams, 'getFormat')){
                 $ApiResponse->setFormat($ApiRequestParams->getFormat());
@@ -76,6 +80,8 @@ class Controller implements ControllerInterface
         }catch(ApiException $e){
             $ApiResponse->setCode($e->getCode());
             $ApiResponse->setMessage($e->getMessage());
+//         }catch(\Throwable $e){
+//             var_dump($e->__toString());exit;
         }finally{
             return $ApiResponse->makeResponse($ApiResponseParams);
         }

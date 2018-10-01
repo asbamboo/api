@@ -5,6 +5,9 @@ use PHPUnit\Framework\TestCase;
 use asbamboo\http\ServerRequest;
 use asbamboo\api\apiStore\validator\TimestampChecker;
 use asbamboo\api\exception\InvalidTimestampException;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\ApiFixed;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed\RequestParams;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\ApiDelete;
 
 /**
  *
@@ -45,5 +48,18 @@ class TimestampCheckerTest extends TestCase
         $TimestampChecker       = new TimestampChecker($Request);
         $this->assertTrue($TimestampChecker->check());
         $_REQUEST   = $org_request;
+    }
+
+    public function testIsSupport()
+    {
+        $Request                = new ServerRequest();
+        $TimestampChecker       = new TimestampChecker($Request);
+        $Api                    = new ApiFixed();
+        $ApiRequestParams       = new RequestParams($Request);
+        $this->assertFalse($TimestampChecker->isSupport($Api, $ApiRequestParams));
+
+        $Api                    = new ApiDelete();
+        $ApiRequestParams       = new \asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiDelete\RequestParams($Request);
+        $this->assertTrue($TimestampChecker->isSupport($Api, $ApiRequestParams));
     }
 }

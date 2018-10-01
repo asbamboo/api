@@ -5,6 +5,9 @@ use PHPUnit\Framework\TestCase;
 use asbamboo\api\exception\InvalidSignException;
 use asbamboo\http\ServerRequest;
 use asbamboo\api\apiStore\validator\SignCheckerByFixedSecurity;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\ApiFixed;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiDelete\RequestParams;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\ApiDelete;
 
 class SignCheckerByFixedSecurityTest extends TestCase
 {
@@ -55,4 +58,16 @@ class SignCheckerByFixedSecurityTest extends TestCase
         $_REQUEST   = $org_request;
     }
 
+    public function testIsSupport()
+    {
+        $Request                = new ServerRequest();
+        $SignChecker            = new SignCheckerByFixedSecurity($Request);
+        $Api                    = new ApiDelete();
+        $ApiRequestParams       = new RequestParams($Request);
+        $this->assertTrue($SignChecker->isSupport($Api, $ApiRequestParams));
+
+        $Api                    = new ApiFixed();
+        $ApiRequestParams       = new \asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed\RequestParams($Request);
+        $this->assertFalse($SignChecker->isSupport($Api, $ApiRequestParams));
+    }
 }

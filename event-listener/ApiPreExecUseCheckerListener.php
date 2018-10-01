@@ -3,6 +3,8 @@ namespace asbamboo\api\eventListener;
 
 use asbamboo\api\apiStore\validator\CheckerCollectionInterface;
 use asbamboo\api\exception\ApiException;
+use asbamboo\api\apiStore\ApiClassInterface;
+use asbamboo\api\apiStore\ApiRequestParamsInterface;
 
 /**
  * 监听器. 蒋婷api.controller事件，做一些验证处理。
@@ -10,7 +12,7 @@ use asbamboo\api\exception\ApiException;
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月30日
  */
-class ApiControllerUseCheckerListener
+class ApiPreExecUseCheckerListener
 {
     /**
      *
@@ -32,13 +34,13 @@ class ApiControllerUseCheckerListener
      *
      * @throws ApiException
      */
-    public function onCheck()
+    public function onCheck(ApiClassInterface $ApiClass, ApiRequestParamsInterface $ApiRequestParams)
     {
         /**
          * @var asbamboo\api\apiStore\validator\CheckerInterface $Checker
          */
         foreach($this->CheckerCollection AS $Checker){
-            if($Checker->check() == false){
+            if($Checker->isSupport($ApiClass, $ApiRequestParams) && $Checker->check() == false){
                 throw new ApiException('没有满足所有执行接口程序的前置条件。');
             }
         }

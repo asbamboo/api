@@ -6,15 +6,17 @@ use asbamboo\http\ServerRequest;
 use asbamboo\api\apiStore\validator\SignCheckerByFixedSecurity;
 use asbamboo\api\apiStore\validator\TimestampChecker;
 use asbamboo\api\apiStore\validator\CheckerCollection;
-use asbamboo\api\eventListener\ApiControllerUseCheckerListener;
+use asbamboo\api\eventListener\ApiPreExecUseCheckerListener;
 use asbamboo\api\exception\ApiException;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\ApiDelete;
+use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiDelete\RequestParams;
 
 /**
  *
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月30日
  */
-class ApiControllerUseCheckerListenerTest extends TestCase
+class ApiPreExecUseCheckerListenerTest extends TestCase
 {
     /**
      *
@@ -26,8 +28,10 @@ class ApiControllerUseCheckerListenerTest extends TestCase
         $SignChecker            = new SignCheckerByFixedSecurity($Request);
         $TimestampChecker       = new TimestampChecker($Request);
         $CheckerCollection      = new CheckerCollection([$SignChecker, $TimestampChecker]);
-        $Listener               = new ApiControllerUseCheckerListener($CheckerCollection);
-        $Listener->onCheck();
+        $Api                    = new ApiDelete();
+        $ApiRequestParams       = new RequestParams($Request);
+        $Listener               = new ApiPreExecUseCheckerListener($CheckerCollection);
+        $Listener->onCheck($Api, $ApiRequestParams);
         $this->assertTrue(true);
     }
 
@@ -50,8 +54,10 @@ class ApiControllerUseCheckerListenerTest extends TestCase
         $SignChecker            = new SignCheckerByFixedSecurity($Request);
         $TimestampChecker       = new TimestampChecker($Request);
         $CheckerCollection      = new CheckerCollection([$SignChecker, $TimestampChecker]);
-        $Listener               = new ApiControllerUseCheckerListener($CheckerCollection);
-        $Listener->onCheck();
+        $Listener               = new ApiPreExecUseCheckerListener($CheckerCollection);
+        $Api                    = new ApiDelete();
+        $ApiRequestParams       = new RequestParams($Request);
+        $Listener->onCheck($Api, $ApiRequestParams);
         $this->assertTrue(true);
 
         $_REQUEST   = $org_request;
