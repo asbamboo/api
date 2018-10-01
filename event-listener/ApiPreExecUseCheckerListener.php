@@ -34,7 +34,7 @@ class ApiPreExecUseCheckerListener
      *
      * @throws ApiException
      */
-    public function onCheck(ApiClassInterface $ApiClass, ApiRequestParamsInterface $ApiRequestParams)
+    public function onCheck(ApiClassInterface $ApiClass, ?ApiRequestParamsInterface $ApiRequestParams = null)
     {
         /**
          * @var asbamboo\api\apiStore\validator\CheckerInterface $Checker

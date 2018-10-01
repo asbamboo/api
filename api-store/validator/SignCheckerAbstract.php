@@ -19,21 +19,21 @@ abstract class SignCheckerAbstract implements CheckerInterface
      *
      * @var ServerRequestInterface
      */
-    private $Request;
+    protected $Request;
 
     /**
      * app key 字段在 $_REQUEST变量中的键
      *
      * @var string
      */
-    private $input_app_key;
+    protected $input_app_key;
 
     /**
      * app sign 字段在 $_REQUEST变量中的键
      *
      * @var string
      */
-    private $input_sign;
+    protected $input_sign;
 
     /**
      *
@@ -67,9 +67,9 @@ abstract class SignCheckerAbstract implements CheckerInterface
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\validator\CheckerInterface::isSupport()
      */
-    public function isSupport(ApiClassInterface $ApiClass, ApiRequestParamsInterface $ApiRequestParams) : bool
+    public function isSupport(ApiClassInterface $ApiClass, ?ApiRequestParamsInterface $ApiRequestParams = null) : bool
     {
-        return property_exists($ApiRequestParams, $this->input_sign);
+        return $ApiRequestParams && property_exists($ApiRequestParams, $this->input_sign);
     }
 
     /**

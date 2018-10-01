@@ -27,7 +27,7 @@ class ApiPreExecUseCheckerListenerTest extends TestCase
         $Request                = new ServerRequest();
         $SignChecker            = new SignCheckerByFixedSecurity($Request);
         $TimestampChecker       = new TimestampChecker($Request);
-        $CheckerCollection      = new CheckerCollection([$SignChecker, $TimestampChecker]);
+        $CheckerCollection      = new CheckerCollection($SignChecker, $TimestampChecker);
         $Api                    = new ApiDelete();
         $ApiRequestParams       = new RequestParams($Request);
         $Listener               = new ApiPreExecUseCheckerListener($CheckerCollection);
@@ -53,7 +53,7 @@ class ApiPreExecUseCheckerListenerTest extends TestCase
         $Request                = new ServerRequest();
         $SignChecker            = new SignCheckerByFixedSecurity($Request);
         $TimestampChecker       = new TimestampChecker($Request);
-        $CheckerCollection      = new CheckerCollection([$SignChecker, $TimestampChecker]);
+        $CheckerCollection      = new CheckerCollection($SignChecker, $TimestampChecker);
         $Listener               = new ApiPreExecUseCheckerListener($CheckerCollection);
         $Api                    = new ApiDelete();
         $ApiRequestParams       = new RequestParams($Request);

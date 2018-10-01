@@ -34,5 +34,5 @@ interface CheckerInterface
      * @param ApiRequestParamsInterface $ApiRequestParams
      * @return bool
      */
-    public function isSupport(ApiClassInterface $ApiClass, ApiRequestParamsInterface $ApiRequestParams) : bool;
+    public function isSupport(ApiClassInterface $ApiClass, ?ApiRequestParamsInterface $ApiRequestParams = null) : bool;
 }

@@ -67,9 +67,9 @@ class TimestampChecker implements CheckerInterface
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\validator\CheckerInterface::isSupport()
      */
-    public function isSupport(ApiClassInterface $ApiClass, ApiRequestParamsInterface $ApiRequestParams) : bool
+    public function isSupport(ApiClassInterface $ApiClass, ?ApiRequestParamsInterface $ApiRequestParams=null) : bool
     {
-        return property_exists($ApiRequestParams, $this->input_timestamp);
+        return $ApiRequestParams && property_exists($ApiRequestParams, $this->input_timestamp);
     }
 
     /**

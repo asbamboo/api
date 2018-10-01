@@ -11,6 +11,17 @@ use asbamboo\api\_test\fixtures\apiStore\v1_0_0\ApiDelete;
 
 class SignCheckerByFixedSecurityTest extends TestCase
 {
+    public $org_request;
+
+    public function setUp()
+    {
+        $this->org_request    = $_REQUEST;
+    }
+
+    public function tearDown()
+    {
+        $_REQUEST   = $this->org_request;
+    }
 
     public function testCheckNotSign()
     {

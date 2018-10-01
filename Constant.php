@@ -14,6 +14,6 @@ final class Constant
      *
      * @var string
      */
-    const RESPONSE_STATUS_OK    = 0;
+    const RESPONSE_STATUS_OK    = '0';
     const RESPONSE_MESSAGE_OK   = 'success';
 }
