@@ -27,6 +27,7 @@ trait CommonApiRequestParamsTrait
      *
      * @common
      * @range api列表中支持的版本
+     * @example v1.0
      * @desc api版本。如果没传，表示使用最新的版本
      * @var string
      */

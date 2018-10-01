@@ -30,6 +30,11 @@ class ApiRequestParamDocTest extends TestCase
         $this->assertEquals('v1.0.0', $this->ApiRequestParamDoc->getDefaultValue());
     }
 
+    public function testGetExampleValue()
+    {
+        $this->assertEquals('v1.0.0', $this->ApiRequestParamDoc->getExampleValue());
+    }
+
     public function testGetVar()
     {
         $this->assertEquals('文本', $this->ApiRequestParamDoc->getVar());

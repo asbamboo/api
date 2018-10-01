@@ -18,7 +18,7 @@ class ApiFixed extends ApiClassAbstract
 {
     protected function successApiResponseParams(ApiRequestParamsInterface $Params) : ?ApiResponseParamsInterface
     {
-        return new ResponseParams();
+        return new ResponseParams(['id' => 'test_id']);
     }
 
     public function validate(ApiRequestParamsInterface $Params): bool

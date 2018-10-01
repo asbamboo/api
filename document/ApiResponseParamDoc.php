@@ -58,6 +58,18 @@ class ApiResponseParamDoc implements ApiResponseParamDocInterface
     }
 
     /**
+     * 如果示例值没有的话，默认等于空字符串。
+     *  - 为了说明文档中展示正确的返回值，你应该配置示例值
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\ApiRequestParamDocInterface::getExampleValue()
+     */
+    public function getExampleValue()
+    {
+        return isset($this->docs['example']) ? current($this->docs['example']) : '';
+    }
+
+    /**
      * 字段类型
      *  - "@var"
      *

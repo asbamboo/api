@@ -75,8 +75,8 @@ class Controller implements ControllerInterface
             if(method_exists($ApiRequestParams, 'getFormat')){
                 $ApiResponse->setFormat($ApiRequestParams->getFormat());
             }
-            $ApiResponse->setCode(0);
-            $ApiResponse->setMessage('success');
+            $ApiResponse->setCode(Constant::RESPONSE_STATUS_OK);
+            $ApiResponse->setMessage(Constant::RESPONSE_MESSAGE_OK);
         }catch(ApiException $e){
             $ApiResponse->setCode($e->getCode());
             $ApiResponse->setMessage($e->getMessage());
