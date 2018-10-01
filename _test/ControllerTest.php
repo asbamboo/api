@@ -39,7 +39,7 @@ class ControlerTest extends TestCase
     {
         $response       = $this->Controller->api('v1.0.0', '/api-fixed');
         $this->assertEquals(
-            json_encode(['code'=>0,'message'=>'success','data'=>['id'=>'test_id']]),
+            json_encode(['code'=>'0','message'=>'success','data'=>['id'=>'test_id']]),
             $response->getBody()->getContents()
         );
     }

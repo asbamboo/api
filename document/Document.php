@@ -2,10 +2,13 @@
 namespace asbamboo\api\document;
 
 use asbamboo\http\ResponseInterface;
-use asbamboo\api\apiStore\ApiStoreInterface;
-use asbamboo\api\apiStore\ApiClassInterface;
 use asbamboo\api\exception\NotFoundApiException;
 use asbamboo\http\TextResponse;
+use asbamboo\api\Constant;
+use asbamboo\api\apiStore\ApiResponse;
+use asbamboo\api\apiStore\ApiResponseParams;
+use asbamboo\api\apiStore\ApiStoreInterface;
+use asbamboo\api\apiStore\ApiClassInterface;
 
 /**
  * 文档生成器
@@ -113,10 +116,12 @@ class Document implements DocumentInterface
      */
     public function response() : ResponseInterface
     {
-        $all_versions   = $this->ApiStore->findApiVersions(1);
-        $cur_version    = $this->getVersion();
-        $lists          = $this->getApiLists();
-        $detail         = $this->getApiName() ? $this->getApiDetail() : null;
+        $all_versions       = $this->ApiStore->findApiVersions(1);
+        $cur_version        = $this->getVersion();
+        $lists              = $this->getApiLists();
+        $detail             = $this->getApiName() ? $this->getApiDetail() : null;
+        $request_example    = $this->getRequestExample();
+        $response_example   = $this->getResponseExample();
         ob_start();
         include $this->template;
         $html   = ob_get_contents();
@@ -204,5 +209,72 @@ class Document implements DocumentInterface
             throw new NotFoundApiException(sprintf('api 接口不存在，版本[%s], api 名称[%s]', $this->getVersion(), $this->getApiName()));
         }
         return $api_lists[$this->getApiName()];
+    }
+
+    /**
+     * 返回请求值示例
+     *
+     * @return string
+     */
+    private function getRequestExample() : string
+    {
+        /**
+         * @var ApiRequestParamDoc $RequestParamDoc
+         */
+        $example    = '';
+        if($this->getApiName()){
+            $example            = [];
+            $example[]          = 'curl http://xxxxxxxx \\';
+            $Detail             = $this->getApiDetail();
+            $RequestParamsDoc   = $Detail->getRequestParamsDoc();
+            foreach($RequestParamsDoc AS $RequestParamDoc){
+                $name       = $RequestParamDoc->getName();
+                $value      = $RequestParamDoc->getExampleValue();
+                $value      = $name == 'api_name' ? $this->getApiName() : $value;
+                $value      = $name == 'version' ? $this->getVersion() : $value;
+                $example[]  = '-d ' . $name . '=' . urlencode($value) . ' \\';
+            }
+            $example            = implode("\r\n", $example);
+        }
+        return $example;
+    }
+
+    /**
+     * 返回响应值示例
+     *
+     * @return string
+     */
+    public function getResponseExample() : string
+    {
+        /**
+         * @var ApiResponseParamDoc $ResponseParamDoc
+         */
+        $example    = '';
+        if($this->getApiName()){
+            $data               = [];
+            $ResponseParams     = null;
+            $Detail             = $this->getApiDetail();
+            $ResponseParamsDoc  = $Detail->getResponseParamsDoc();
+            if($ResponseParamsDoc){
+                foreach($ResponseParamsDoc AS $ResponseParamDoc){
+                    $data[$ResponseParamDoc->getName()] = $ResponseParamDoc->getExampleValue();
+                }
+                $ResponseParams = new class($data) extends ApiResponseParams{
+                    public function __construct($data){
+                        $this->data = $data;
+                    }
+                    public function getObjectVars(): ? array
+                    {
+                        return $this->data;
+                    }
+                };
+            }
+            $ApiResponse   = new ApiResponse();
+            $ApiResponse->setCode(Constant::RESPONSE_STATUS_OK);
+            $ApiResponse->setMessage(Constant::RESPONSE_MESSAGE_OK);
+            $Response   = $ApiResponse->makeResponse($ResponseParams);
+            $example    = $Response->getBody()->getContents();
+        }
+        return $example;
     }
 }

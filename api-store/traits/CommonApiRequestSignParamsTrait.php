@@ -9,12 +9,13 @@ namespace asbamboo\api\apiStore\traits;
 trait CommonApiRequestSignParamsTrait
 {
     /**
-     * app_key是一个请求api接口的应用程序的唯一标识符号
      *
-     * @desc app key
+     * @desc app key 一个请求api接口的应用程序的唯一标识符号
      * @required 必须
      * @common
      * @var string
+     * @example xxxxxxxx
+     * @range 每个应用唯一
      */
     protected $app_key = '';
 
@@ -26,6 +27,8 @@ trait CommonApiRequestSignParamsTrait
      * @required 必须
      * @common
      * @var string
+     * @example xxxxxxxxxxxxxxxxxxxxxxxxxx
+     * @range 请查看签名规则
      */
     protected $sign = '';
 

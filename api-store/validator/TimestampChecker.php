@@ -3,6 +3,8 @@ namespace asbamboo\api\apiStore\validator;
 
 use asbamboo\http\ServerRequestInterface;
 use asbamboo\api\exception\InvalidTimestampException;
+use asbamboo\api\apiStore\ApiClassInterface;
+use asbamboo\api\apiStore\ApiRequestParamsInterface;
 
 /**
  * 请求参数是否在有效时间内验证
@@ -47,6 +49,7 @@ class TimestampChecker implements CheckerInterface
     }
 
     /**
+     * 在isSupport方法返回false的情况下，不应该调用check方法
      *
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\validator\CheckerInterface::check()
@@ -57,6 +60,16 @@ class TimestampChecker implements CheckerInterface
             throw new InvalidTimestampException('生成的请求参数已经超过有效期');
         }
         return true;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\apiStore\validator\CheckerInterface::isSupport()
+     */
+    public function isSupport(ApiClassInterface $ApiClass, ?ApiRequestParamsInterface $ApiRequestParams=null) : bool
+    {
+        return $ApiRequestParams && property_exists($ApiRequestParams, $this->input_timestamp);
     }
 
     /**

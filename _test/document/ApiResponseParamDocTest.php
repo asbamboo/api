@@ -20,6 +20,11 @@ class ApiResponseParamDocTest extends TestCase
         $this->assertEquals('id', $this->ApiResponseParamDoc->getName());
     }
 
+    public function testGetExampleValue()
+    {
+        $this->assertEquals('10089', $this->ApiResponseParamDoc->getExampleValue());
+    }
+
     public function testGetVar()
     {
         $this->assertEquals('string', $this->ApiResponseParamDoc->getVar());

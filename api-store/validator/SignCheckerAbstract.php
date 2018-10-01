@@ -3,6 +3,8 @@ namespace asbamboo\api\apiStore\validator;
 
 use asbamboo\http\ServerRequestInterface;
 use asbamboo\api\exception\InvalidSignException;
+use asbamboo\api\apiStore\ApiClassInterface;
+use asbamboo\api\apiStore\ApiRequestParamsInterface;
 
 /**
  * 签名验证
@@ -17,21 +19,21 @@ abstract class SignCheckerAbstract implements CheckerInterface
      *
      * @var ServerRequestInterface
      */
-    private $Request;
+    protected $Request;
 
     /**
      * app key 字段在 $_REQUEST变量中的键
      *
      * @var string
      */
-    private $input_app_key;
+    protected $input_app_key;
 
     /**
      * app sign 字段在 $_REQUEST变量中的键
      *
      * @var string
      */
-    private $input_sign;
+    protected $input_sign;
 
     /**
      *
@@ -47,6 +49,7 @@ abstract class SignCheckerAbstract implements CheckerInterface
     }
 
     /**
+     * 在isSupport方法返回false的情况下，不应该调用check方法
      *
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\validator\CheckerInterface::check()
@@ -57,6 +60,16 @@ abstract class SignCheckerAbstract implements CheckerInterface
             throw new InvalidSignException('无效的签名。');
         }
         return true;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\apiStore\validator\CheckerInterface::isSupport()
+     */
+    public function isSupport(ApiClassInterface $ApiClass, ?ApiRequestParamsInterface $ApiRequestParams = null) : bool
+    {
+        return $ApiRequestParams && property_exists($ApiRequestParams, $this->input_sign);
     }
 
     /**

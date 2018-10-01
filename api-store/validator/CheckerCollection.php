@@ -16,9 +16,9 @@ class CheckerCollection implements CheckerCollectionInterface
 
     /**
      *
-     * @param CheckerInterface[] $checkers
+     * @param CheckerInterface ...$checkers
      */
-    public function __construct(array $checkers = [])
+    public function __construct(CheckerInterface ...$checkers)
     {
         foreach($checkers AS $Checker){
             $this->add($Checker);

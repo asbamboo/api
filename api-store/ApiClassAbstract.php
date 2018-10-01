@@ -30,9 +30,10 @@ abstract class ApiClassAbstract implements ApiClassInterface
      * 成功时返回的响应参数
      *  - 如果有的话继承的类中重载本方法
      *
+     * @param ApiRequestParamsInterface $Params
      * @return ApiResponseParamsInterface|NULL
      */
-    protected function successApiResponseParams() : ?ApiResponseParamsInterface
+    protected function successApiResponseParams(ApiRequestParamsInterface $Params) : ?ApiResponseParamsInterface
     {
         return null;
     }
@@ -41,10 +42,11 @@ abstract class ApiClassAbstract implements ApiClassInterface
      * 没有通过参数验证时返回的响应参数
      *  - 如果有的话继承的类中重载本方法
      *
+     * @param ApiRequestParamsInterface $Params
      * @throws InvalidArgumentException
      * @return ApiResponseParamsInterface|NULL
      */
-    protected function invalidApiResponseParams() : ?ApiResponseParamsInterface
+    protected function invalidApiResponseParams(ApiRequestParamsInterface $Params) : ?ApiResponseParamsInterface
     {
         throw new InvalidArgumentException('无效的api请求参数。');
     }

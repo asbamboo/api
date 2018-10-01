@@ -25,6 +25,15 @@ interface ApiRequestParamDocInterface
     public function getDefaultValue();
 
     /**
+     * 字段示例值
+     *  - 示例值会被用来生成演示代码
+     *  - "@example"
+     *
+     * @return mixed
+     */
+    public function getExampleValue();
+
+    /**
      * 字段类型
      *  - "@var"
      *

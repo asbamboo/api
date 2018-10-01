@@ -16,9 +16,9 @@ use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed\ResponseParams;
  */
 class ApiFixed extends ApiClassAbstract
 {
-    protected function successApiResponseParams() : ?ApiResponseParamsInterface
+    protected function successApiResponseParams(ApiRequestParamsInterface $Params) : ?ApiResponseParamsInterface
     {
-        return new ResponseParams();
+        return new ResponseParams(['id' => 'test_id']);
     }
 
     public function validate(ApiRequestParamsInterface $Params): bool

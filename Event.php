@@ -15,5 +15,12 @@ final class Event
      *
      * @var string
      */
-    const API_CONTROLLER    = 'API_CONTROLLER';
+    const API_CONTROLLER    = 'api.controller';
+
+    /**
+     * 该事件在接口程序正式执行前触发
+     *
+     * @var string
+     */
+    const API_PRE_EXEC      = 'api.pre.exec';
 }

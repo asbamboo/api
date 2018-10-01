@@ -101,7 +101,7 @@ class ApiResponse implements ApiResponseInterface
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\ApiResponseInterface::makeResponse()
      */
-    public function makeResponse(ApiResponseParamsInterface $Params): ResponseInterface
+    public function makeResponse(?ApiResponseParamsInterface $Params = null): ResponseInterface
     {
         if($this->getFormat() != self::FORMAT_JSON){
             throw new NotSupportedFormatException(sprintf('目前Api接口响应格式只允许[%s]', self::FORMAT_JSON));
@@ -109,7 +109,7 @@ class ApiResponse implements ApiResponseInterface
         $response_data              = [];
         $response_data['code']      = $this->getCode();
         $response_data['message']   = $this->getMessage();
-        if(!empty($Params->getObjectVars())){
+        if(!empty($Params) && !empty($Params->getObjectVars())){
             $response_data['data']   = $Params->getObjectVars();
         }
         return new JsonResponse($response_data);
