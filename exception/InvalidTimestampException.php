@@ -9,5 +9,8 @@ namespace asbamboo\api\exception;
  */
 class InvalidTimestampException extends ApiException
 {
-
+    public function __construct(string $message="无效的时间戳。", \Exception $previous = null)
+    {
+        parent::__construct($message, Code::INVALID_TIMESTAMP, $previous);
+    }
 }

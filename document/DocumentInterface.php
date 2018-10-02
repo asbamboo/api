@@ -3,6 +3,7 @@ namespace asbamboo\api\document;
 
 use asbamboo\http\ResponseInterface;
 use asbamboo\api\apiStore\ApiRequestUrisInterface;
+use asbamboo\api\exception\NotFoundApiException;
 
 /**
  * 文档生成器
@@ -29,6 +30,20 @@ interface DocumentInterface
     public function getVersion() : string;
 
     /**
+     * 返回支持的api版本列表
+     *
+     * @return array
+     */
+    public function getApiVersions() : array;
+
+    /**
+     * 返回api列表
+     *
+     * @return ApiClassDocInterface[]
+     */
+    public function getApiLists() : array;
+
+    /**
      * 设置当前需要获取哪个接口的文档
      *
      * @param string $api_name
@@ -42,6 +57,14 @@ interface DocumentInterface
      * @return string
      */
     public function getApiName() : string;
+
+    /**
+     * 获取一个api接口文档详情信息
+     *
+     * @throws NotFoundApiException
+     * @return ApiClassDocInterface
+     */
+    public function getApiDetail() : ApiClassDocInterface;
 
     /**
      * 设置api store请求的uri集合

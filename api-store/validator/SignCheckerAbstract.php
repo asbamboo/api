@@ -90,7 +90,7 @@ abstract class SignCheckerAbstract implements CheckerInterface
     private function getValidSign() : string
     {
         $sign               = '';
-        $request_params     = $this->Request->getRequestParams();
+        $request_params     = array_merge($this->Request->getPostParams()??[], $this->Request->getQueryParams()??[]);
         ksort($request_params);
         foreach($request_params AS $request_key => $request_value){
             if($request_key == $this->input_sign){

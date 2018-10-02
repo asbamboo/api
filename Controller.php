@@ -12,6 +12,7 @@ use asbamboo\api\document\DocumentInterface;
 use asbamboo\api\document\ApiClassDoc;
 use asbamboo\event\EventScheduler;
 use asbamboo\api\apiStore\ApiRequestUrisInterface;
+use asbamboo\api\tool\test\TestInterface;
 
 /**
  *
@@ -104,5 +105,32 @@ class Controller implements ControllerInterface
         $Document->setVersion($version);
         $Document->setRequestUris($this->Container->get(ApiRequestUrisInterface::class));
         return $Document->response();
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\ControllerInterface::testTool()
+     */
+    public function testTool(string $version = '', string $api_name = '', string $uri = '') : ResponseInterface
+    {
+        /**
+         *
+         * @var DocumentInterface $Document
+         */
+        $Document       = $this->Container->get(DocumentInterface::class);
+        $Document->setApiName($api_name);
+        $Document->setVersion($version);
+        $Document->setRequestUris($this->Container->get(ApiRequestUrisInterface::class));
+
+        /**
+         *
+         * @var TestInterface $Test
+         */
+        $Test           = $this->Container->get(TestInterface::class);
+        $Test->setDocument($Document);
+        $Test->setTestUri($uri);
+
+        return $Test->response();
     }
 }

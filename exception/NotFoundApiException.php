@@ -11,6 +11,6 @@ class NotFoundApiException extends ApiException
 {
     public function __construct(string $message="不好意思，你访问的API不存在。", \Exception $previous = null)
     {
-        parent::__construct($message, 404, $previous);
+        parent::__construct($message, Code::NOT_FOUND, $previous);
     }
 }

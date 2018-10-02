@@ -9,5 +9,8 @@ namespace asbamboo\api\exception;
  */
 class ApiException extends \Exception
 {
-
+    public function __construct(string $message="系统发生异常。", $code = Code::SYSTEM_EXCEPTION, \Exception $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
 }

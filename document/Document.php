@@ -168,7 +168,7 @@ class Document implements DocumentInterface
      *
      * @return array
      */
-    private function getApiVersions() : array
+    public function getApiVersions() : array
     {
         return $this->ApiStore->findApiVersions(1);
     }
@@ -178,7 +178,7 @@ class Document implements DocumentInterface
      *
      * @return array
      */
-    private function getApiLists() : array
+    public function getApiLists() : array
     {
         if(empty($this->api_lists)){
             $this->api_lists    = [];
@@ -236,7 +236,7 @@ class Document implements DocumentInterface
      * @throws NotFoundApiException
      * @return ApiClassDocInterface
      */
-    private function getApiDetail() : ApiClassDocInterface
+    public function getApiDetail() : ApiClassDocInterface
     {
         $api_lists  = $this->getApiLists();
         if(!isset($api_lists[$this->getApiName()])){
