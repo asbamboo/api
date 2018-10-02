@@ -82,8 +82,6 @@ class Controller implements ControllerInterface
         }catch(ApiException $e){
             $ApiResponse->setCode($e->getCode());
             $ApiResponse->setMessage($e->getMessage());
-//         }catch(\Throwable $e){
-//             var_dump($e->__toString());exit;
         }finally{
             return $ApiResponse->makeResponse($ApiResponseParams);
         }
