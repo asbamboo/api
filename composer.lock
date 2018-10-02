@@ -49,16 +49,16 @@
         },
         {
             "name": "asbamboo/di",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/asbamboo/di.git",
-                "reference": "6216ba34aa11d32fb879b83d404cac5467cbd520"
+                "reference": "2d19fd12f9b990af9305a7d563baa5aef1146789"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asbamboo/di/zipball/6216ba34aa11d32fb879b83d404cac5467cbd520",
-                "reference": "6216ba34aa11d32fb879b83d404cac5467cbd520",
+                "url": "https://api.github.com/repos/asbamboo/di/zipball/2d19fd12f9b990af9305a7d563baa5aef1146789",
+                "reference": "2d19fd12f9b990af9305a7d563baa5aef1146789",
                 "shasum": ""
             },
             "require": {
@@ -80,10 +80,10 @@
             ],
             "description": "依赖注入模块",
             "support": {
-                "source": "https://github.com/asbamboo/di/tree/v1.0.0",
+                "source": "https://github.com/asbamboo/di/tree/v1.0.1",
                 "issues": "https://github.com/asbamboo/di/issues"
             },
-            "time": "2018-09-22T03:57:28+00:00"
+            "time": "2018-10-02T06:14:01+00:00"
         },
         {
             "name": "asbamboo/event",

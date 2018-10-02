@@ -1,6 +1,10 @@
 <?php
 namespace asbamboo\api\document;
 
+use asbamboo\api\apiStore\ApiRequestUris;
+use asbamboo\api\apiStore\ApiRequestUrisInterface;
+use asbamboo\api\apiStore\ApiRequestUri;
+
 /**
  *
  * @author 李春寅 <licy2013@aliyun.com>
@@ -46,6 +50,12 @@ class ApiClassDoc implements ApiClassDocInterface
      * @var ApiResponseParamsDocInterface
      */
     private $ApiResponseParamsDoc;
+
+    /**
+     *
+     * @var ApiRequestUrisInterface
+     */
+    private $ApiRequestUris;
 
     /**
      *
@@ -156,6 +166,29 @@ class ApiClassDoc implements ApiClassDocInterface
     {
         return !empty( $this->docs['delete'] );
     }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\ApiClassDocInterface::getRequestUris()
+     */
+    public function getRequestUris() : ?ApiRequestUrisInterface
+    {
+        if(!$this->ApiRequestUris && !empty($this->docs['uris'])){
+            $this->ApiRequestUris = new ApiRequestUris();
+            foreach($this->docs['uris'] AS $uri){
+                $uri_data   = [];
+                $parse      = explode(',', $uri);
+                foreach($parse AS $p){
+                    @list($key, $value) = explode('=', $p);
+                    $uri_data[$key] = $value;
+                }
+                $this->ApiRequestUris->add(new ApiRequestUri($uri_data['uri'] ?? '', $uri_data['desc'] ?? '', $uri_data['type'] ?? ''));
+            }
+        }
+        return $this->ApiRequestUris;
+    }
+
 
     /**
      *

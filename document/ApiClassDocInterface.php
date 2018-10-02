@@ -1,6 +1,8 @@
 <?php
 namespace asbamboo\api\document;
 
+use asbamboo\api\apiStore\ApiRequestUrisInterface;
+
 /**
  * 实现"asbamboo\restfulApi\apiStore\ApiClassInterface"的类的帮助信息。
  *
@@ -57,6 +59,15 @@ interface ApiClassDocInterface
      * @return bool
      */
     public function isDelete() : bool;
+
+    /**
+     * 返回请求的uris集合
+     * 应该解析ApiClass的注释中的 "@uris" 信息
+     * “@uris” 格式应该是 type=test,uri=http://test,desc=desc
+     *
+     * @return ApiRequestUrisInterface|NULL
+     */
+    public function getRequestUris() : ?ApiRequestUrisInterface;
 
     /**
      * 返回 api 请求参数说明

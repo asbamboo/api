@@ -7,4 +7,10 @@ namespace asbamboo\api\exception;
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月26日
  */
-class InvalidArgumentException extends ApiException{}
+class InvalidArgumentException extends ApiException
+{
+    public function __construct(string $message="参数无效。", \Exception $previous = null)
+    {
+        parent::__construct($message, Code::INVALID_ARGUMENT, $previous);
+    }
+}

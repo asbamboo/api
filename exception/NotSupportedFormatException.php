@@ -9,5 +9,8 @@ namespace asbamboo\api\exception;
  */
 class NotSupportedFormatException extends ApiException
 {
-
+    public function __construct(string $message="不支持的格式。", \Exception $previous = null)
+    {
+        parent::__construct($message, Code::NOT_SUPPORTED_FORMAT, $previous);
+    }
 }

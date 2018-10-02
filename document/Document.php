@@ -9,6 +9,7 @@ use asbamboo\api\apiStore\ApiResponse;
 use asbamboo\api\apiStore\ApiResponseParams;
 use asbamboo\api\apiStore\ApiStoreInterface;
 use asbamboo\api\apiStore\ApiClassInterface;
+use asbamboo\api\apiStore\ApiRequestUrisInterface;
 
 /**
  * 文档生成器
@@ -24,6 +25,12 @@ class Document implements DocumentInterface
      * @var ApiStoreInterface
      */
     private $ApiStore;
+
+    /**
+     *
+     * @var ApiRequestUrisInterface
+     */
+    private $ApiRequestUris;
 
     /**
      *
@@ -112,6 +119,32 @@ class Document implements DocumentInterface
     /**
      *
      * {@inheritDoc}
+     * @see \asbamboo\api\document\DocumentInterface::setRequestUris()
+     */
+    public function setRequestUris(ApiRequestUrisInterface $ApiRequestUris) : DocumentInterface
+    {
+        $this->ApiRequestUris   = $ApiRequestUris;
+        return $this;
+    }
+
+    /**
+     * 如果api详情文档里面有请求uri说明的话，使用这个指定的api专用的uri集合
+     * 如果api详情文档里面没有请求uri说明的话，使用公共的uri集合
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\DocumentInterface::getRequestUris()
+     */
+    public function getRequestUris() : ?ApiRequestUrisInterface
+    {
+        if($this->getApiName() && $this->getApiDetail()->getRequestUris()){
+            return $this->getApiDetail()->getRequestUris();
+        }
+        return $this->ApiRequestUris;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
      * @see \asbamboo\api\document\DocumentInterface::response()
      */
     public function response() : ResponseInterface
@@ -122,6 +155,7 @@ class Document implements DocumentInterface
         $detail             = $this->getApiName() ? $this->getApiDetail() : null;
         $request_example    = $this->getRequestExample();
         $response_example   = $this->getResponseExample();
+        $uris               = $this->getRequestUris();
         ob_start();
         include $this->template;
         $html   = ob_get_contents();
@@ -134,7 +168,7 @@ class Document implements DocumentInterface
      *
      * @return array
      */
-    private function getApiVersions() : array
+    public function getApiVersions() : array
     {
         return $this->ApiStore->findApiVersions(1);
     }
@@ -144,7 +178,7 @@ class Document implements DocumentInterface
      *
      * @return array
      */
-    private function getApiLists() : array
+    public function getApiLists() : array
     {
         if(empty($this->api_lists)){
             $this->api_lists    = [];
@@ -202,7 +236,7 @@ class Document implements DocumentInterface
      * @throws NotFoundApiException
      * @return ApiClassDocInterface
      */
-    private function getApiDetail() : ApiClassDocInterface
+    public function getApiDetail() : ApiClassDocInterface
     {
         $api_lists  = $this->getApiLists();
         if(!isset($api_lists[$this->getApiName()])){
@@ -223,8 +257,17 @@ class Document implements DocumentInterface
          */
         $example    = '';
         if($this->getApiName()){
+            $url                = 'http://XXXXXXXX';
+            if($this->getRequestUris()){
+                foreach($this->getRequestUris() AS $ApiRequestUri){
+                    if($ApiRequestUri->getUri()){
+                        $url    = $ApiRequestUri->getUri();
+                        break;
+                    }
+                }
+            }
             $example            = [];
-            $example[]          = 'curl http://xxxxxxxx \\';
+            $example[]          = 'curl ' . $url . ' \\';
             $Detail             = $this->getApiDetail();
             $RequestParamsDoc   = $Detail->getRequestParamsDoc();
             foreach($RequestParamsDoc AS $RequestParamDoc){
