@@ -11,6 +11,7 @@ use asbamboo\api\apiStore\ApiResponse;
 use asbamboo\api\document\DocumentInterface;
 use asbamboo\api\document\ApiClassDoc;
 use asbamboo\event\EventScheduler;
+use asbamboo\api\apiStore\ApiRequestUrisInterface;
 
 /**
  *
@@ -101,6 +102,7 @@ class Controller implements ControllerInterface
         $Document       = $this->Container->get(DocumentInterface::class);
         $Document->setApiName($api_name);
         $Document->setVersion($version);
+        $Document->setRequestUris($this->Container->get(ApiRequestUrisInterface::class));
         return $Document->response();
     }
 }

@@ -6,6 +6,7 @@ use asbamboo\api\apiStore\ApiStore;
 use asbamboo\api\document\Document;
 use asbamboo\http\TextResponse;
 use asbamboo\api\document\DocumentInterface;
+use asbamboo\api\apiStore\ApiRequestUris;
 
 /**
  *
@@ -53,6 +54,28 @@ class DocumentTest extends TestCase
     public function testGetApiName(Document $Document)
     {
         $this->assertEquals('api_name', $Document->getApiName());
+    }
+
+    public function testSetRequestUris()
+    {
+        $Document       = new Document($this->ApiStore);
+        $ApiRequestUris = new ApiRequestUris();
+        $Document       = $Document->setRequestUris($ApiRequestUris);
+        $this->assertInstanceOf(DocumentInterface::class, $Document);
+        return [$Document, $ApiRequestUris];
+    }
+
+    /**
+     * @depends testSetRequestUris
+     */
+    public function testGetRequestUris($data)
+    {
+        list($Document, $ApiRequestUris) = $data;
+        $this->assertEquals($ApiRequestUris, $Document->getRequestUris());
+        $Document->setApiName('api-update');
+        $this->assertEquals('dev', $Document->getRequestUris()->get('dev')->getType());
+        $this->assertEquals('http://test.delete', $Document->getRequestUris()->get('dev')->getUri());
+        $this->assertEquals('desc', $Document->getRequestUris()->get('dev')->getDesc());
     }
 
     public function testResponse()

@@ -2,6 +2,7 @@
 namespace asbamboo\api\document;
 
 use asbamboo\http\ResponseInterface;
+use asbamboo\api\apiStore\ApiRequestUrisInterface;
 
 /**
  * 文档生成器
@@ -41,6 +42,21 @@ interface DocumentInterface
      * @return string
      */
     public function getApiName() : string;
+
+    /**
+     * 设置api store请求的uri集合
+     *
+     * @param ApiRequestUrisInterface $ApiRequestUris
+     * @return DocumentInterface
+     */
+    public function setRequestUris(ApiRequestUrisInterface $ApiRequestUris) : DocumentInterface;
+
+    /**
+     * 返回api store的uri请求地址（是一个集合，应该包含了测试，正式等各个环境）
+     *
+     * @return ApiRequestUrisInterface|NULL
+     */
+    public function getRequestUris() : ?ApiRequestUrisInterface;
 
     /**
      * 响应结果

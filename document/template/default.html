@@ -49,6 +49,19 @@
                 	<p><?=$detail->getDesc()?></p>
                 <?php ENDIF;?>
             </div>
+            <?php IF($uris):?>
+            	<div>
+            		<h3>请求地址</h3>
+            		<table>
+            			<?php FOREACH($uris AS $uri):?>
+            				<tr>
+            					<th><?=$uri->getDesc()?></th>
+            					<td><?=$uri->getUri()?></td>
+            				<tr>
+            			<?php ENDFOREACH;?>
+            		</table>
+            	</div>
+            <?php ENDIF;?>
             <?php IF($detail->getRequestParamsDoc()):?>
 	            <div class="api-request">
 	                <h3>公共请求参数</h3>
