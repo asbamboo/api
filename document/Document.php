@@ -36,6 +36,12 @@ class Document implements DocumentInterface
      *
      * @var string
      */
+    private $test_tool_uri;
+
+    /**
+     *
+     * @var string
+     */
     private $template;
 
     /**
@@ -119,6 +125,26 @@ class Document implements DocumentInterface
     /**
      *
      * {@inheritDoc}
+     * @see \asbamboo\api\document\DocumentInterface::setTestToolUri()
+     */
+    public function setTestToolUri(string $uri) : DocumentInterface
+    {
+        $this->test_tool_uri    = $uri;
+        return $this;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\DocumentInterface::getTestToolUri()
+     */
+    public function getTestToolUri() : ?string
+    {
+        return $this->test_tool_uri;
+    }
+    /**
+     *
+     * {@inheritDoc}
      * @see \asbamboo\api\document\DocumentInterface::setRequestUris()
      */
     public function setRequestUris(ApiRequestUrisInterface $ApiRequestUris) : DocumentInterface
@@ -156,6 +182,8 @@ class Document implements DocumentInterface
         $request_example    = $this->getRequestExample();
         $response_example   = $this->getResponseExample();
         $uris               = $this->getRequestUris();
+        $test_tool_uri      = $this->getTestToolUri();
+
         ob_start();
         include $this->template;
         $html   = ob_get_contents();

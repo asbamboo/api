@@ -73,6 +73,8 @@
 									<label><?=$param->getName()?>:<input type="text" value="<?=$cur_version?>" name="<?=$param->getName()?>" /></label>
 								<?php ELSEIF($param->getName() == 'timestamp'):?>
 									<label><?=$param->getName()?>:<input type="text" value="<?=date('Y-m-d H:i:s')?>" name="<?=$param->getName()?>" /></label>
+								<?php ELSEIF($param->getName() == 'app_key'):?>
+									<label><?=$param->getName()?>:<input type="text" value="<?=$_SESSION['APIAPPKEY']??$param->getExampleValue()?>" name="<?=$param->getName()?>" /></label>
 								<?php ELSEIF($param->getName() == 'api_name'):?>
 									<label><?=$param->getName()?>:<input type="text" value="<?=$cur_api ? $cur_api->getApiName() : ''?>" name="<?=$param->getName()?>" /></label>
 								<?php ELSE:?>
@@ -96,14 +98,21 @@
   		</form>
   	</div>
   	<div class="right container">
-  		<div>
-  			<h2>签名生成</h2>
-  			<p>填写完左侧请求的参数后,输入与左侧app key对应的security</p>
-  			<p>
-  				<label>security:<input type="text" name="security" /></label><button type="button" onclick="doMakeSign()">生成</button>
-  			</p>
-  			<p><textarea name="sign_example" rows="5" cols="60"></textarea></p>
-  		</div>
+  		<?php IF($cur_api):?>
+			<?php FOREACH($cur_api->getRequestParamsDoc() AS $param): ?>
+				<?php IF($param->getName() == 'sign'):?>
+			  		<div>
+			  			<h2>签名生成</h2>
+			  			<p>填写完左侧请求的参数后,输入与左侧app key对应的security</p>
+			  			<p>
+			  				<label>security:<input type="text" name="security" value="<?=$_SESSION['APISECURITY']??''?>" /></label>
+			  				<button type="button" onclick="doMakeSign()">生成</button>
+			  			</p>
+			  			<p><textarea name="sign_example" rows="5" cols="60"></textarea></p>
+			  		</div>
+		  		<?php BREAK;ENDIF;?>
+			<?php ENDFOREACH;?>
+		<?php ENDIF;?>
   		<div>
   			<h2>请求示例</h2>
   			<textarea name="request_example"></textarea>
@@ -143,7 +152,7 @@
 			document.getElementsByName('sign')[0].value = sign.toUpperCase();
 			document.getElementsByName('sign_example')[0].value =
 				'待签名字符串:' + sign_str +
-				"\r\n" + 
+				"\r\n\r\n" + 
 				'签名:' + sign.toUpperCase()
 			;
 		}
