@@ -18,6 +18,21 @@ use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiDelete\RequestParams;
  */
 class ApiPreExecUseCheckerListenerTest extends TestCase
 {
+    public $org_request;
+    public $org_post;
+
+    public function setUp()
+    {
+        $this->org_request    = $_REQUEST;
+        $this->org_post       = $_POST;
+    }
+
+    public function tearDown()
+    {
+        $_REQUEST   = $this->org_request;
+        $_POST      = $this->org_post;
+    }
+
     /**
      *
      */
@@ -49,6 +64,7 @@ class ApiPreExecUseCheckerListenerTest extends TestCase
             $sign_str .= $k . $v;
         }
         $_REQUEST['sign']       = md5( $sign_str . 'security');
+        $_POST                  = $_REQUEST;
 
         $Request                = new ServerRequest();
         $SignChecker            = new SignCheckerByFixedSecurity($Request);

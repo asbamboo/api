@@ -67,6 +67,22 @@ interface DocumentInterface
     public function getApiDetail() : ApiClassDocInterface;
 
     /**
+     * 设置测试工具页面的uri
+     *
+     * @param string $uri
+     * @return DocumentInterface
+     */
+    public function setTestToolUri(string $uri) : DocumentInterface;
+
+    /**
+     * 返回测试工具页面的uri
+     *  - 当没有使用测试工具是返回null
+     *
+     * @return string|NULL
+     */
+    public function getTestToolUri() : ?string;
+
+    /**
      * 设置api store请求的uri集合
      *
      * @param ApiRequestUrisInterface $ApiRequestUris

@@ -54,6 +54,26 @@ class DocumentTest extends TestCase
     public function testGetApiName(Document $Document)
     {
         $this->assertEquals('api_name', $Document->getApiName());
+        return $Document;
+    }
+
+    /**
+     * @depends testGetApiName
+     */
+    public function testSetTestToolUri(Document $Document)
+    {
+        $this->assertInstanceOf(DocumentInterface::class, $Document->setTestToolUri('http://test.tool'));
+        return $Document;
+    }
+
+    /**
+     * @depends testSetTestToolUri
+     */
+    public function testGetTestToolUri(Document $Document)
+    {
+        $this->assertEquals('http://test.tool', $Document->getTestToolUri());
+        $Document       = new Document($this->ApiStore);
+        $this->assertNull($Document->getTestToolUri());
     }
 
     public function testSetRequestUris()

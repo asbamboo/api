@@ -13,6 +13,9 @@ use asbamboo\api\document\ApiClassDoc;
 use asbamboo\event\EventScheduler;
 use asbamboo\api\apiStore\ApiRequestUrisInterface;
 use asbamboo\api\tool\test\TestInterface;
+use asbamboo\router\RouterInterface;
+use asbamboo\router\RouteInterface;
+use asbamboo\api\apiStore\ApiRequestUriInterface;
 
 /**
  *
@@ -82,8 +85,6 @@ class Controller implements ControllerInterface
         }catch(ApiException $e){
             $ApiResponse->setCode($e->getCode());
             $ApiResponse->setMessage($e->getMessage());
-//         }catch(\Throwable $e){
-//             var_dump($e->__toString());exit;
         }finally{
             return $ApiResponse->makeResponse($ApiResponseParams);
         }
@@ -104,6 +105,30 @@ class Controller implements ControllerInterface
         $Document->setApiName($api_name);
         $Document->setVersion($version);
         $Document->setRequestUris($this->Container->get(ApiRequestUrisInterface::class));
+
+        /**
+         * 测试工具uri
+         *
+         * @var RouterInterface $Router
+         * @var RouteInterface $Route
+         * @var ApiRequestUriInterface $ApiRequestUri
+         */
+        if($Document->getApiName() && $Document->getVersion()){
+            $Router = $this->Container->get(RouterInterface::class);
+            $routes = $Router->getRouteCollection()->getIterator();
+            foreach($routes AS $Route){
+                if($Route->getCallback() == [$this, 'testTool']){
+                    $test_tool_uri  = $Route->getPath();
+                    foreach($Document->getRequestUris() AS $ApiRequestUri){
+                        $test_tool_uri  .= '?uri=' . urlencode($ApiRequestUri->getUri()) . '&version=' . $Document->getVersion() . '&api_name=' . $Document->getApiName();
+                        break;
+                    }
+                    $Document->setTestToolUri($test_tool_uri);
+                    break;
+                }
+            }
+        }
+
         return $Document->response();
     }
 
