@@ -10,6 +10,8 @@ use asbamboo\api\apiStore\ApiResponseParams;
 use asbamboo\api\apiStore\ApiStoreInterface;
 use asbamboo\api\apiStore\ApiClassInterface;
 use asbamboo\api\apiStore\ApiRequestUrisInterface;
+use asbamboo\api\view\TemplateInterface;
+use asbamboo\api\view\Template;
 
 /**
  * 文档生成器
@@ -40,9 +42,9 @@ class Document implements DocumentInterface
 
     /**
      *
-     * @var string
+     * @var TemplateInterface
      */
-    private $template;
+    private $Template;
 
     /**
      *
@@ -70,10 +72,14 @@ class Document implements DocumentInterface
      * @param ApiStoreInterface $ApiStore
      * @param string $template
      */
-    public function __construct(ApiStoreInterface $ApiStore, string $template = null)
+    public function __construct(ApiStoreInterface $ApiStore, TemplateInterface $Template = null)
     {
         $this->ApiStore     = $ApiStore;
-        $this->template     = $template ?? __DIR__ . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR . 'default.html';
+        $this->Template     = $Template;
+        if(is_null($this->Template)){
+            $this->Template = new Template();
+            $this->Template->setPath(implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'view', 'template', 'document', 'default.html']));
+        }
     }
 
     /**
@@ -175,20 +181,16 @@ class Document implements DocumentInterface
      */
     public function response() : ResponseInterface
     {
-        $all_versions       = $this->ApiStore->findApiVersions(1);
-        $cur_version        = $this->getVersion();
-        $lists              = $this->getApiLists();
-        $detail             = $this->getApiName() ? $this->getApiDetail() : null;
-        $request_example    = $this->getRequestExample();
-        $response_example   = $this->getResponseExample();
-        $uris               = $this->getRequestUris();
-        $test_tool_uri      = $this->getTestToolUri();
-
-        ob_start();
-        include $this->template;
-        $html   = ob_get_contents();
-        ob_end_clean();
-        return new TextResponse($html);
+        return new TextResponse($this->Template->render([
+            'all_versions'       => $this->ApiStore->findApiVersions(1),
+            'cur_version'        => $this->getVersion(),
+            'lists'              => $this->getApiLists(),
+            'detail'             => $this->getApiName() ? $this->getApiDetail() : null,
+            'request_example'    => $this->getRequestExample(),
+            'response_example'   => $this->getResponseExample(),
+            'uris'               => $this->getRequestUris(),
+            'test_tool_uri'      => $this->getTestToolUri(),
+        ]));
     }
 
     /**

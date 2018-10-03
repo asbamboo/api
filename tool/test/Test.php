@@ -4,6 +4,8 @@ namespace asbamboo\api\tool\test;
 use asbamboo\api\document\DocumentInterface;
 use asbamboo\http\ResponseInterface;
 use asbamboo\http\TextResponse;
+use asbamboo\api\view\TemplateInterface;
+use asbamboo\api\view\Template;
 
 /**
  *
@@ -29,15 +31,19 @@ class Test implements TestInterface
      *
      * @var string
      */
-    private $template;
+    private $Template;
 
     /**
      *
      * @param string $template
      */
-    public function __construct(string $template = null)
+    public function __construct(TemplateInterface $Template = null)
     {
-        $this->template     = $template ?? __DIR__ . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR . 'default.html';
+        $this->Template     = $Template;
+        if(is_null($this->Template)){
+            $this->Template = new Template();
+            $this->Template->setPath(implode(DIRECTORY_SEPARATOR, [dirname(dirname(__DIR__)), 'view', 'template', 'tool', 'test.html']));
+        }
     }
 
 
@@ -90,16 +96,13 @@ class Test implements TestInterface
      */
     public function response() : ResponseInterface
     {
-        $all_versions       = $this->getDocument()->getApiVersions();
-        $cur_version        = $this->getDocument()->getVersion();
-        $api_lists          = $this->getDocument()->getApiLists();
-        $cur_api            = $this->getDocument()->getApiName() ? $this->getDocument()->getApiDetail() : null;
-        $uris               = $this->getDocument()->getRequestUris();
-        $cur_uri            = $this->getTestUri();
-        ob_start();
-        include $this->template;
-        $html   = ob_get_contents();
-        ob_end_clean();
-        return new TextResponse($html);
+        return new TextResponse($this->Template->render([
+            'all_versions'       => $this->getDocument()->getApiVersions(),
+            'cur_version'        => $this->getDocument()->getVersion(),
+            'api_lists'          => $this->getDocument()->getApiLists(),
+            'cur_api'            => $this->getDocument()->getApiName() ? $this->getDocument()->getApiDetail() : null,
+            'uris'               => $this->getDocument()->getRequestUris(),
+            'cur_uri'            => $this->getTestUri(),
+        ]));
     }
 }
