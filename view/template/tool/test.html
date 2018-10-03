@@ -14,6 +14,7 @@
   </head>
   <body>
   	<div class="left container">
+  		<div><?=$test_name?></div>
   		<form action="<?=$cur_uri?>" method="post" target="test_api_frame" name="$api_form" onsubmit="doMakeRequestExample()">
   			<div>
 	  			<p>当前测试uri:<?=$cur_uri?></p>
@@ -69,17 +70,19 @@
 	  				<?php FOREACH($cur_api->getRequestParamsDoc() AS $param): ?>
 	  					<?php IF($param->isCommon()):?>
 							<p>
-								<?php IF($param->getName() == 'version'):?>
-									<label><?=$param->getName()?>:<input type="text" value="<?=$cur_version?>" name="<?=$param->getName()?>" /></label>
-								<?php ELSEIF($param->getName() == 'timestamp'):?>
-									<label><?=$param->getName()?>:<input type="text" value="<?=date('Y-m-d H:i:s')?>" name="<?=$param->getName()?>" /></label>
-								<?php ELSEIF($param->getName() == 'app_key'):?>
-									<label><?=$param->getName()?>:<input type="text" value="<?=$_SESSION['APIAPPKEY']??$param->getExampleValue()?>" name="<?=$param->getName()?>" /></label>
-								<?php ELSEIF($param->getName() == 'api_name'):?>
-									<label><?=$param->getName()?>:<input type="text" value="<?=$cur_api ? $cur_api->getApiName() : ''?>" name="<?=$param->getName()?>" /></label>
-								<?php ELSE:?>
-									<label><?=$param->getName()?>:<input type="text" value="<?=$param->getExampleValue()?>" name="<?=$param->getName()?>" /></label>
-								<?php ENDIF;?>
+								<label title="<?=$param->getDesc()?>">
+									<?php IF($param->getName() == 'version'):?>
+										<?=$param->getName()?>:<input type="text" value="<?=$cur_version?>" name="<?=$param->getName()?>" />
+									<?php ELSEIF($param->getName() == 'timestamp'):?>
+										<?=$param->getName()?>:<input type="text" value="<?=date('Y-m-d H:i:s')?>" name="<?=$param->getName()?>" />
+									<?php ELSEIF($param->getName() == 'app_key'):?>
+										<?=$param->getName()?>:<input type="text" value="<?=$_SESSION['APIAPPKEY']??$param->getExampleValue()?>" name="<?=$param->getName()?>" />
+									<?php ELSEIF($param->getName() == 'api_name'):?>
+										<?=$param->getName()?>:<input type="text" value="<?=$cur_api ? $cur_api->getApiName() : ''?>" name="<?=$param->getName()?>" />
+									<?php ELSE:?>
+										<?=$param->getName()?>:<input type="text" value="<?=$param->getExampleValue()?>" name="<?=$param->getName()?>" />
+									<?php ENDIF;?>
+								</label>
 							</p>
 						<?php ENDIF;?>
 	  				<?php ENDFOREACH;?>

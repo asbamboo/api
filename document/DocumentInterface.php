@@ -15,6 +15,21 @@ use asbamboo\api\exception\NotFoundApiException;
 interface DocumentInterface
 {
     /**
+     * 设置文档的名称
+     *
+     * @param string $name
+     * @return DocumentInterface
+     */
+    public function setDocumentName(string $name) : DocumentInterface;
+
+    /**
+     * 返回文档的名称
+     *
+     * @return string
+     */
+    public function getDocumentName() : string;
+
+    /**
      * 设置当前需要获取那个版本的文档
      *
      * @param string $version

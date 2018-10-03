@@ -23,6 +23,13 @@ use asbamboo\api\view\Template;
 class Document implements DocumentInterface
 {
     /**
+     * 这份文档的名称
+     *
+     * @var string
+     */
+    private $name='';
+
+    /**
      *
      * @var ApiStoreInterface
      */
@@ -80,6 +87,27 @@ class Document implements DocumentInterface
             $this->Template = new Template();
             $this->Template->setPath(implode(DIRECTORY_SEPARATOR, [dirname(__DIR__), 'view', 'template', 'document', 'default.html']));
         }
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\DocumentInterface::setDocumentName()
+     */
+    public function setDocumentName(string $name) : DocumentInterface
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\document\DocumentInterface::getDocumentName()
+     */
+    public function getDocumentName() : string
+    {
+        return $this->name;
     }
 
     /**
@@ -182,14 +210,15 @@ class Document implements DocumentInterface
     public function response() : ResponseInterface
     {
         return new TextResponse($this->Template->render([
-            'all_versions'       => $this->ApiStore->findApiVersions(1),
-            'cur_version'        => $this->getVersion(),
-            'lists'              => $this->getApiLists(),
-            'detail'             => $this->getApiName() ? $this->getApiDetail() : null,
-            'request_example'    => $this->getRequestExample(),
-            'response_example'   => $this->getResponseExample(),
-            'uris'               => $this->getRequestUris(),
-            'test_tool_uri'      => $this->getTestToolUri(),
+            'all_versions'          => $this->ApiStore->findApiVersions(1),
+            'cur_version'           => $this->getVersion(),
+            'lists'                 => $this->getApiLists(),
+            'detail'                => $this->getApiName() ? $this->getApiDetail() : null,
+            'request_example'       => $this->getRequestExample(),
+            'response_example'      => $this->getResponseExample(),
+            'uris'                  => $this->getRequestUris(),
+            'test_tool_uri'         => $this->getTestToolUri(),
+            'document_name'         => $this->getDocumentName(),
         ]));
     }
 

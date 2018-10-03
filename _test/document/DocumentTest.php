@@ -24,6 +24,25 @@ class DocumentTest extends TestCase
         $this->ApiStore = new ApiStore($namespace, $dir);
     }
 
+    public function testSetDocumentName()
+    {
+        $Document       = new Document($this->ApiStore);
+        $this->assertInstanceOf(DocumentInterface::class, $Document->setDocumentName('document'));
+        return $Document;
+    }
+
+    /**
+     * @depends testSetDocumentName
+     * @param DocumentInterface $Document
+     * @return string
+     */
+    public function testGetDocumentName(DocumentInterface $Document)
+    {
+        $this->assertEquals('document', $Document->getDocumentName());
+        $Document       = new Document($this->ApiStore);
+        $this->assertEquals('', $Document->getDocumentName());
+    }
+
     public function testSetVersion()
     {
         $Document       = new Document($this->ApiStore);

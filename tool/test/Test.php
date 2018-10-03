@@ -97,12 +97,13 @@ class Test implements TestInterface
     public function response() : ResponseInterface
     {
         return new TextResponse($this->Template->render([
-            'all_versions'       => $this->getDocument()->getApiVersions(),
-            'cur_version'        => $this->getDocument()->getVersion(),
-            'api_lists'          => $this->getDocument()->getApiLists(),
-            'cur_api'            => $this->getDocument()->getApiName() ? $this->getDocument()->getApiDetail() : null,
-            'uris'               => $this->getDocument()->getRequestUris(),
-            'cur_uri'            => $this->getTestUri(),
+            'all_versions'      => $this->getDocument()->getApiVersions(),
+            'cur_version'       => $this->getDocument()->getVersion(),
+            'api_lists'         => $this->getDocument()->getApiLists(),
+            'cur_api'           => $this->getDocument()->getApiName() ? $this->getDocument()->getApiDetail() : null,
+            'uris'              => $this->getDocument()->getRequestUris(),
+            'cur_uri'           => $this->getTestUri(),
+            'test_name'         => $this->getDocument()->getDocumentName() . '调试',
         ]));
     }
 }
