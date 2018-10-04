@@ -165,7 +165,7 @@
             <div class="api-title">
                 <h1>
                 	<?=$detail->getLabelName()?><small><?=$detail->getApiName()?></small>
-                	<?php IF($test_tool_uri):?><a href="<?=$test_tool_uri?>">测试工具</a><?php ENDIF;?>
+                	<?php IF($test_tool_uri):?><a href="<?=$test_tool_uri?>"><small>测试工具</small></a><?php ENDIF;?>
                 </h1>
                 <?php IF($detail->isDelete()):?>
                     <p><b>注意:</b> 该接口已经废弃。</p>
