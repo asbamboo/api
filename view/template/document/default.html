@@ -4,35 +4,155 @@
     <meta charset="utf-8">
     <title>API 文档</title>
     <style>
+    	body{
+    		margin: 0;
+    		padding: 0;
+    		font-size: 14px;
+    		font-family: '宋体';
+    		font-color: #666;
+    	}
+    	ul{
+    		margin: 0;
+    		padding: 0;
+    	}
+    	ul li {
+    		list-style: none;
+    	}
+    	h1,h2,h3{
+    		padding: 0;
+    		margin: 0;
+    		font-weight: normal;
+    	}
+    	hr{
+    		margin: 2em 0;
+    	}
+        .clear {
+        	clear: both;
+        }
+        .top {
+        	background-color: #f8f9fa;
+        	padding: 1em;
+        	font-size: 16px;
+        	height: 60px;
+        	box-sizing: border-box;
+        	border-bottom: 1px solid #ccc;
+        }
+        .document-name {
+        	float: left;
+        }
+        .version-list {
+        	float: right;
+        	position: relative;
+        }
+        .version-list ul {
+        	position: absolute;
+        	display: none;
+        	right: 0;
+        	top: 20px;
+        	background: #f8f9fa;
+        	width: 100%;
+        	text-align: right;
+        }
+        .version-list ul li{
+			border: 1px solid #ccc;
+			padding: 5px;
+        }
+        .version-list:hover ul {
+        	display: block;
+        }
+
         .container { 
-            float:left;
+        	overflow: scroll; 
         }
+
         .left {
-            width: 30%;
+            width: 250px;
+            border-right: 1px solid #ccc;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            bottom: 0;
+            background: #f8f9fa;
         }
+        
+        .api-list {
+        	font-size: 16px;
+        }
+
+		.api-list li {
+			border-bottom: 1px solid #efefef;
+		}
+
+        .api-list li.current a {
+        	color: #4798e5;
+        }
+
+        .api-list li a {
+        	display: block;
+			width: 100%;
+			text-decoration: none;
+        	padding: 0.25em;
+        	color: #333;
+			padding-left: 20px;
+			box-sizing: border-box;
+        }
+        
+        .api-list li a:hover {
+			background: #eff1f3;
+        }
+        
+        .right {
+        	position: absolute;
+        	padding: 15px;
+        	top: 60px;
+        	left: 250px;
+        	right: 0;
+        	bottom: 0;
+        }
+        
+        .right table{
+        	table-layout: fixed;
+        	border-collapse: collapse;
+        	border: 1px solid #ccc;
+        	width: 100%;
+        }    
+
+        .right table td,
+        .right table th {
+        	border: 1px solid #ccc;
+        	padding: 5px 10px;
+        	word-break: break-all;
+        }    
+
     </style>
   </head>
   <body>
     <div class="top">
-    	<div><?=$document_name?></div>
+    	<div class="document-name"><?=$document_name?></div>
         <div class="version-list">
-            <?php FOREACH($all_versions AS $version):?>
-                <?php IF($cur_version == $version): ?>
-                    <a href="?version=<?=$version?>" class="current"><?=$version?></a>
-                <?php ELSE:?>
-                    <a href="?version=<?=$version?>"><?=$version?></a>
-                <?php ENDIF;?>
-            <?php ENDFOREACH;?>
+        	<span><b>版本:</b> <?=$cur_version?> </span>
+        	<?php IF(count($all_versions) > 1): ?>
+	        	<ul>
+		            <?php FOREACH($all_versions AS $version):?>
+		                <?php IF($cur_version != $version): ?>
+			        		<li><a href="?version=<?=$version?>"><?=$version?></a></li>
+		                <?php ENDIF;?>
+		            <?php ENDFOREACH;?>
+	            </ul>
+            <?php ENDIF;?>
         </div>
+        <div class="clear"></div>
     </div>
     <div class="left container">
         <div class="api-list">
             <ul>
                 <?php FOREACH($lists AS $api):?>
                     <?php IF($api->isDelete() == false):?>
-                        <li>
+                        <li <?=$detail && $detail->getApiName() == $api->getApiName() ? 'class="current"' : '' ?>>
                             <a href="?version=<?=$cur_version?>&api_name=<?=$api->getApiName()?>">
-                                <?=$api->getLabelName()?><br/><small><?=$api->getApiName()?></small>
+                            	<small><?=$api->getApiName()?></small>
+                            	<br/>
+                                <?=$api->getLabelName()?>
                             </a>
                         </li>
                     <?php ENDIF;?>
@@ -43,7 +163,10 @@
     <div class="right container">
         <?php IF($detail):?>
             <div class="api-title">
-                <h1><?=$detail->getLabelName()?><small><?=$detail->getApiName()?></small></h1>
+                <h1>
+                	<?=$detail->getLabelName()?><small><?=$detail->getApiName()?></small>
+                	<?php IF($test_tool_uri):?><a href="<?=$test_tool_uri?>"><small>测试工具</small></a><?php ENDIF;?>
+                </h1>
                 <?php IF($detail->isDelete()):?>
                     <p><b>注意:</b> 该接口已经废弃。</p>
                 <?php ELSE:?>
@@ -54,6 +177,10 @@
             	<div>
             		<h3>请求地址</h3>
             		<table>
+            			<colgroup>
+	                		<col width="200" />
+	                		<col />
+	                	</colgroup>
             			<?php FOREACH($uris AS $uri):?>
             				<tr>
             					<th><?=$uri->getDesc()?></th>
@@ -65,9 +192,18 @@
             <?php ENDIF;?>
             <?php IF($detail->getRequestParamsDoc()):?>
 	            <div class="api-request">
+	            	<hr/>
 	                <h3>公共请求参数</h3>
 	                <div>
 		                <table>
+		                	<colgroup>
+		                		<col width="100" />
+		                		<col width="100" />
+		                		<col />
+		                		<col width="100" />
+		                		<col />
+		                		<col />
+		                	</colgroup>
 		                    <tr>
 		                        <th>字段</th>
 		                        <th>类型</th>
@@ -83,16 +219,31 @@
 			                            <td><?=$ApiRequestParamDoc->getVar()?></td>
 			                            <td><?=$ApiRequestParamDoc->getRange()?></td>
 			                            <td><?=$ApiRequestParamDoc->getRequired()?></td>
-			                            <td><?=$ApiRequestParamDoc->getDefaultValue()?></td>
+			                            <td>
+			                            	<?php IF($ApiRequestParamDoc->getName() == 'api_name'):?>
+			                            		<?=$detail && $detail->getApiName() ? $detail->getApiName() : $ApiRequestParamDoc->getDefaultValue()?>
+			                            	<?php ELSE:?>
+			                            		<?=$ApiRequestParamDoc->getDefaultValue()?>
+			                            	<?php ENDIF;?>
+			                            </td>
 			                            <td><?=$ApiRequestParamDoc->getDesc()?></td>
 			                        </tr>
 		                        <?php ENDIF;?>
 		                    <?php ENDFOREACH;?>
 		                </table>
 	                </div>
+		           	<hr/>
 	                <h3>请求参数</h3>
 	                <div>
 	                    <table>
+		                	<colgroup>
+		                		<col width="100" />
+		                		<col width="100" />
+		                		<col />
+		                		<col width="100" />
+		                		<col />
+		                		<col />
+		                	</colgroup>
 	                        <tr>
 	                            <th>字段</th>
 	                            <th>类型</th>
@@ -115,6 +266,7 @@
 	                        <?php ENDFOREACH;?>
 	                    </table>
 	                </div>
+	            	<hr/>
 	            </div>
                 <div>
 					<h3>请求示例</h3>
@@ -123,58 +275,76 @@
             <?php ENDIF;?>
             
             
-            <?php IF($detail->getResponseParamsDoc()):?>
-                <div class="api-response">
-	                <h3>响应参数</h3>
-	                <table>
-	                   <tr>
-	                       <th>字段名</th>
-                           <th>类型</th>
-                           <th>取值范围</th>
-                           <th>说明</th>
-	                   </tr>
-	                   <tr>
-	                       <td>code</td>
-	                       <td>integer</td>
-	                       <td></td>
-	                       <td>状态码。成功时返回0。</td>
-	                   </tr>
-                       <tr>
-                           <td>message</td>
-                           <td>string</td>
-                           <td></td>
-                           <td>状态说明。成功时是"success", 错误时返回与code对应的错误信息</td>
-                       </tr>
-                       <tr>
-                           <td>data</td>
-                           <td>data</td>
-                           <td></td>
-                           <td>响应数据信息</td>
-                       </tr>
-	                </table>
-                    <h3>响应信息data具体字段</h3>
-                    <table>
-                       <tr>
-                           <th>字段名</th>
-                           <th>类型</th>
-                           <th>取值范围</th>
-                           <th>说明</th>
-                       </tr>
-                       <?php FOREACH($detail->getResponseParamsDoc() AS $ApiResponseParamDoc):?>
-	                       <tr>
-	                           <td><?=$ApiResponseParamDoc->getName()?></td>
-	                           <td><?=$ApiResponseParamDoc->getVar()?></td>
-	                           <td><?=$ApiResponseParamDoc->getRange()?></td>
-	                           <td><?=$ApiResponseParamDoc->getDesc()?></td>
-	                       </tr>
-                        <?php ENDFOREACH;?>
-                    </table>
-                </div>
-                <div>
-					<h3>响应示例</h3>
-					<code><?=$response_example?></code>                
-                </div>
-            <?php ENDIF;?>
+            <div class="api-response">
+				<hr/>
+				<h3>响应参数</h3>
+				<table>
+                	<colgroup>
+                		<col width="100" />
+                		<col width="100" />
+                		<col />
+                		<col />
+                	</colgroup>
+					<tr>
+						<th>字段名</th>
+						<th>类型</th>
+						<th>取值范围</th>
+						<th>说明</th>
+					</tr>
+					<tr>
+						<td>code</td>
+						<td>string</td>
+						<td></td>
+						<td>状态码。成功时返回'0'。</td>
+					</tr>
+					<tr>
+						<td>message</td>
+						<td>string</td>
+						<td></td>
+						<td>状态说明。成功时是"success", 错误时返回与code对应的错误信息</td>
+					</tr>
+		            <?php IF($detail->getResponseParamsDoc()):?>
+						<tr>
+							<td>data</td>
+							<td>data</td>
+							<td></td>
+							<td>响应数据信息 见响应信息data具体字段</td>
+						</tr>
+					<?php ENDIF;?>
+				</table>
+				<?php IF($detail->getResponseParamsDoc()):?>
+					<hr/>
+					<h3>响应信息data具体字段</h3>
+					<table>
+	                	<colgroup>
+	                		<col width="100" />
+	                		<col width="100" />
+	                		<col />
+	                		<col />
+	                	</colgroup>
+						<tr>
+							<th>字段名</th>
+							<th>类型</th>
+							<th>取值范围</th>
+							<th>说明</th>
+						</tr>
+						<?php FOREACH($detail->getResponseParamsDoc() AS $ApiResponseParamDoc):?>
+							<tr>
+								<td><?=$ApiResponseParamDoc->getName()?></td>
+								<td><?=$ApiResponseParamDoc->getVar()?></td>
+								<td><?=$ApiResponseParamDoc->getRange()?></td>
+								<td><?=$ApiResponseParamDoc->getDesc()?></td>
+							</tr>
+						<?php ENDFOREACH;?>
+					</table>
+				<?php ENDIF;?>
+			</div>
+        	<hr/>
+            <div>
+				<h3>响应示例</h3>
+				<code><?=$response_example?></code>                
+            </div>
+           	<hr/>
             <?php IF($test_tool_uri):?>
 	            <div><a href="<?=$test_tool_uri?>">测试工具</a></div>
             <?php ENDIF;?>

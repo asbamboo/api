@@ -4,66 +4,219 @@
     <meta charset="utf-8">
     <title>API 测试工具</title>
 	<style>
-        .container { 
-            float:left;
+		body{
+    		margin: 0;
+    		padding: 0;
+    		font-size: 14px;
+    		font-family: '宋体';
+    		font-color: #666;
+    	}
+    	
+    	ul{
+    		margin: 0;
+    		padding: 0;
+    	}
+    	
+    	ul li {
+    		list-style: none;
+    	}
+    	
+    	h1, h2, h3 {
+    		margin:0;
+    		padding: 0;
+    	}
+    	
+        .clear {
+        	clear: both;
         }
+        
+        .top {
+        	background-color: #f8f9fa;
+        	padding: 1em;
+        	font-size: 16px;
+        	height: 60px;
+        	box-sizing: border-box;
+        	border-bottom: 1px solid #ccc;
+        }
+        
+        .test-name {
+        	float: left;
+        }
+        
+        .test-uri-list {
+        	float: left;
+        	margin-left: 50px;
+        	position: relative;
+        	min-width: 350px;
+        }
+        
+        .version-list {
+        	float: right;
+        	position: relative;
+        }
+        
+        .test-uri-list ul,
+        .version-list ul {
+        	position: absolute;
+        	display: none;
+        	right: 0;
+        	top: 20px;
+        	background: #f8f9fa;
+        	width: 100%;
+        	text-align: right;
+        }
+        
+        .test-uri-list ul{
+        	text-align: center;        
+        }
+        
+        .test-uri-list ul li,
+        .version-list ul li{
+			border: 1px solid #ccc;
+			padding: 5px;
+        }
+        
+        .test-uri-list:hover ul,
+        .version-list:hover ul {
+        	display: block;
+        }
+        
+        .container { 
+        	overflow: scroll; 
+        }
+        
+		.api-list {
+            width: 250px;
+            border-right: 1px solid #ccc;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            bottom: 0;
+            background: #f8f9fa;
+        	font-size: 16px;
+        }
+
+		.api-list li {
+			border-bottom: 1px solid #efefef;
+		}
+
+        .api-list li.current a {
+        	color: #4798e5;
+        }
+
+        .api-list li a {
+        	display: block;
+			width: 100%;
+			text-decoration: none;
+        	padding: 0.25em;
+        	color: #333;
+			padding-left: 20px;
+			box-sizing: border-box;
+        }
+        
+        .api-list li a:hover {
+			background: #eff1f3;
+        }
+
         .left {
-            width: 50%;
+        	position: absolute;
+        	padding: 15px;
+        	top: 60px;
+        	left: 250px;
+        	right: 0;
+        	bottom: 0;
+        	width: calc((100% - 250px)/(100/40));
+        	box-sizing: border-box;
+        }
+        
+        .left label {
+        	width: 100%;
+        	max-width: 350px;
+			display: inline-block;
+        }
+
+        .left label input{
+        	float: right;
+        	width: 80%;
+        }
+                
+        .right {
+        	border-left: 1px solid #ccc;
+        	box-sizing: border-box;
+        	position: absolute;
+        	padding: 15px;
+        	top: 60px;
+        	left: calc((100% - 250px)/(100/40) + 250px);
+        	right: 0;
+        	bottom: 0;
+        }
+        
+        .right textarea {
+        	width: 100%;
+        	height: 10em;
+        }
+        
+        .right iframe {
+        	border: 1px solid #ccc;
+        	width: 100%;
+        	height: 10em;
+        	overflow:auto;
         }
     </style>
   </head>
   <body>
+	<div class="top">
+    	<div class="test-name"><?=$test_name?></div>
+		<?php IF($uris): ?>
+		<div class="test-uri-list">
+  			<span><b>API 请求 URI:</b> <?=$cur_uri?> </span>
+  			<ul>
+  				<?php FOREACH($uris AS $uri):?>
+  					<?php IF($cur_uri != $uri->getUri()):?>
+	  					<li>
+	                        <a href="?version=<?=$cur_version?>&api_name=<?=$cur_api ? $cur_api->getApiName() : ''?>&uri=<?=$uri->getUri()?>">
+	                            <?=$uri->getDesc()?><small><?=$uri->getUri()?></small>
+	                        </a>
+	                    </li>
+                    <?php ENDIF;?>
+  				<?php ENDFOREACH;?>
+  			</ul>
+ 		</div>
+		<?php ENDIF;?>
+        <div class="version-list">
+        	<span><b>版本:</b> <?=$cur_version?> </span>
+        	<?php IF(count($all_versions) > 1): ?>
+	        	<ul>
+		            <?php FOREACH($all_versions AS $version):?>
+		                <?php IF($cur_version != $version): ?>
+			        		<li><a href="?version=<?=$version?>"><?=$version?></a></li>
+		                <?php ENDIF;?>
+		            <?php ENDFOREACH;?>
+	            </ul>
+            <?php ENDIF;?>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="api-list container">
+		<div>
+  			<p>选择接口:</p>
+  			<ul>
+  				<?php FOREACH($api_lists AS $api):?>
+  					<?php IF($api->isDelete() == false):?>
+	  					<li>
+	                        <a href="?version=<?=$cur_version?>&api_name=<?=$api->getApiName()?>&uri=<?=$cur_uri?>">
+	                            <?=$api->getLabelName()?><small><?=$api->getApiName()?></small>
+	                        </a>
+	                    </li>
+                    <?php ENDIF;?>
+  				<?php ENDFOREACH;?>
+  			</ul> 
+  		</div>
+    </div>
   	<div class="left container">
-  		<div><?=$test_name?></div>
   		<form action="<?=$cur_uri?>" method="post" target="test_api_frame" name="$api_form" onsubmit="doMakeRequestExample()">
   			<div>
-	  			<p>当前测试uri:<?=$cur_uri?></p>
-	  			<div>
-	  				<p>选择测试uri:</p>
- 					<?php IF($uris): ?>
-		  				<ul>
-		  					<?php FOREACH($uris AS $uri):?>
-		  						<li>
-		                            <a href="?version=<?=$cur_version?>&api_name=<?=$cur_api ? $cur_api->getApiName() : ''?>&uri=<?=$uri->getUri()?>">
-		                                <?=$uri->getDesc()?><small><?=$uri->getUri()?></small>
-		                            </a>
-		                        </li>
-		  					<?php ENDFOREACH;?>
-		  				</ul>
-	  				<?php ENDIF;?>
-	  			</div>
-  			</div>
-  			<div>
-	  			<p>测试版本:<?=$cur_version?></p>
-	  			<div>
-	  				<p>选择版本:</p>
-	  				<ul>
-	  					<?php FOREACH($all_versions AS $version):?>
-	  						<li>
-	                            <a href="?version=<?=$version?>&uri=<?=$cur_uri?>">
-	                                <?=$version?>
-	                            </a>
-	                        </li>
-	  					<?php ENDFOREACH;?>
-	  				</ul> 
-	  			</div>
-  			</div>
-  			<div>
-	  			<p>接口名称:<?=$cur_api ? $cur_api->getLabelName() : ''?><small><?=$cur_api ? $cur_api->getApiName() : ''?></small></p>
-	  			<div>
-	  				<p>选择接口:</p>
-	  				<ul>
-	  					<?php FOREACH($api_lists AS $api):?>
-	  						<?php IF($api->isDelete() == false):?>
-		  						<li>
-		                            <a href="?version=<?=$cur_version?>&api_name=<?=$api->getApiName()?>&uri=<?=$cur_uri?>">
-		                                <?=$api->getLabelName()?><small><?=$api->getApiName()?></small>
-		                            </a>
-		                        </li>
-	                        <?php ENDIF;?>
-	  					<?php ENDFOREACH;?>
-	  				</ul> 
-	  			</div>
+	  			<h3>接口名称:<?=$cur_api ? $cur_api->getLabelName() : ''?><small><?=$cur_api ? $cur_api->getApiName() : ''?></small></h3>
   			</div>
   			<div>
   				<?php IF($cur_api):?>
@@ -111,7 +264,7 @@
 			  				<label>security:<input type="text" name="security" value="<?=$_SESSION['APISECURITY']??''?>" /></label>
 			  				<button type="button" onclick="doMakeSign()">生成</button>
 			  			</p>
-			  			<p><textarea name="sign_example" rows="5" cols="60"></textarea></p>
+			  			<p><textarea name="sign_example"></textarea></p>
 			  		</div>
 		  		<?php BREAK;ENDIF;?>
 			<?php ENDFOREACH;?>
@@ -122,7 +275,7 @@
   		</div>
   		<div>
   			<h2>响应结果</h2>
-	  		<iframe name="test_api_frame" style="width:500px; height: 400px;"></iframe>
+	  		<iframe name="test_api_frame"></iframe>
   		</div>
   	</div>
 	<script type="text/javascript">
