@@ -26,6 +26,10 @@
     		padding: 0;
     	}
     	
+    	.text-center {
+    		text-align: center;
+    	}
+    	
         .clear {
         	clear: both;
         }
@@ -129,15 +133,29 @@
         	box-sizing: border-box;
         }
         
-        .left label {
+        .left .input-group {
         	width: 100%;
-        	max-width: 350px;
-			display: inline-block;
         }
 
-        .left label input{
-        	float: right;
-        	width: 80%;
+        .left .input-group label {
+        	display: block;
+        	box-sizing: border-box;
+        	width: 25%;
+        	float: left;       
+        	text-align: right; 
+        	padding-right: 15px;
+        }
+        
+        .left .input-group input {
+        	display: block;
+        	box-sizing: border-box;
+        	width: 75%;
+        	left: right;
+        }
+        
+        .left button {
+        	float:right;
+        	margin-right: 50%;
         }
                 
         .right {
@@ -215,40 +233,40 @@
     </div>
   	<div class="left container">
   		<form action="<?=$cur_uri?>" method="post" target="test_api_frame" name="$api_form" onsubmit="doMakeRequestExample()">
-  			<div>
+  			<div class="text-center">
 	  			<h3>接口名称:<?=$cur_api ? $cur_api->getLabelName() : ''?><small><?=$cur_api ? $cur_api->getApiName() : ''?></small></h3>
   			</div>
   			<div>
   				<?php IF($cur_api):?>
 	  				<?php FOREACH($cur_api->getRequestParamsDoc() AS $param): ?>
 	  					<?php IF($param->isCommon()):?>
-							<p>
-								<label title="<?=$param->getDesc()?>">
-									<?php IF($param->getName() == 'version'):?>
-										<?=$param->getName()?>:<input type="text" value="<?=$cur_version?>" name="<?=$param->getName()?>" />
-									<?php ELSEIF($param->getName() == 'timestamp'):?>
-										<?=$param->getName()?>:<input type="text" value="<?=date('Y-m-d H:i:s')?>" name="<?=$param->getName()?>" />
-									<?php ELSEIF($param->getName() == 'app_key'):?>
-										<?=$param->getName()?>:<input type="text" value="<?=$_SESSION['APIAPPKEY']??$param->getExampleValue()?>" name="<?=$param->getName()?>" />
-									<?php ELSEIF($param->getName() == 'api_name'):?>
-										<?=$param->getName()?>:<input type="text" value="<?=$cur_api ? $cur_api->getApiName() : ''?>" name="<?=$param->getName()?>" />
-									<?php ELSE:?>
-										<?=$param->getName()?>:<input type="text" value="<?=$param->getExampleValue()?>" name="<?=$param->getName()?>" />
-									<?php ENDIF;?>
-								</label>
+							<p class="input-group">
+								<label title="<?=$param->getDesc()?>"><?=$param->getName()?>:</label>
+								<?php IF($param->getName() == 'version'):?>
+									<input type="text" value="<?=$cur_version?>" name="<?=$param->getName()?>" />
+								<?php ELSEIF($param->getName() == 'timestamp'):?>
+									<input type="text" value="<?=date('Y-m-d H:i:s')?>" name="<?=$param->getName()?>" />
+								<?php ELSEIF($param->getName() == 'app_key'):?>
+									<input type="text" value="<?=$_SESSION['APIAPPKEY']??$param->getExampleValue()?>" name="<?=$param->getName()?>" />
+								<?php ELSEIF($param->getName() == 'api_name'):?>
+									<input type="text" value="<?=$cur_api ? $cur_api->getApiName() : ''?>" name="<?=$param->getName()?>" />
+								<?php ELSE:?>
+									<input type="text" value="<?=$param->getExampleValue()?>" name="<?=$param->getName()?>" />
+								<?php ENDIF;?>
 							</p>
 						<?php ENDIF;?>
 	  				<?php ENDFOREACH;?>
 	  				<?php FOREACH($cur_api->getRequestParamsDoc() AS $param): ?>
 	  					<?php IF(!$param->isCommon()):?>
-							<p>
-								<label><?=$param->getName()?>:<input type="text" value="<?=$param->getExampleValue()?>" name="<?=$param->getName()?>" /></label>
+							<p class="input-group">
+								<label title="<?=$param->getDesc()?>"><?=$param->getName()?>:</label>
+								<input type="text" value="<?=$param->getExampleValue()?>" name="<?=$param->getName()?>" />
 							</p>
 						<?php ENDIF;?>
 	  				<?php ENDFOREACH;?>
   				<?php ENDIF;?>
   			</div>
-  			<div>
+  			<div class="clear">
   				<button type="submit">提交</button>
   			</div>
   		</form>
