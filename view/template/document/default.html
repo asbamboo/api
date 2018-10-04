@@ -94,6 +94,7 @@
         	padding: 0.25em;
         	color: #333;
 			padding-left: 20px;
+			box-sizing: border-box;
         }
         
         .api-list li a:hover {
@@ -200,7 +201,7 @@
 		                		<col width="100" />
 		                		<col />
 		                		<col width="100" />
-		                		<col width="100" />
+		                		<col />
 		                		<col />
 		                	</colgroup>
 		                    <tr>
@@ -218,7 +219,13 @@
 			                            <td><?=$ApiRequestParamDoc->getVar()?></td>
 			                            <td><?=$ApiRequestParamDoc->getRange()?></td>
 			                            <td><?=$ApiRequestParamDoc->getRequired()?></td>
-			                            <td><?=$ApiRequestParamDoc->getDefaultValue()?></td>
+			                            <td>
+			                            	<?php IF($ApiRequestParamDoc->getName() == 'api_name'):?>
+			                            		<?=$detail && $detail->getApiName() ? $detail->getApiName() : $ApiRequestParamDoc->getDefaultValue()?>
+			                            	<?php ELSE:?>
+			                            		<?=$ApiRequestParamDoc->getDefaultValue()?>
+			                            	<?php ENDIF;?>
+			                            </td>
 			                            <td><?=$ApiRequestParamDoc->getDesc()?></td>
 			                        </tr>
 		                        <?php ENDIF;?>
@@ -234,7 +241,7 @@
 		                		<col width="100" />
 		                		<col />
 		                		<col width="100" />
-		                		<col width="100" />
+		                		<col />
 		                		<col />
 		                	</colgroup>
 	                        <tr>
@@ -272,6 +279,12 @@
 				<hr/>
 				<h3>响应参数</h3>
 				<table>
+                	<colgroup>
+                		<col width="100" />
+                		<col width="100" />
+                		<col />
+                		<col />
+                	</colgroup>
 					<tr>
 						<th>字段名</th>
 						<th>类型</th>
@@ -303,6 +316,12 @@
 					<hr/>
 					<h3>响应信息data具体字段</h3>
 					<table>
+	                	<colgroup>
+	                		<col width="100" />
+	                		<col width="100" />
+	                		<col />
+	                		<col />
+	                	</colgroup>
 						<tr>
 							<th>字段名</th>
 							<th>类型</th>
