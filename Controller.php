@@ -154,6 +154,12 @@ class Controller implements ControllerInterface
          *
          * @var TestInterface $Test
          */
+        if(empty($uri) && $Document->getRequestUris()){
+            foreach($Document->getRequestUris() AS $ApiRequestUri){
+                $uri    = $ApiRequestUri->getUri();
+                break;
+            }
+        }
         $Test           = $this->Container->get(TestInterface::class);
         $Test->setDocument($Document);
         $Test->setTestUri($uri);
