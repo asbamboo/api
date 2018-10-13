@@ -19,4 +19,17 @@ interface ApiRequestParamsInterface
      * @param ServerRequest $Request
      */
     public function __construct(ServerRequest $Request);
+
+    /**
+     * api 名称
+     *
+     * @return string
+     */
+    public function getApiName() : string;
+    /**
+     * api 版本
+     *
+     * @return string
+     */
+    public function getVersion() : string;
 }
