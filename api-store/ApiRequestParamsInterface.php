@@ -26,7 +26,6 @@ interface ApiRequestParamsInterface
      * @return string
      */
     public function getApiName() : string;
-
     /**
      * api 版本
      *
