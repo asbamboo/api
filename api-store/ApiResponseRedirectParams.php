@@ -24,9 +24,9 @@ abstract class ApiResponseRedirectParams extends ApiResponseParams implements Ap
     {
         $data   = get_object_vars($this);
         if($this->getRedirectType() == self::REDIRECT_TYPE_FORM_SUBMIT){
-            $hiddenFields = '';
+            $hidden_fields  = '';
             foreach($data as $key => $value){
-                $hiddenFields .= sprintf(
+                $hidden_fields .= sprintf(
                     '<input type="hidden" name="%1$s" value="%2$s" />',
                     htmlentities($key, ENT_QUOTES, 'UTF-8', false),
                     htmlentities($value, ENT_QUOTES, 'UTF-8', false)
@@ -52,7 +52,7 @@ abstract class ApiResponseRedirectParams extends ApiResponseParams implements Ap
             $html = sprintf(
                 $html,
                 htmlentities($this->getRedirectUri(), ENT_QUOTES, 'UTF-8', false),
-                $hiddenFields
+                $hidden_fields
             );
             return new TextResponse($html);
         }
