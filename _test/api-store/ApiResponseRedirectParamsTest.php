@@ -32,6 +32,10 @@ class TestReturnTextClass extends ApiResponseRedirectParams
     {
         return 'http://test';
     }
+    protected function getRedirectResponseData() : array
+    {
+        return [];
+    }
 }
 
 class TestReturnRedirectClass extends ApiResponseRedirectParams
@@ -39,6 +43,11 @@ class TestReturnRedirectClass extends ApiResponseRedirectParams
     protected function getRedirectType() : string
     {
         return 'get';
+    }
+
+    protected function getRedirectResponseData() : array
+    {
+        return ['test'=>'test'];
     }
 
     protected function getRedirectUri() : string

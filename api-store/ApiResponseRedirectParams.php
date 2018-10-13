@@ -6,6 +6,9 @@ use asbamboo\http\RedirectResponse;
 use asbamboo\http\TextResponse;
 
 /**
+ * 由于显示的声明一个属性会出现到帮助文档中，所以目标跳转的数据如果需要绑定一个属性的话只能隐式声明一个属性
+ * 为了解决隐式声明的属性代码可读性问题。所以使用getRedirectResponseData方法。方法中明确隐式声明的属性值。
+ * 这里只是说明可以只用隐式声明一个属性的方式绑定目标跳转提交的数据，并不是一定要这么做
  *
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年10月13日
@@ -14,6 +17,22 @@ abstract class ApiResponseRedirectParams extends ApiResponseParams implements Ap
 {
     const REDIRECT_TYPE_FORM_SUBMIT = 'form_submit';
     const REDIRECT_TYPE_GET_REQUEST = 'get';
+
+
+    /**
+     * 跳转目标url
+     * - uri不能带有query string 和 fragment
+     *
+     * @return string
+     */
+    abstract protected function getRedirectUri() : string;
+
+    /**
+     * 返回像目标页面提交的数据
+     *
+     * @return array
+     */
+    abstract protected function getRedirectResponseData() :array;
 
     /**
      *
@@ -62,16 +81,6 @@ abstract class ApiResponseRedirectParams extends ApiResponseParams implements Ap
     }
 
     /**
-     * 返回像目标页面提交的数据
-     *
-     * @return array
-     */
-    protected function getRedirectResponseData()
-    {
-        return get_object_vars($this);
-    }
-
-    /**
      * 默认采用表单提交的方式实现页面跳转的响应
      *
      * @return string
@@ -80,12 +89,4 @@ abstract class ApiResponseRedirectParams extends ApiResponseParams implements Ap
     {
         return self::REDIRECT_TYPE_FORM_SUBMIT;
     }
-
-    /**
-     * 跳转目标url
-     * - uri不能带有query string 和 fragment
-     *
-     * @return string
-     */
-    abstract protected function getRedirectUri() : string;
 }
