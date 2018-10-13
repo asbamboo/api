@@ -22,7 +22,7 @@ abstract class ApiResponseRedirectParams extends ApiResponseParams implements Ap
      */
     public function makeRedirectResponse() : ResponseInterface
     {
-        $data   = get_object_vars($this);
+        $data   = $this->getRedirectResponseData();
         if($this->getRedirectType() == self::REDIRECT_TYPE_FORM_SUBMIT){
             $hidden_fields  = '';
             foreach($data as $key => $value){
@@ -59,6 +59,16 @@ abstract class ApiResponseRedirectParams extends ApiResponseParams implements Ap
         $query_string   = http_build_query($data);
         $target_uri     = $this->getRedirectUri() . '?' . $query_string;
         return new RedirectResponse($target_uri);
+    }
+
+    /**
+     * 返回像目标页面提交的数据
+     *
+     * @return array
+     */
+    protected function getRedirectResponseData()
+    {
+        return get_object_vars($this);
     }
 
     /**
