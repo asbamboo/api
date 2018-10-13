@@ -103,6 +103,10 @@ class ApiResponse implements ApiResponseInterface
      */
     public function makeResponse(?ApiResponseParamsInterface $Params = null): ResponseInterface
     {
+        if($Params instanceof ApiResponseRedirectParamsInterface){
+            return $Params->makeRedirectResponse();
+        }
+
         if($this->getFormat() != self::FORMAT_JSON){
             throw new NotSupportedFormatException(sprintf('目前Api接口响应格式只允许[%s]', self::FORMAT_JSON));
         }
