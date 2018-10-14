@@ -14,8 +14,7 @@ use asbamboo\event\EventScheduler;
 use asbamboo\api\apiStore\ApiRequestUrisInterface;
 use asbamboo\api\tool\test\TestInterface;
 use asbamboo\router\RouterInterface;
-use asbamboo\router\RouteInterface;
-use asbamboo\api\apiStore\ApiRequestUriInterface;
+use asbamboo\api\exception\Code;
 
 /**
  *
@@ -55,6 +54,17 @@ class Controller implements ControllerInterface
         try
         {
             /**
+             * 初始化 controller 返回响应需要的相关变量
+             *
+             * @var ApiResponse $ApiResponse
+             * @var ApiResponseParamsInterface|null $ApiResponseParams
+             */
+            $ApiResponse    = new ApiResponse();
+            $ApiResponse->setCode(Code::SYSTEM_EXCEPTION);
+            $ApiResponse->setMessage('系统异常');
+            $ApiResponseParams          = null;
+
+            /**
              * 事件触发 可以通过监听这个事件处理一些事情，比如:写入日志,校验请求参数等
              * 在api模块内，event-listener定义了几个监听器，如果你有需要的话，请使用EventScheduler::instance()->bind 方法绑定事件监听器
              */
@@ -63,7 +73,6 @@ class Controller implements ControllerInterface
             /**
              * @var \asbamboo\api\apiStore\ApiClassInterface $Api
              */
-            $ApiResponse                = new ApiResponse();
             $class                      = $this->ApiStore->findApiClass($version, $api_name);
             $Api                        = $this->Container->get($class);
             $ApiDoc                     = new ApiClassDoc($class, $this->ApiStore->getNamespace());
@@ -85,6 +94,7 @@ class Controller implements ControllerInterface
         }catch(ApiException $e){
             $ApiResponse->setCode($e->getCode());
             $ApiResponse->setMessage($e->getMessage());
+            $ApiResponseParams  = $e->getApiResponseParams();
         }finally{
             return $ApiResponse->makeResponse($ApiResponseParams);
         }
@@ -111,8 +121,8 @@ class Controller implements ControllerInterface
          * 测试工具uri
          *
          * @var RouterInterface $Router
-         * @var RouteInterface $Route
-         * @var ApiRequestUriInterface $ApiRequestUri
+         * @var \asbamboo\router\RouteInterface $Route
+         * @var \asbamboo\api\apiStore\ApiRequestUriInterface $ApiRequestUri
          */
         if($Document->getApiName() && $Document->getVersion()){
             $Router = $this->Container->get(RouterInterface::class);
