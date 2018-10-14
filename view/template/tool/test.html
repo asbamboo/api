@@ -247,11 +247,11 @@
 								<?php ELSEIF($param->getName() == 'timestamp'):?>
 									<input type="text" value="<?=date('Y-m-d H:i:s')?>" name="<?=$param->getName()?>" />
 								<?php ELSEIF($param->getName() == 'app_key'):?>
-									<input type="text" value="<?=$_SESSION['APIAPPKEY']??$param->getExampleValue()?>" name="<?=$param->getName()?>" />
+									<input type="text" value="<?=$_SESSION['APIAPPKEY']??htmlspecialchars($param->getExampleValue())?>" name="<?=$param->getName()?>" />
 								<?php ELSEIF($param->getName() == 'api_name'):?>
 									<input type="text" value="<?=$cur_api ? $cur_api->getApiName() : ''?>" name="<?=$param->getName()?>" />
 								<?php ELSE:?>
-									<input type="text" value="<?=$param->getExampleValue()?>" name="<?=$param->getName()?>" />
+									<input type="text" value="<?=htmlspecialchars($param->getExampleValue())?>" name="<?=$param->getName()?>" />
 								<?php ENDIF;?>
 							</p>
 						<?php ENDIF;?>
@@ -260,7 +260,7 @@
 	  					<?php IF(!$param->isCommon()):?>
 							<p class="input-group">
 								<label title="<?=$param->getDesc()?>"><?=$param->getName()?>:</label>
-								<input type="text" value="<?=$param->getExampleValue()?>" name="<?=$param->getName()?>" />
+								<input type="text" value="<?=htmlspecialchars($param->getExampleValue())?>" name="<?=$param->getName()?>" />
 							</p>
 						<?php ENDIF;?>
 	  				<?php ENDFOREACH;?>
