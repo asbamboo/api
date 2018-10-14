@@ -9,8 +9,8 @@ namespace asbamboo\api\exception;
  */
 class NotSetApiNameException extends ApiException
 {
-    public function __construct(string $message="没有配置api名称。", \Exception $previous = null)
+    public function __construct(string $message="没有配置api名称。", $code = Code::NOTSET_API_NAME, \Exception $previous = null)
     {
-        parent::__construct($message, Code::NOTSET_API_NAME, $previous);
+        parent::__construct($message, $code, $previous);
     }
 }

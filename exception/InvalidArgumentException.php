@@ -9,8 +9,8 @@ namespace asbamboo\api\exception;
  */
 class InvalidArgumentException extends ApiException
 {
-    public function __construct(string $message="参数无效。", \Exception $previous = null)
+    public function __construct(string $message="参数无效。", $code = Code::INVALID_ARGUMENT, \Exception $previous = null)
     {
-        parent::__construct($message, Code::INVALID_ARGUMENT, $previous);
+        parent::__construct($message, $code, $previous);
     }
 }

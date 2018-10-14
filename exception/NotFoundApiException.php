@@ -9,8 +9,8 @@ namespace asbamboo\api\exception;
  */
 class NotFoundApiException extends ApiException
 {
-    public function __construct(string $message="不好意思，你访问的API不存在。", \Exception $previous = null)
+    public function __construct(string $message="不好意思，你访问的API不存在。", $code = Code::NOT_FOUND, \Exception $previous = null)
     {
-        parent::__construct($message, Code::NOT_FOUND, $previous);
+        parent::__construct($message, $code, $previous);
     }
 }

@@ -9,8 +9,8 @@ namespace asbamboo\api\exception;
  */
 class InvalidSignException extends ApiException
 {
-    public function __construct(string $message="无效的签名。", \Exception $previous = null)
+    public function __construct(string $message="无效的签名。", $code = Code::INVALID_SIGN, \Exception $previous = null)
     {
-        parent::__construct($message, Code::INVALID_SIGN, $previous);
+        parent::__construct($message, $code, $previous);
     }
 }
