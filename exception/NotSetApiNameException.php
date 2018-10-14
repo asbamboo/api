@@ -7,7 +7,7 @@ namespace asbamboo\api\exception;
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月15日
  */
-class NotSetApiNameException extends \Exception
+class NotSetApiNameException extends ApiException
 {
     public function __construct(string $message="没有配置api名称。", \Exception $previous = null)
     {
