@@ -76,7 +76,11 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getExampleValue()
     {
-        return isset($this->docs['example']) ? current($this->docs['example']) : $this->getDefaultValue();
+        $example    = isset($this->docs['example']) ? current($this->docs['example']) : $this->getDefaultValue();
+        if(preg_match('@^eval:(.*)$@siU', $example, $match)){
+            $example    = eval('return ' . $match[1] . ';');
+        }
+        return $example;
     }
 
     /**
@@ -109,7 +113,14 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getRange() : string
     {
-        return isset($this->docs['range']) ? implode('\r\n', $this->docs['range']) : '';
+        if(isset($this->docs['range'])){
+            foreach((array) $this->docs['range'] AS $key => $range){
+                if(preg_match('@^eval:(.*)$@siU', $range, $match)){
+                    $this->docs['range'][$key]   = eval('return ' . $match[1] . ';');
+                }
+            }
+        }
+        return isset($this->docs['range']) ? implode("\r\n", $this->docs['range']) : '';
     }
 
     /**
@@ -120,7 +131,14 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getDesc() : string
     {
-        return isset($this->docs['desc']) ? implode('\r\n', $this->docs['desc']) : '';
+        if(isset($this->docs['desc'])){
+            foreach((array) $this->docs['desc'] AS $key => $desc){
+                if(preg_match('@^eval:(.*)$@siU', $desc, $match)){
+                    $this->docs['desc'][$key]   = eval('return ' . $match[1] . ';');
+                }
+            }
+        }
+        return isset($this->docs['desc']) ? implode("\r\n", $this->docs['desc']) : '';
     }
 
     /**
