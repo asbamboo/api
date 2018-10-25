@@ -42,7 +42,11 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
 
         if(preg_match_all('#@(\w+)(\s(.*))?[\r\n]#siU', $document, $matches)){
             foreach($matches[1] AS $index => $key){
-                $this->docs[$key][]   = trim($matches[3][$index]);
+                $value                = trim($matches[3][$index]);
+                if(preg_match('@^eval:(.*)$@siU', $value, $match)){
+                    $value    = eval('return ' . $match[1] . ';');
+                }
+                $this->docs[$key][]   = $value;
             }
         }
     }
@@ -76,11 +80,7 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getExampleValue()
     {
-        $example    = isset($this->docs['example']) ? current($this->docs['example']) : $this->getDefaultValue();
-        if(preg_match('@^eval:(.*)$@siU', $example, $match)){
-            $example    = eval('return ' . $match[1] . ';');
-        }
-        return $example;
+        return isset($this->docs['example']) ? current($this->docs['example']) : $this->getDefaultValue();
     }
 
     /**
@@ -113,13 +113,6 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getRange() : string
     {
-        if(isset($this->docs['range'])){
-            foreach((array) $this->docs['range'] AS $key => $range){
-                if(preg_match('@^eval:(.*)$@siU', $range, $match)){
-                    $this->docs['range'][$key]   = eval('return ' . $match[1] . ';');
-                }
-            }
-        }
         return isset($this->docs['range']) ? implode("\r\n", $this->docs['range']) : '';
     }
 
@@ -131,13 +124,6 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getDesc() : string
     {
-        if(isset($this->docs['desc'])){
-            foreach((array) $this->docs['desc'] AS $key => $desc){
-                if(preg_match('@^eval:(.*)$@siU', $desc, $match)){
-                    $this->docs['desc'][$key]   = eval('return ' . $match[1] . ';');
-                }
-            }
-        }
         return isset($this->docs['desc']) ? implode("\r\n", $this->docs['desc']) : '';
     }
 
