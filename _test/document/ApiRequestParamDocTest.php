@@ -4,59 +4,74 @@ namespace asbamboo\api\_test\apiStore\document;
 use PHPUnit\Framework\TestCase;
 use asbamboo\api\_test\fixtures\apiStore\v1_0_0\apiFixed\RequestParams;
 use asbamboo\api\document\ApiRequestParamDoc;
-use asbamboo\api\document\ApiRequestParamDocInterface;
 
 class ApiRequestParamDocTest extends TestCase
 {
-    /**
-     *
-     * @var ApiRequestParamDocInterface
-     */
-    public $ApiRequestParamDoc;
-
-    public function setUp()
-    {
-        $ReflectionProperty         = new \ReflectionProperty(RequestParams::class, 'version');
-        $this->ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
-    }
-
     public function testGetName()
     {
-        $this->assertEquals('version', $this->ApiRequestParamDoc->getName());
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('version', $ApiRequestParamDoc->getName());
     }
 
     public function testGetDefaultValue()
     {
-        $this->assertEquals('v1.0.0', $this->ApiRequestParamDoc->getDefaultValue());
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('v1.0.0', $ApiRequestParamDoc->getDefaultValue());
     }
 
     public function testGetExampleValue()
     {
-        $this->assertEquals('v1.0.0', $this->ApiRequestParamDoc->getExampleValue());
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('v1.0.0', $ApiRequestParamDoc->getExampleValue());
+
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'api_name');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('Api版本', $ApiRequestParamDoc->getExampleValue());
     }
 
     public function testGetVar()
     {
-        $this->assertEquals('文本', $this->ApiRequestParamDoc->getVar());
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('文本', $ApiRequestParamDoc->getVar());
     }
 
     public function testGetRequired()
     {
-        $this->assertEquals('非必须', $this->ApiRequestParamDoc->getRequired());
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('非必须', $ApiRequestParamDoc->getRequired());
     }
 
     public function testGetRange()
     {
-        $this->assertEquals('v1.0.0-v2.0.0', $this->ApiRequestParamDoc->getRange());
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('v1.0.0-v2.0.0', $ApiRequestParamDoc->getRange());
+
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'api_name');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('api版本', $ApiRequestParamDoc->getRange());
     }
 
     public function testGetDesc()
     {
-        $this->assertEquals('api版本', $this->ApiRequestParamDoc->getDesc());
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('api版本', $ApiRequestParamDoc->getDesc());
+
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'api_name');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertEquals('api版本', $ApiRequestParamDoc->getDesc());
     }
 
     public function isCommon()
     {
-        $this->assertTrue($this->ApiRequestParamDoc->isCommon());
+        $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
+        $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
+        $this->assertTrue($ApiRequestParamDoc->isCommon());
     }
 }

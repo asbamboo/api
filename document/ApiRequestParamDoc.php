@@ -42,7 +42,11 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
 
         if(preg_match_all('#@(\w+)(\s(.*))?[\r\n]#siU', $document, $matches)){
             foreach($matches[1] AS $index => $key){
-                $this->docs[$key][]   = trim($matches[3][$index]);
+                $value                = trim($matches[3][$index]);
+                if(preg_match('@^eval:(.*)$@siU', $value, $match)){
+                    $value    = eval('return ' . $match[1] . ';');
+                }
+                $this->docs[$key][]   = $value;
             }
         }
     }
@@ -109,7 +113,7 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getRange() : string
     {
-        return isset($this->docs['range']) ? implode('\r\n', $this->docs['range']) : '';
+        return isset($this->docs['range']) ? implode("\r\n", $this->docs['range']) : '';
     }
 
     /**
@@ -120,7 +124,7 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getDesc() : string
     {
-        return isset($this->docs['desc']) ? implode('\r\n', $this->docs['desc']) : '';
+        return isset($this->docs['desc']) ? implode("\r\n", $this->docs['desc']) : '';
     }
 
     /**

@@ -14,6 +14,9 @@ class RequestParams extends ApiRequestParamsAbstract
     /**
      * api名称
      *
+     * @example eval:ucfirst("api版本")
+     * @range eval:"api版本"
+     * @desc eval:"api版本"
      * @var string
      */
     private $api_name;
