@@ -95,9 +95,9 @@ class Controller implements ControllerInterface
             $ApiResponse->setCode($e->getCode());
             $ApiResponse->setMessage($e->getMessage());
             $ApiResponseParams  = $e->getApiResponseParams();
-        }finally{
-            return $ApiResponse->makeResponse($ApiResponseParams);
         }
+
+        return $ApiResponse->makeResponse($ApiResponseParams);
     }
 
     /**
