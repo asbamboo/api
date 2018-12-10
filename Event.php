@@ -23,4 +23,12 @@ final class Event
      * @var string
      */
     const API_PRE_EXEC      = 'api.pre.exec';
+
+
+    /**
+     * 该事件在接口程序执行后，即将返回响应值时触发
+     *
+     * @var string
+     */
+    const API_AFTER_EXEC      = 'api.after.exec';
 }
