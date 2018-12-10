@@ -98,7 +98,7 @@ class Controller implements ControllerInterface
         }
 
         $response   = $ApiResponse->makeResponse($ApiResponseParams);
-        EventScheduler::instance()->trigger(Event::API_AFTER_EXEC, [$Api, $ApiRequestParams, $this->Request, $response]);
+        EventScheduler::instance()->trigger(Event::API_AFTER_EXEC, [$Api, $ApiResponseParams, $ApiResponse, $response]);
         return $response;
     }
 
