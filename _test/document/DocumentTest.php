@@ -7,6 +7,7 @@ use asbamboo\api\document\Document;
 use asbamboo\http\TextResponse;
 use asbamboo\api\document\DocumentInterface;
 use asbamboo\api\apiStore\ApiRequestUris;
+use asbamboo\api\apiStore\ApiResponseSigned;
 
 /**
  *
@@ -120,8 +121,9 @@ class DocumentTest extends TestCase
     public function testResponse()
     {
         $Document       = new Document($this->ApiStore);
+        $Document->setResponseBuilder(new ApiResponseSigned());
         $Document->setApiName('api-fixed');
-//         var_dump($Document->response()->getBody()->getContents());exit;
+        var_dump($Document->response()->getBody()->getContents());exit;
         $this->assertInstanceOf(TextResponse::class, $Document->response());
     }
 }

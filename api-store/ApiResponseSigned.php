@@ -50,7 +50,7 @@ class ApiResponseSigned extends ApiResponse
         $response_data['random']    = uniqid();
         $sign_data                  = $response_data;
         $app_security               = '';
-        if($SignChecker = $this->Container->get(SignCheckerAbstract::class)){
+        if($this->Container && $SignChecker = $this->Container->get(SignCheckerAbstract::class)){
             $app_security   = $SignChecker->getAppSecurity();
         }
         if(array_key_exists('data', $sign_data)){
