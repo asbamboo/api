@@ -124,6 +124,7 @@ class Controller implements ControllerInterface
         $Document->setApiName($api_name);
         $Document->setVersion($version);
         $Document->setRequestUris($this->Container->get(ApiRequestUrisInterface::class));
+        $Document->setResponseBuilder($this->ApiResponse);
 
         /**
          * 测试工具uri
