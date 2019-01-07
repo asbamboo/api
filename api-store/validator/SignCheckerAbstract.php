@@ -105,5 +105,5 @@ abstract class SignCheckerAbstract implements CheckerInterface
      *
      * @return string
      */
-    abstract protected function getAppSecurity() : string;
+    abstract public function getAppSecurity() : string;
 }

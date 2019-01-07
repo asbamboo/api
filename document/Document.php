@@ -12,6 +12,8 @@ use asbamboo\api\apiStore\ApiClassInterface;
 use asbamboo\api\apiStore\ApiRequestUrisInterface;
 use asbamboo\api\view\TemplateInterface;
 use asbamboo\api\view\Template;
+use asbamboo\api\apiStore\ApiResponseInterface;
+use asbamboo\api\apiStore\ApiResponseSigned;
 
 /**
  * 文档生成器
@@ -73,6 +75,13 @@ class Document implements DocumentInterface
      * @var array
      */
     private $api_lists;
+
+    /**
+     * 响应值构建器
+     *
+     * @var ApiResponseInterface
+     */
+    private $ResponseBuilder;
 
     /**
      *
@@ -214,6 +223,7 @@ class Document implements DocumentInterface
             'cur_version'           => $this->getVersion(),
             'lists'                 => $this->getApiLists(),
             'detail'                => $this->getApiName() ? $this->getApiDetail() : null,
+            'is_sign_response'      => $this->getResponseBuilder() instanceof ApiResponseSigned,
             'request_example'       => $this->getRequestExample(),
             'response_example'      => $this->getResponseExample(),
             'uris'                  => $this->getRequestUris(),
@@ -371,12 +381,35 @@ class Document implements DocumentInterface
                     }
                 };
             }
-            $ApiResponse   = new ApiResponse();
+            $ApiResponse    = $this->getResponseBuilder();
             $ApiResponse->setCode(Constant::RESPONSE_STATUS_OK);
             $ApiResponse->setMessage(Constant::RESPONSE_MESSAGE_OK);
-            $Response   = $ApiResponse->makeResponse($ResponseParams);
-            $example    = $Response->getBody()->getContents();
+            $Response       = $ApiResponse->makeResponse($ResponseParams);
+            $example        = $Response->getBody()->getContents();
         }
         return $example;
+    }
+
+    /**
+     * 设置响应值构建器
+     *
+     * @param ApiResponseInterface $ApiResponse
+     */
+    public function setResponseBuilder(ApiResponseInterface $ApiResponse)
+    {
+        $this->ResponseBuilder  = $ApiResponse;
+    }
+
+    /**
+     * 返回响应值构建器
+     *
+     * @return ApiResponseInterface
+     */
+    public function getResponseBuilder() : ApiResponseInterface
+    {
+        if(!$this->ResponseBuilder){
+            $this->ResponseBuilder  = new ApiResponse();
+        }
+        return $this->ResponseBuilder;
     }
 }

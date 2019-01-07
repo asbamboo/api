@@ -15,6 +15,7 @@ use asbamboo\api\apiStore\ApiRequestUrisInterface;
 use asbamboo\api\tool\test\TestInterface;
 use asbamboo\router\RouterInterface;
 use asbamboo\api\exception\Code;
+use asbamboo\api\apiStore\ApiResponseInterface;
 
 /**
  *
@@ -29,19 +30,24 @@ class Controller implements ControllerInterface
      *
      * @var ApiStoreInterface
      * @var ServerRequestInterface $Request
+     * @var ApiResponseInterface $Request
      */
-    private $ApiStore; private $Request;
+    private $ApiStore; private $Request; private $ApiResponse;
 
     /**
      *
      * @param ApiStoreInterface $ApiStore
-     * @param ContainerInterface $Container
      * @param ServerRequestInterface $Request
+     * @param ApiResponseInterface $ApiResponse
      */
-    public function __construct(ApiStoreInterface $ApiStore, ServerRequestInterface $Request)
+    public function __construct(ApiStoreInterface $ApiStore, ServerRequestInterface $Request, ApiResponseInterface $ApiResponse = null)
     {
-        $this->ApiStore     = $ApiStore;
-        $this->Request      = $Request;
+        $this->ApiStore         = $ApiStore;
+        $this->Request          = $Request;
+        $this->ApiResponse      = $ApiResponse;
+        if(is_null($this->ApiResponse)){
+            $this->ApiResponse  = new ApiResponse();
+        }
     }
 
     /**
@@ -59,7 +65,7 @@ class Controller implements ControllerInterface
              * @var ApiResponse $ApiResponse
              * @var ApiResponseParamsInterface|null $ApiResponseParams
              */
-            $ApiResponse    = new ApiResponse();
+            $ApiResponse    = $this->ApiResponse;
             $ApiResponse->setCode(Code::SYSTEM_EXCEPTION);
             $ApiResponse->setMessage('系统异常');
             $ApiResponseParams          = null;
@@ -161,6 +167,7 @@ class Controller implements ControllerInterface
         $Document->setApiName($api_name);
         $Document->setVersion($version);
         $Document->setRequestUris($this->Container->get(ApiRequestUrisInterface::class));
+        $Document->setResponseBuilder($this->ApiResponse);
 
         /**
          *
