@@ -37,7 +37,7 @@ class SignCheckerByFixedSecurity extends SignCheckerAbstract
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\validator\SignCheckerAbstract::getAppSecurity()
      */
-    protected function getAppSecurity() : string
+    public function getAppSecurity() : string
     {
         return $this->app_security;
     }

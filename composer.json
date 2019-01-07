@@ -18,6 +18,5 @@
             "email": "licy2013@aliyun.com"
         }
     ],
-    "prefer-stable": true,
     "minimum-stability": "dev"
 }

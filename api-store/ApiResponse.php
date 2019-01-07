@@ -9,6 +9,9 @@ use asbamboo\http\JsonResponse;
  * api响应信息
  *  - 暂时这个类只支持json格式
  *
+ * 返回值示例:
+ *  {"code":"0","message":"success","data":{"id":"test_id"}}
+ *
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月26日
  */

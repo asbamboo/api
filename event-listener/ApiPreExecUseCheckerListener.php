@@ -7,7 +7,7 @@ use asbamboo\api\apiStore\ApiClassInterface;
 use asbamboo\api\apiStore\ApiRequestParamsInterface;
 
 /**
- * 监听器. 蒋婷api.controller事件，做一些验证处理。
+ * 监听器 监听api.controller事件，做一些验证处理。
  *
  * @author 李春寅 <licy2013@aliyun.com>
  * @since 2018年9月30日

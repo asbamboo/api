@@ -4,6 +4,7 @@ namespace asbamboo\api\document;
 use asbamboo\http\ResponseInterface;
 use asbamboo\api\apiStore\ApiRequestUrisInterface;
 use asbamboo\api\exception\NotFoundApiException;
+use asbamboo\api\apiStore\ApiResponseInterface;
 
 /**
  * 文档生成器
@@ -111,6 +112,20 @@ interface DocumentInterface
      * @return ApiRequestUrisInterface|NULL
      */
     public function getRequestUris() : ?ApiRequestUrisInterface;
+
+    /**
+     * 设置响应值构建器
+     *
+     * @param ApiResponseInterface $ApiResponse
+     */
+    public function setResponseBuilder(ApiResponseInterface $ApiResponse);
+
+    /**
+     * 返回响应值构建器
+     *
+     * @return ApiResponseInterface
+     */
+    public function getResponseBuilder() : ApiResponseInterface;
 
     /**
      * 响应结果

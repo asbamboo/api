@@ -303,6 +303,20 @@
 						<td></td>
 						<td>状态说明。成功时是"success", 错误时返回与code对应的错误信息</td>
 					</tr>
+					<?php IF($is_sign_response == true):?>
+						<tr>
+							<td>random</td>
+							<td>string</td>
+							<td></td>
+							<td>随机字符串，对数据没有意义，目的在于每次响应值都会产生不一样的签名值。</td>
+						</tr>
+						<tr>
+							<td>sign</td>
+							<td>string</td>
+							<td></td>
+							<td>签名值，通过签名算法生成。</td>
+						</tr>			
+					<?php ENDIF;?>
 		            <?php IF($detail->getResponseParamsDoc()):?>
 						<tr>
 							<td>data</td>
