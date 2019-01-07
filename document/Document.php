@@ -395,9 +395,10 @@ class Document implements DocumentInterface
      *
      * @param ApiResponseInterface $ApiResponse
      */
-    public function setResponseBuilder(ApiResponseInterface $ApiResponse)
+    public function setResponseBuilder(ApiResponseInterface $ApiResponse) : DocumentInterface
     {
         $this->ResponseBuilder  = $ApiResponse;
+        return $this;
     }
 
     /**
