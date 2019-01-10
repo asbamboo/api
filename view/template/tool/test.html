@@ -241,7 +241,7 @@
 	  				<?php FOREACH($cur_api->getRequestParamsDoc() AS $param): ?>
 	  					<?php IF($param->isCommon()):?>
 							<p class="input-group">
-								<label title="<?=$param->getDesc()?>"><?=$param->getName()?>:</label>
+								<label title="<?=htmlspecialchars($param->getDesc())?>"><?=$param->getName()?>:</label>
 								<?php IF($param->getName() == 'version'):?>
 									<input type="text" value="<?=$cur_version?>" name="<?=$param->getName()?>" />
 								<?php ELSEIF($param->getName() == 'timestamp'):?>
@@ -259,7 +259,7 @@
 	  				<?php FOREACH($cur_api->getRequestParamsDoc() AS $param): ?>
 	  					<?php IF(!$param->isCommon()):?>
 							<p class="input-group">
-								<label title="<?=$param->getDesc()?>"><?=$param->getName()?>:</label>
+								<label title="<?=htmlspecialchars($param->getDesc())?>"><?=$param->getName()?>:</label>
 								<input type="text" value="<?=htmlspecialchars($param->getExampleValue())?>" name="<?=$param->getName()?>" />
 							</p>
 						<?php ENDIF;?>
