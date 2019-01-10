@@ -61,7 +61,8 @@ class ApiRequestParamDocTest extends TestCase
     {
         $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'version');
         $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);
-        $this->assertEquals('api版本', $ApiRequestParamDoc->getDesc());
+        $this->assertContains('<a href="http://version_url">api版本</a>', $ApiRequestParamDoc->getDesc());
+        $this->assertContains('<a href="http://version_url">http://version_url</a>', $ApiRequestParamDoc->getDesc());
 
         $ReflectionProperty   = new \ReflectionProperty(RequestParams::class, 'api_name');
         $ApiRequestParamDoc   = new ApiRequestParamDoc($ReflectionProperty);

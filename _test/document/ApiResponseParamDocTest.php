@@ -35,8 +35,10 @@ class ApiResponseParamDocTest extends TestCase
         $this->assertEquals('0~255', $this->ApiResponseParamDoc->getRange());
     }
 
-    public function getDesc()
+    public function testGetDesc()
     {
-        $this->assertEquals('测试ID', $this->ApiResponseParamDoc->getDesc());
+        $this->assertContains('测试ID', $this->ApiResponseParamDoc->getDesc());
+        $this->assertContains('<a href="link">link</a>', $this->ApiResponseParamDoc->getDesc());
+        $this->assertContains('<a href="link">test</a>', $this->ApiResponseParamDoc->getDesc());
     }
 }

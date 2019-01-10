@@ -942,12 +942,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d44f2448e6ce249107c00aebcdfb239e61663d12"
+                "reference": "99bd534a8ab88573d4280a9082924aaec5719dad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d44f2448e6ce249107c00aebcdfb239e61663d12",
-                "reference": "d44f2448e6ce249107c00aebcdfb239e61663d12",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/99bd534a8ab88573d4280a9082924aaec5719dad",
+                "reference": "99bd534a8ab88573d4280a9082924aaec5719dad",
                 "shasum": ""
             },
             "require": {
@@ -1018,7 +1018,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-01-05T05:51:47+00:00"
+            "time": "2019-01-09T13:03:41+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1191,12 +1191,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f"
+                "reference": "585fbcdeff7fb58c4b7596d8b2d6e97aef510611"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/febd209a219cea7b56ad799b30ebbea34b71eb8f",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/585fbcdeff7fb58c4b7596d8b2d6e97aef510611",
+                "reference": "585fbcdeff7fb58c4b7596d8b2d6e97aef510611",
                 "shasum": ""
             },
             "require": {
@@ -1233,7 +1233,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-11-25T09:31:21+00:00"
+            "time": "2019-01-07T17:23:37+00:00"
         },
         {
             "name": "sebastian/exporter",

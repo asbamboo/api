@@ -25,7 +25,8 @@ class RequestParams extends ApiRequestParamsAbstract
      * @range v1.0.0-v2.0.0
      * @required 非必须
      * @common
-     * @desc api版本
+     * @desc [url:http://version_url]api版本[/url]
+     * @desc [url]http://version_url[/url]
      * @var 文本
      */
     private $version   = 'v1.0.0';
