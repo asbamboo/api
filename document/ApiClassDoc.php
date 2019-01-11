@@ -155,7 +155,7 @@ class ApiClassDoc implements ApiClassDocInterface
      */
     public function getLabelName() : string
     {
-        return isset($this->docs['name']) ? implode('\r\n', $this->docs['name']) : '';
+        return isset($this->docs['name']) ? implode("\r\n", $this->docs['name']) : '';
     }
 
     /**
@@ -165,7 +165,7 @@ class ApiClassDoc implements ApiClassDocInterface
      */
     public function getDesc() : string
     {
-        return isset($this->docs['desc']) ? implode('\r\n', $this->docs['desc']) : '';
+        return isset($this->docs['desc']) ? implode("\r\n", $this->docs['desc']) : '';
     }
 
     /**
