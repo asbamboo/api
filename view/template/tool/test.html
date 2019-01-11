@@ -281,7 +281,7 @@
 			  			<p>填写完左侧请求的参数后,输入与左侧app key对应的security</p>
 			  			<p>
 			  				<label>security:<input type="text" name="security" value="<?=$_SESSION['APISECURITY']??''?>" /></label>
-			  				<button type="button" onclick="doMakeSign()">生成</button>
+			  				<input type="button" onclick="doMakeSign()" value="生成" />
 			  			</p>
 			  			<p><textarea name="sign_example"></textarea></p>
 			  		</div>
