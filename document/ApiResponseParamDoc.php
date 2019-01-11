@@ -46,6 +46,13 @@ class ApiResponseParamDoc implements ApiResponseParamDocInterface
                 if(preg_match('@^eval:(.*)$@siU', $value, $match)){
                     $value    = eval('return ' . $match[1] . ';');
                 }
+                $value  = preg_replace([
+                    '#\[\s*url\s*\]([^\[]*)\[\s*/url\s*\]#siU',
+                    '#\[\s*url\s*:\s*([^\]]*)\s*\]([^\[]*)\[\s*/url\s*\]#siU',
+                ], [
+                    '<a href="$1">$1</a>',
+                    '<a href="$1">$2</a>',
+                ], $value);
                 $this->docs[$key][]   = $value;
             }
         }

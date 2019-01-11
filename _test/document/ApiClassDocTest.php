@@ -32,7 +32,9 @@ class ApiClassDocTest extends TestCase
     public function testGetLabelName()
     {
         $ApiClassDoc = new ApiClassDoc(ApiFixed::class, 'asbamboo\\api\\_test\\fixtures\\apiStore\\');
-        $this->assertEquals('测试固定不变的接口', $ApiClassDoc->getLabelName());
+        $this->assertContains('测试固定不变的接口', $ApiClassDoc->getLabelName());
+        $this->assertContains('<a href="http://link">http://link</a>', $ApiClassDoc->getLabelName());
+        $this->assertContains('<a href="http://link">link test</a>', $ApiClassDoc->getLabelName());
         $ApiClassDoc = new ApiClassDoc(ApiUpdate::class, 'asbamboo\\api\\_test\\fixtures\\apiStore\\');
         $this->assertEquals('', $ApiClassDoc->getLabelName());
     }

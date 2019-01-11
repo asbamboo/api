@@ -153,9 +153,9 @@
         	left: right;
         }
         
-        .left button {
+        .left .button {
         	float:right;
-        	margin-right: 50%;
+        	margin: 2px;
         }
                 
         .right {
@@ -232,7 +232,7 @@
   		</div>
     </div>
   	<div class="left container">
-  		<form action="<?=$cur_uri?>" method="post" target="test_api_frame" name="$api_form" onsubmit="doMakeRequestExample()">
+  		<form action="<?=$cur_uri?>" method="post" target="test_api_frame" name="$api_form">
   			<div class="text-center">
 	  			<h3>接口名称:<?=$cur_api ? $cur_api->getLabelName() : ''?><small><?=$cur_api ? $cur_api->getApiName() : ''?></small></h3>
   			</div>
@@ -241,7 +241,7 @@
 	  				<?php FOREACH($cur_api->getRequestParamsDoc() AS $param): ?>
 	  					<?php IF($param->isCommon()):?>
 							<p class="input-group">
-								<label title="<?=$param->getDesc()?>"><?=$param->getName()?>:</label>
+								<label title="<?=htmlspecialchars($param->getDesc())?>"><?=$param->getName()?>:</label>
 								<?php IF($param->getName() == 'version'):?>
 									<input type="text" value="<?=$cur_version?>" name="<?=$param->getName()?>" />
 								<?php ELSEIF($param->getName() == 'timestamp'):?>
@@ -259,7 +259,7 @@
 	  				<?php FOREACH($cur_api->getRequestParamsDoc() AS $param): ?>
 	  					<?php IF(!$param->isCommon()):?>
 							<p class="input-group">
-								<label title="<?=$param->getDesc()?>"><?=$param->getName()?>:</label>
+								<label title="<?=htmlspecialchars($param->getDesc())?>"><?=$param->getName()?>:</label>
 								<input type="text" value="<?=htmlspecialchars($param->getExampleValue())?>" name="<?=$param->getName()?>" />
 							</p>
 						<?php ENDIF;?>
@@ -267,7 +267,8 @@
   				<?php ENDIF;?>
   			</div>
   			<div class="clear">
-  				<button type="submit">提交</button>
+  				<input type="button" class="button" onclick="doMakeRequestExample()" value="生成请求示例" />
+  				<input type="submit" class="button" value="生成响应结果" />
   			</div>
   		</form>
   	</div>
@@ -280,7 +281,7 @@
 			  			<p>填写完左侧请求的参数后,输入与左侧app key对应的security</p>
 			  			<p>
 			  				<label>security:<input type="text" name="security" value="<?=$_SESSION['APISECURITY']??''?>" /></label>
-			  				<button type="button" onclick="doMakeSign()">生成</button>
+			  				<input type="button" onclick="doMakeSign()" value="生成" />
 			  			</p>
 			  			<p><textarea name="sign_example"></textarea></p>
 			  		</div>

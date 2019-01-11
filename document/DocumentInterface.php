@@ -118,7 +118,7 @@ interface DocumentInterface
      *
      * @param ApiResponseInterface $ApiResponse
      */
-    public function setResponseBuilder(ApiResponseInterface $ApiResponse);
+    public function setResponseBuilder(ApiResponseInterface $ApiResponse) : DocumentInterface;
 
     /**
      * 返回响应值构建器
