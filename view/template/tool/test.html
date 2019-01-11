@@ -153,9 +153,9 @@
         	left: right;
         }
         
-        .left button {
+        .left .button {
         	float:right;
-        	margin-right: 50%;
+        	margin: 2px;
         }
                 
         .right {
@@ -232,7 +232,7 @@
   		</div>
     </div>
   	<div class="left container">
-  		<form action="<?=$cur_uri?>" method="post" target="test_api_frame" name="$api_form" onsubmit="doMakeRequestExample()">
+  		<form action="<?=$cur_uri?>" method="post" target="test_api_frame" name="$api_form">
   			<div class="text-center">
 	  			<h3>接口名称:<?=$cur_api ? $cur_api->getLabelName() : ''?><small><?=$cur_api ? $cur_api->getApiName() : ''?></small></h3>
   			</div>
@@ -267,7 +267,8 @@
   				<?php ENDIF;?>
   			</div>
   			<div class="clear">
-  				<button type="submit">提交</button>
+  				<input type="button" class="button" onclick="doMakeRequestExample()" value="生成请求示例" />
+  				<input type="submit" class="button" value="生成响应结果" />
   			</div>
   		</form>
   	</div>
