@@ -336,6 +336,9 @@
 			var inputs	= $api_form.getElementsByTagName('input');
 			exstr = exstr + " curl " + $api_form.action + " \\\r\n";
 			for(var i = 0; i < inputs.length; i++){
+				if(!inputs[i].name){
+					continue;
+				}
 				exstr	= exstr + " -d " + inputs[i].name + "=" + encodeURI(inputs[i].value);
 				if(i < inputs.length - 1){
 					exstr	= exstr + " \\\r\n";
