@@ -101,7 +101,7 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getVar() : string
     {
-        return isset($this->docs['var']) ? implode('\r\n', $this->docs['var']) : '';
+        return isset($this->docs['var']) ? implode("\r\n", $this->docs['var']) : '';
     }
 
     /**
@@ -112,7 +112,7 @@ class ApiRequestParamDoc implements ApiRequestParamDocInterface
      */
     public function getRequired() : string
     {
-        return isset($this->docs['required']) ? implode('\r\n', $this->docs['required']) : '';
+        return isset($this->docs['required']) ? implode("\r\n", $this->docs['required']) : '';
     }
 
     /**

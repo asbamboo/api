@@ -88,7 +88,7 @@ class ApiResponseParamDoc implements ApiResponseParamDocInterface
      */
     public function getVar() : string
     {
-        return isset($this->docs['var']) ? implode('\r\n', $this->docs['var']) : '';
+        return isset($this->docs['var']) ? implode("\r\n", $this->docs['var']) : '';
     }
 
     /**
@@ -99,7 +99,7 @@ class ApiResponseParamDoc implements ApiResponseParamDocInterface
      */
     public function getRange() : string
     {
-        return isset($this->docs['range']) ? implode('\r\n', $this->docs['range']) : '';
+        return isset($this->docs['range']) ? implode("\r\n", $this->docs['range']) : '';
     }
 
     /**
@@ -110,6 +110,6 @@ class ApiResponseParamDoc implements ApiResponseParamDocInterface
      */
     public function getDesc() : string
     {
-        return isset($this->docs['desc']) ? implode('\r\n', $this->docs['desc']) : '';
+        return isset($this->docs['desc']) ? implode("\r\n", $this->docs['desc']) : '';
     }
 }
