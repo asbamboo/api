@@ -41,8 +41,9 @@ class ApiRequestParamsDoc implements ApiRequestParamsDocInterface
         $this->api_request_params_class = $api_request_params_class;
         $Reflection                     = new \ReflectionClass($api_request_params_class);
         foreach($Reflection->getProperties() AS $Property){
-            $this->api_request_param_docs[] = new ApiRequestParamDoc($Property);
+            $this->api_request_param_docs[$Property->getName()] = new ApiRequestParamDoc($Property);
         }
+        ksort($this->api_request_param_docs);
     }
 
     /**
