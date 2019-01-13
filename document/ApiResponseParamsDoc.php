@@ -38,8 +38,9 @@ class ApiResponseParamsDoc implements ApiResponseParamsDocInterface
         $this->api_response_params_class    = $api_response_params_class;
         $Reflection                         = new \ReflectionClass($api_response_params_class);
         foreach($Reflection->getProperties() AS $Property){
-            $this->api_response_param_docs[] = new ApiResponseParamDoc($Property);
+            $this->api_response_param_docs[$Property->getName()] = new ApiResponseParamDoc($Property);
         }
+        ksort($this->api_response_param_docs);
     }
 
     /**
