@@ -49,7 +49,7 @@ class ApiResponseSigned extends ApiResponse
          * @var SignCheckerAbstract $SignChecker
          */
         $response_data['random']    = uniqid();
-        $sign_data                  = $response_data;
+        $sorted_data                = $response_data;
         $app_security               = '';
 
         if($this->Container && ($SignChecker = $this->Container->get(SignCheckerAbstract::class))){
@@ -60,12 +60,26 @@ class ApiResponseSigned extends ApiResponse
             }
         }
 
-        if(array_key_exists('data', $sign_data)){
-            ksort($sign_data['data']);
+        if(array_key_exists('data', $sorted_data)){
+            ksort($sorted_data['data']);
         }
-        ksort($sign_data);
-        $sign_data                  = json_encode($sign_data);
-        $response_data['sign']      = strtoupper(md5($app_security . $sign_data));
+        ksort($sorted_data);
+
+
+        $sign_data  = [];
+        foreach($sorted_data AS $key => $value){
+            if($key == 'data'){
+                $data_info = [];
+                foreach($value AS $k => $v){
+                    $data_info[]  = $k . $v;
+                }
+                $value  = implode("", $data_info);
+            }
+            $sign_data[]    = $key . $value;
+        }
+
+        $sign_string                = implode("", $sign_data) . $app_security;
+        $response_data['sign']      = strtoupper(md5($sign_string));
         return new JsonResponse($response_data);
     }
 }
