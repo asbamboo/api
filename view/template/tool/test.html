@@ -187,7 +187,8 @@
     	<div class="test-name"><?=$test_name?></div>
 		<?php IF($uris): ?>
 		<div class="test-uri-list">
-  			<span><b>API 请求 URI:</b> <?=$cur_uri?> </span>
+  			<span><b>API 请求 URI:</b> <?=$cur_uri?></span>
+  			<b><a href="<?=$cur_uri?>" target="_blank">请检查此链接是否受信任</a></b>
   			<ul>
   				<?php FOREACH($uris AS $uri):?>
   					<?php IF($cur_uri != $uri->getUri()):?>

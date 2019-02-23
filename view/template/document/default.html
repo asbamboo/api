@@ -188,6 +188,10 @@
             				<tr>
             			<?php ENDFOREACH;?>
             		</table>
+                    <p>
+                        <b>说明:</b>
+                        如果请求地址(url)，浏览器不信任它，使用测试工具时，无法正常获取响应结果。所以，请先在浏览器受访问一下请求地址(url)，确定请求地址(url)是受信任的。
+                    </p>
             	</div>
             <?php ENDIF;?>
             <?php IF($detail->getRequestParamsDoc()):?>
