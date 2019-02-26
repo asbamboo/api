@@ -85,6 +85,12 @@ class Document implements DocumentInterface
 
     /**
      *
+     * @var ApiResponseMetadatasDocInterface
+     */
+    private $ApiResponseMetadatasDoc;
+
+    /**
+     *
      * @param ApiStoreInterface $ApiStore
      * @param string $template
      */
@@ -219,16 +225,16 @@ class Document implements DocumentInterface
     public function response() : ResponseInterface
     {
         return new TextResponse($this->Template->render([
-            'all_versions'          => $this->ApiStore->findApiVersions(1),
-            'cur_version'           => $this->getVersion(),
-            'lists'                 => $this->getApiLists(),
-            'detail'                => $this->getApiName() ? $this->getApiDetail() : null,
-            'is_sign_response'      => $this->getResponseBuilder() instanceof ApiResponseSigned,
-            'request_example'       => $this->getRequestExample(),
-            'response_example'      => $this->getResponseExample(),
-            'uris'                  => $this->getRequestUris(),
-            'test_tool_uri'         => $this->getTestToolUri(),
-            'document_name'         => $this->getDocumentName(),
+            'all_versions'              => $this->ApiStore->findApiVersions(1),
+            'cur_version'               => $this->getVersion(),
+            'lists'                     => $this->getApiLists(),
+            'detail'                    => $this->getApiName() ? $this->getApiDetail() : null,
+            'response_metadatas_doc'    => $this->getApiName() ? $this->getResponseMetadatasDoc() : null,
+            'request_example'           => $this->getRequestExample(),
+            'response_example'          => $this->getResponseExample(),
+            'uris'                      => $this->getRequestUris(),
+            'test_tool_uri'             => $this->getTestToolUri(),
+            'document_name'             => $this->getDocumentName(),
         ]));
     }
 
@@ -382,12 +388,25 @@ class Document implements DocumentInterface
                 };
             }
             $ApiResponse    = $this->getResponseBuilder();
-            $ApiResponse->setCode(Constant::RESPONSE_STATUS_OK);
-            $ApiResponse->setMessage(Constant::RESPONSE_MESSAGE_OK);
+            $ApiResponse->getApiResponseMetadata()->setCode(Constant::RESPONSE_STATUS_OK);
+            $ApiResponse->getApiResponseMetadata()->setMessage(Constant::RESPONSE_MESSAGE_OK);
             $Response       = $ApiResponse->makeResponse($ResponseParams);
             $example        = $Response->getBody()->getContents();
         }
         return $example;
+    }
+
+    /**
+     *
+     * @return \asbamboo\api\document\ApiResponseMetadatasDocInterface
+     */
+    public function getResponseMetadatasDoc() : ApiResponseMetadatasDocInterface
+    {
+        if(! $this->ApiResponseMetadatasDoc){
+            $ApiResponseMetadata            = $this->getResponseBuilder()->getApiResponseMetadata();
+            $this->ApiResponseMetadatasDoc  = new ApiResponseMetadatasDoc(get_class($ApiResponseMetadata));
+        }
+        return $this->ApiResponseMetadatasDoc;
     }
 
     /**

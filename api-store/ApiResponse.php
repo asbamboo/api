@@ -3,7 +3,6 @@ namespace asbamboo\api\apiStore;
 
 use asbamboo\http\ResponseInterface;
 use asbamboo\api\exception\NotSupportedFormatException;
-use asbamboo\http\JsonResponse;
 
 /**
  * api响应信息
@@ -25,15 +24,21 @@ class ApiResponse implements ApiResponseInterface
 
     /**
      *
-     * @var int|string
+     * @var ApiResponseMetadataInterface
      */
-    private $code;
+    private $ApiResponseMetadata;
 
     /**
      *
-     * @var string
+     * @param ApiResponseMetadataInterface $ApiResponseMetadata
      */
-    private $message;
+    public function __construct(ApiResponseMetadataInterface $ApiResponseMetadata = null)
+    {
+        if($ApiResponseMetadata == null){
+            $ApiResponseMetadata    = new ApiResponseMetadata();
+        }
+        $this->ApiResponseMetadata  = $ApiResponseMetadata;
+    }
 
     /**
      *
@@ -59,45 +64,12 @@ class ApiResponse implements ApiResponseInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseInterface::setCode()
+     * @see \asbamboo\api\apiStore\ApiResponseInterface::getApiResponseMetadata()
      */
-    public function setCode($code) : ApiResponseInterface
+    public function getApiResponseMetadata() : ApiResponseMetadataInterface
     {
-        $this->code   = $code;
-        return $this;
+        return $this->ApiResponseMetadata;
     }
-
-    /**
-     *
-     * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseInterface::getCode()
-     */
-    public function getCode()/* : string|int*/
-    {
-        return $this->code;
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseInterface::setMessage()
-     */
-    public function setMessage(string $message) : ApiResponseInterface
-    {
-        $this->message  = $message;
-        return $this;
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseInterface::getMessage()
-     */
-    public function getMessage() : string
-    {
-        return $this->message;
-    }
-
 
     /**
      *
@@ -113,12 +85,10 @@ class ApiResponse implements ApiResponseInterface
         if($this->getFormat() != self::FORMAT_JSON){
             throw new NotSupportedFormatException(sprintf('目前Api接口响应格式只允许[%s]', self::FORMAT_JSON));
         }
-        $response_data              = [];
-        $response_data['code']      = $this->getCode();
-        $response_data['message']   = $this->getMessage();
-        if(!empty($Params) && !empty($Params->getObjectVars())){
-            $response_data['data']   = $Params->getObjectVars();
+
+        if($Params instanceof ApiResponseParamsInterface){
+            $this->getApiResponseMetadata()->setData($Params);
         }
-        return new JsonResponse($response_data);
+        return $this->getApiResponseMetadata()->toJsonResponse();
     }
 }

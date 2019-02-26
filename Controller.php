@@ -3,19 +3,18 @@ namespace asbamboo\api;
 
 use asbamboo\http\ResponseInterface;
 use asbamboo\api\apiStore\ApiStoreInterface;
-use asbamboo\di\ContainerInterface;
 use asbamboo\http\ServerRequestInterface;
 use asbamboo\api\exception\ApiException;
-use asbamboo\di\ContainerAwareTrait;
 use asbamboo\api\apiStore\ApiResponse;
 use asbamboo\api\document\DocumentInterface;
 use asbamboo\api\document\ApiClassDoc;
 use asbamboo\event\EventScheduler;
 use asbamboo\api\apiStore\ApiRequestUrisInterface;
 use asbamboo\api\tool\test\TestInterface;
-use asbamboo\router\RouterInterface;
 use asbamboo\api\exception\Code;
 use asbamboo\api\apiStore\ApiResponseInterface;
+use Psr\Container\ContainerInterface;
+use asbamboo\router\RouterInterface;
 
 /**
  *
@@ -24,7 +23,20 @@ use asbamboo\api\apiStore\ApiResponseInterface;
  */
 class Controller implements ControllerInterface
 {
-    use ContainerAwareTrait;
+    /**
+     * @var ContainerInterface
+     */
+    protected $Container;
+
+    /**
+     * 在 [asbamboo\di\Container($serviceMapping)]时会被调用
+     *
+     * @param ContainerInterface $Container
+     */
+    public function setContainer(ContainerInterface $Container) : void
+    {
+        $this->Container = $Container;
+    }
 
     /**
      *
@@ -65,9 +77,9 @@ class Controller implements ControllerInterface
              * @var ApiResponse $ApiResponse
              * @var ApiResponseParamsInterface|null $ApiResponseParams
              */
-            $ApiResponse    = $this->ApiResponse;
-            $ApiResponse->setCode(Code::SYSTEM_EXCEPTION);
-            $ApiResponse->setMessage('系统异常');
+            $ApiResponse                = $this->ApiResponse;
+            $ApiResponse->getApiResponseMetadata()->setCode(Code::SYSTEM_EXCEPTION);
+            $ApiResponse->getApiResponseMetadata()->setMessage('系统异常');
             $ApiResponseParams          = null;
 
             /**
@@ -95,11 +107,11 @@ class Controller implements ControllerInterface
             if(method_exists($ApiRequestParams, 'getFormat')){
                 $ApiResponse->setFormat($ApiRequestParams->getFormat());
             }
-            $ApiResponse->setCode(Constant::RESPONSE_STATUS_OK);
-            $ApiResponse->setMessage(Constant::RESPONSE_MESSAGE_OK);
+            $ApiResponse->getApiResponseMetadata()->setCode(Constant::RESPONSE_STATUS_OK);
+            $ApiResponse->getApiResponseMetadata()->setMessage(Constant::RESPONSE_MESSAGE_OK);
         }catch(ApiException $e){
-            $ApiResponse->setCode($e->getCode());
-            $ApiResponse->setMessage($e->getMessage());
+            $ApiResponse->getApiResponseMetadata()->setCode($e->getCode());
+            $ApiResponse->getApiResponseMetadata()->setMessage($e->getMessage());
             $ApiResponseParams  = $e->getApiResponseParams();
         }
 
