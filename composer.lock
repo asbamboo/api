@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bdbce48c48d776a4d1505a39eca9999",
+    "content-hash": "e42ca422bef9f29c70b89972aa990665",
     "packages": [
         {
             "name": "asbamboo/autoload",
@@ -173,6 +173,44 @@
                 "issues": "https://github.com/asbamboo/http/issues"
             },
             "time": "2019-01-21T06:19:38+00:00"
+        },
+        {
+            "name": "asbamboo/router",
+            "version": "1.0.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/asbamboo/router.git",
+                "reference": "49f00718cada717d8dbb9433c47ddf817f6ea2f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/asbamboo/router/zipball/49f00718cada717d8dbb9433c47ddf817f6ea2f0",
+                "reference": "49f00718cada717d8dbb9433c47ddf817f6ea2f0",
+                "shasum": ""
+            },
+            "require": {
+                "asbamboo/autoload": "^1.0",
+                "asbamboo/http": "^1.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.2"
+            },
+            "type": "library",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "李春寅",
+                    "email": "licy2013@aliyun.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/asbamboo/router/tree/1.0.1",
+                "issues": "https://github.com/asbamboo/router/issues"
+            },
+            "time": "2018-10-03T13:04:37+00:00"
         },
         {
             "name": "psr/container",

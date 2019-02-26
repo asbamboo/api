@@ -7,6 +7,7 @@
         "asbamboo/autoload": "^1.0",
         "asbamboo/http": "^1.0",
         "asbamboo/event": "^1.0",
+        "asbamboo/router": "^1.0",
         "psr/container": "^1.0"
     },
     "require-dev": {
