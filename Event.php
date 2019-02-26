@@ -30,5 +30,5 @@ final class Event
      *
      * @var string
      */
-    const API_AFTER_EXEC      = 'api.after.exec';
+    const API_AFTER_EXEC        = 'api.after.exec';
 }

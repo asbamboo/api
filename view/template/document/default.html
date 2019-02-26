@@ -295,40 +295,14 @@
 						<th>取值范围</th>
 						<th>说明</th>
 					</tr>
-					<tr>
-						<td>code</td>
-						<td>string</td>
-						<td></td>
-						<td>状态码。成功时返回'0'。</td>
-					</tr>
-					<tr>
-						<td>message</td>
-						<td>string</td>
-						<td></td>
-						<td>状态说明。成功时是"success", 错误时返回与code对应的错误信息</td>
-					</tr>
-					<?php IF($is_sign_response == true):?>
+					<?php FOREACH($response_metadatas_doc AS $ApiResponseMetadataDoc):?>
 						<tr>
-							<td>random</td>
-							<td>string</td>
-							<td></td>
-							<td>随机字符串，对数据没有意义，目的在于每次响应值都会产生不一样的签名值。</td>
+							<td><?=$ApiResponseMetadataDoc->getName();?></td>
+							<td><?=$ApiResponseMetadataDoc->getVar();?></td>
+							<td><?=$ApiResponseMetadataDoc->getRange();?></td>
+							<td><?=$ApiResponseMetadataDoc->getDesc();?></td>
 						</tr>
-						<tr>
-							<td>sign</td>
-							<td>string</td>
-							<td></td>
-							<td>签名值，通过签名算法生成。</td>
-						</tr>			
-					<?php ENDIF;?>
-		            <?php IF($detail->getResponseParamsDoc()):?>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td></td>
-							<td>响应数据信息 见响应信息data具体字段</td>
-						</tr>
-					<?php ENDIF;?>
+					<?php ENDFOREACH;?>
 				</table>
 				<?php IF($detail->getResponseParamsDoc()):?>
 					<hr/>

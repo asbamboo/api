@@ -77,9 +77,9 @@ class Controller implements ControllerInterface
              * @var ApiResponse $ApiResponse
              * @var ApiResponseParamsInterface|null $ApiResponseParams
              */
-            $ApiResponse    = $this->ApiResponse;
-            $ApiResponse->setCode(Code::SYSTEM_EXCEPTION);
-            $ApiResponse->setMessage('系统异常');
+            $ApiResponse                = $this->ApiResponse;
+            $ApiResponse->getApiResponseMetadata()->setCode(Code::SYSTEM_EXCEPTION);
+            $ApiResponse->getApiResponseMetadata()->setMessage('系统异常');
             $ApiResponseParams          = null;
 
             /**
@@ -107,11 +107,11 @@ class Controller implements ControllerInterface
             if(method_exists($ApiRequestParams, 'getFormat')){
                 $ApiResponse->setFormat($ApiRequestParams->getFormat());
             }
-            $ApiResponse->setCode(Constant::RESPONSE_STATUS_OK);
-            $ApiResponse->setMessage(Constant::RESPONSE_MESSAGE_OK);
+            $ApiResponse->getApiResponseMetadata()->setCode(Constant::RESPONSE_STATUS_OK);
+            $ApiResponse->getApiResponseMetadata()->setMessage(Constant::RESPONSE_MESSAGE_OK);
         }catch(ApiException $e){
-            $ApiResponse->setCode($e->getCode());
-            $ApiResponse->setMessage($e->getMessage());
+            $ApiResponse->getApiResponseMetadata()->setCode($e->getCode());
+            $ApiResponse->getApiResponseMetadata()->setMessage($e->getMessage());
             $ApiResponseParams  = $e->getApiResponseParams();
         }
 
