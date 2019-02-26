@@ -4,9 +4,8 @@ namespace asbamboo\api\apiStore;
 use asbamboo\http\ResponseInterface;
 use asbamboo\api\exception\NotSupportedFormatException;
 use asbamboo\http\JsonResponse;
-use asbamboo\di\ContainerAwareTrait;
+use Psr\Container\ContainerInterface;
 use asbamboo\api\apiStore\validator\SignCheckerAbstract;
-use asbamboo\openpay\apiStore\exception\AppKeyInvalidException;
 
 /**
  * api响应信息(加签名的)
@@ -20,8 +19,19 @@ use asbamboo\openpay\apiStore\exception\AppKeyInvalidException;
  */
 class ApiResponseSigned extends ApiResponse
 {
-    use ContainerAwareTrait;
+    /**
+     * @var ContainerInterface
+     */
+    protected $Container;
 
+    /**
+     *
+     * @param ContainerInterface $Container
+     */
+    public function setContainer(ContainerInterface $Container) : void
+    {
+        $this->Container = $Container;
+    }
     /**
      *
      * {@inheritDoc}
@@ -55,7 +65,7 @@ class ApiResponseSigned extends ApiResponse
         if($this->Container && ($SignChecker = $this->Container->get(SignCheckerAbstract::class))){
             try{
                 $app_security   = $SignChecker->getAppSecurity();
-            }catch(AppKeyInvalidException $e){
+            }catch(\RuntimeException $e){
                 // 当用于请求的appkey不正确时，应该要得到AppKeyInvalidException
             }
         }
