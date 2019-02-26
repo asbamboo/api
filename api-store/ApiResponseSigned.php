@@ -65,7 +65,7 @@ class ApiResponseSigned extends ApiResponse
         if($this->Container && ($SignChecker = $this->Container->get(SignCheckerAbstract::class))){
             try{
                 $app_security   = $SignChecker->getAppSecurity();
-            }catch(\RuntimeException $e){
+            }catch(\Exception $e){
                 // 当用于请求的appkey不正确时，应该要得到AppKeyInvalidException
             }
         }
