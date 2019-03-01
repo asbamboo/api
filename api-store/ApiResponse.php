@@ -2,7 +2,10 @@
 namespace asbamboo\api\apiStore;
 
 use asbamboo\http\ResponseInterface;
-use asbamboo\api\exception\NotSupportedFormatException;
+use asbamboo\api\apiStore\responseFormatter\ResponseFormatManagerInterface;
+use asbamboo\api\apiStore\responseFormatter\ResponseFormatManager;
+use asbamboo\api\apiStore\responseFormatter\JsonResponseFormatter;
+use asbamboo\api\apiStore\responseFormatter\ResponseFormatterInterface;
 
 /**
  * api响应信息
@@ -21,6 +24,12 @@ class ApiResponse implements ApiResponseInterface
      * @var string
      */
     private $format = self::FORMAT_JSON;
+
+    /**
+     *
+     * @var ResponseFormatManagerInterface
+     */
+    private $ResponseFormatManager;
 
     /**
      *
@@ -72,6 +81,33 @@ class ApiResponse implements ApiResponseInterface
     }
 
     /**
+     * 自定义设置响应值格式化处理器
+     *
+     * @param ResponseFormatManagerInterface $ResponseFormatManager
+     * @return ApiResponseInterface
+     */
+    public function setResponseFormatManager(ResponseFormatManagerInterface $ResponseFormatManager) : ApiResponseInterface
+    {
+        $this->ResponseFormatManager    = $ResponseFormatManager;
+        return $this;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \asbamboo\api\apiStore\ApiResponseInterface::getResponseFormatManager()
+     */
+    public function getResponseFormatManager() : ResponseFormatManagerInterface
+    {
+        if(is_null($this->ResponseFormatManager)){
+            $ResponseFormatManager  = new ResponseFormatManager();
+            $ResponseFormatManager->appendHandler(self::FORMAT_JSON, JsonResponseFormatter::class);
+            $this->setResponseFormatManager($ResponseFormatManager);
+        }
+        return $this->ResponseFormatManager;
+    }
+
+    /**
      *
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\ApiResponseInterface::makeResponse()
@@ -82,13 +118,11 @@ class ApiResponse implements ApiResponseInterface
             return $Params->makeRedirectResponse();
         }
 
-        if($this->getFormat() != self::FORMAT_JSON){
-            throw new NotSupportedFormatException(sprintf('目前Api接口响应格式只允许[%s]', self::FORMAT_JSON));
-        }
-
         if($Params instanceof ApiResponseParamsInterface){
             $this->getApiResponseMetadata()->setData($Params);
         }
-        return $this->getApiResponseMetadata()->toJsonResponse();
+
+        $ResponseFormatter  = $this->getResponseFormatManager()->getHandler(self::FORMAT_JSON);
+        return $ResponseFormatter->handle($this->getApiResponseMetadata());
     }
 }

@@ -2,6 +2,7 @@
 namespace asbamboo\api\apiStore;
 
 use asbamboo\http\ResponseInterface;
+use asbamboo\api\apiStore\responseFormatter\ResponseFormatManagerInterface;
 
 /**
  * 一个api请求接口的响应结果
@@ -30,6 +31,12 @@ interface ApiResponseInterface
      * @return string
      */
     public function getFormat() : string;
+
+    /**
+     *
+     * @return ResponseFormatManagerInterface
+     */
+    public function getResponseFormatManager() : ResponseFormatManagerInterface;
 
     /**
      * 返回表示响应值元信息的类的实例
