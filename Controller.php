@@ -150,7 +150,11 @@ class Controller implements ControllerInterface
             $routes = $Router->getRouteCollection()->getIterator();
             foreach($routes AS $Route){
                 if($Route->getCallback() == [$this, 'testTool']){
+                    $request_path   = $this->Request->getUri()->getPath();
                     $test_tool_uri  = $Route->getPath();
+                    if($test_tool_uri != $request_path){
+                        $test_tool_uri  = $request_path . $test_tool_uri;
+                    }
                     foreach($Document->getRequestUris() AS $ApiRequestUri){
                         $test_tool_uri  .= '?uri=' . urlencode($ApiRequestUri->getUri()) . '&version=' . $Document->getVersion() . '&api_name=' . $Document->getApiName();
                         break;
