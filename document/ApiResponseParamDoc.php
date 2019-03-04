@@ -8,12 +8,7 @@ namespace asbamboo\api\document;
  */
 class ApiResponseParamDoc implements ApiResponseParamDocInterface
 {
-    /**
-     * 注释信息组成的数组
-     *
-     * @var array
-     */
-    private $docs;
+    use DocCommentParseTrait;
 
     /**
      *
@@ -29,33 +24,6 @@ class ApiResponseParamDoc implements ApiResponseParamDocInterface
     {
         $this->ReflectionProperty = $ReflectionProperty;
         $this->parseDoc($ReflectionProperty);
-    }
-
-    /**
-     * 解析注释行
-     *
-     * @param string $api_class ApiClassInterface的一个类
-     */
-    private function parseDoc(\ReflectionProperty $ReflectionProperty) : void
-    {
-        $document   = $ReflectionProperty->getDocComment();
-
-        if(preg_match_all('#@(\w+)(\s(.*))?[\r\n]#siU', $document, $matches)){
-            foreach($matches[1] AS $index => $key){
-                $value                = trim($matches[3][$index]);
-                if(preg_match('@^eval:(.*)$@siU', $value, $match)){
-                    $value    = eval('return ' . $match[1] . ';');
-                }
-                $value  = preg_replace([
-                    '#\[\s*url\s*\]([^\[]*)\[\s*/url\s*\]#siU',
-                    '#\[\s*url\s*:\s*([^\]]*)\s*\]([^\[]*)\[\s*/url\s*\]#siU',
-                ], [
-                    '<a href="$1">$1</a>',
-                    '<a href="$1">$2</a>',
-                ], $value);
-                $this->docs[$key][]   = $value;
-            }
-        }
     }
 
     /**
