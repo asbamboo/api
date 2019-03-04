@@ -12,18 +12,13 @@ use asbamboo\api\apiStore\ApiRequestUri;
  */
 class ApiClassDoc implements ApiClassDocInterface
 {
+    use DocCommentParseTrait;
+
     /**
      *
      * @var string
      */
     private $api_class;
-
-    /**
-     * 注释信息组成的数组
-     *
-     * @var array
-     */
-    private $docs;
 
     /**
      * 以path风格请求接口时，访问接口使用的path
@@ -65,36 +60,8 @@ class ApiClassDoc implements ApiClassDocInterface
     public function __construct(string $api_class, string $api_store_namespace)
     {
         $this->api_class    = $api_class;
-        $this->parseDoc($api_class);
+        $this->parseDoc(new \ReflectionClass($api_class));
         $this->parsePath($api_class, $api_store_namespace);
-    }
-
-    /**
-     * 解析注释行
-     *
-     * @param string $api_class ApiClassInterface的一个类
-     */
-    private function parseDoc(string $api_class) : void
-    {
-        $Reflection = new \ReflectionClass($api_class);
-        $document   = $Reflection->getDocComment();
-
-        if(preg_match_all('#@(\w+)(\s(.*))?[\r\n]#siU', $document, $matches)){
-            foreach($matches[1] AS $index => $key){
-                $value                = trim($matches[3][$index]);
-                if(preg_match('@^eval:(.*)$@siU', $value, $match)){
-                    $value    = eval('return ' . $match[1] . ';');
-                }
-                $value  = preg_replace([
-                    '#\[\s*url\s*\]([^\[]*)\[\s*/url\s*\]#siU',
-                    '#\[\s*url\s*:\s*([^\]]*)\s*\]([^\[]*)\[\s*/url\s*\]#siU',
-                ], [
-                    '<a href="$1">$1</a>',
-                    '<a href="$1">$2</a>',
-                ], $value);
-                $this->docs[$key][]   = $value;
-            }
-        }
     }
 
     /**
