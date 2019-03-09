@@ -68,6 +68,11 @@ class ApiStoreTest extends TestCase
         $this->assertEquals(strtolower(Inner::class), strtolower($this->ApiStore->findApiClass('v2.0.0', '/api/inner')));
     }
 
+    public function testFindApiClassByEmptyVersion()
+    {
+        $this->assertEquals(ApiDelete2::class, $this->ApiStore->findApiClass('', '/api-delete/'));
+    }
+
     public function testNotFindApiClass()
     {
         $this->expectException(NotFoundApiException::class);
