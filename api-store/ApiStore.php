@@ -101,8 +101,11 @@ class ApiStore implements ApiStoreInterface
         if(!class_exists($class)){
             $versions   = str_replace('.', '_', $this->findApiVersions(1));
             foreach($versions AS $test_version){
+                if(empty($version)){
+                    $version    = $test_version;
+                }
                 $class  = $namespace . '\\' . $test_version . '\\' . $path;
-                if(class_exists($class) && $test_version < $version){
+                if(class_exists($class) && $test_version <= $version){
                     goto CLASS_MATCHED;
                 }
             }
