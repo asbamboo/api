@@ -74,7 +74,7 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
      * {@inheritDoc}
      * @see \asbamboo\api\apiStore\ApiResponseMetadataInterface::setData()
      */
-    public function setData(ApiResponseParamsInterface $ApiResponseParams) : ApiResponseMetadataInterface
+    public function setData(?ApiResponseParamsInterface $ApiResponseParams) : ApiResponseMetadataInterface
     {
         $this->data = $ApiResponseParams;
         return $this;

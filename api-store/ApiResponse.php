@@ -118,9 +118,7 @@ class ApiResponse implements ApiResponseInterface
             return $Params->makeRedirectResponse();
         }
 
-        if($Params instanceof ApiResponseParamsInterface){
-            $this->getApiResponseMetadata()->setData($Params);
-        }
+        $this->getApiResponseMetadata()->setData($Params);
 
         $ResponseFormatter  = $this->getResponseFormatManager()->getHandler(self::FORMAT_JSON);
         return $ResponseFormatter->handle($this->getApiResponseMetadata());
