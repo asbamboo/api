@@ -1,8 +1,6 @@
 <?php
 namespace asbamboo\api\apiStore;
 
-use asbamboo\http\JsonResponse;
-
 /**
  * 响应数据元信息
  *
@@ -32,8 +30,8 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
 
     /**
      *
-     * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseInterface::setCode()
+     * @param string $code
+     * @return ApiResponseMetadataInterface
      */
     public function setCode($code) : ApiResponseMetadataInterface
     {
@@ -43,12 +41,11 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
 
     /**
      *
-     * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseInterface::getCode()
+     * @return string
      */
-    public function getCode()/* : string|int*/
+    public function getCode() : string
     {
-        return $this->code;
+        return (string) $this->code;
     }
 
     /**
@@ -91,22 +88,5 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
     public function getData() : ?ApiResponseParamsInterface
     {
         return $this->data;
-    }
-
-    /**
-     *
-     * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseMetadataInterface::toJsonResponse()
-     */
-    public function toJsonResponse() : JsonResponse
-    {
-        $response_data              = [];
-        $response_data['code']      = $this->getCode();
-        $response_data['message']   = $this->getMessage();
-        if(!empty($this->getData()) && !empty($this->getData()->getObjectVars())){
-            $response_data['data']   = $this->getData()->getObjectVars();
-        }
-
-        return new JsonResponse($response_data);
     }
 }
