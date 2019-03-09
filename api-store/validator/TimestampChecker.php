@@ -56,6 +56,12 @@ class TimestampChecker implements CheckerInterface
      */
     final public function check() : bool
     {
+        if(empty($this->getTimestamp())){
+            throw new InvalidTimestampException('请设置参数:' . $this->input_timestamp);
+        }
+        if(date("Y-m-d H:i:s", strtotime($this->getTimestamp())) != $this->getTimestamp()){
+            throw new InvalidTimestampException('参数格式错误:' . $this->input_timestamp);
+        }
         if(strtotime($this->getTimestamp()) < time() - $this->lifetime){
             throw new InvalidTimestampException('生成的请求参数已经超过有效期');
         }

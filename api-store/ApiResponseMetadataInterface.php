@@ -26,11 +26,4 @@ interface ApiResponseMetadataInterface
      * @return ApiResponseParamsInterface
      */
     public function getData() : ?ApiResponseParamsInterface;
-
-    /**
-     * 返回JsonResponse类型的响应信息。
-     *
-     * @return JsonResponse
-     */
-    public function toJsonResponse() : JsonResponse;
 }
