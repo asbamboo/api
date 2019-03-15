@@ -178,14 +178,14 @@ class Controller implements ControllerInterface
      * {@inheritDoc}
      * @see \asbamboo\api\ControllerInterface::testTool()
      */
-    public function testTool(string $document_name = 'Asbamboo API Documnet', string $version = '', string $api_name = '', string $uri = '') : ResponseInterface
+    public function testTool(string $tool_name = 'Asbamboo API Testing', string $version = '', string $api_name = '', string $uri = '') : ResponseInterface
     {
         /**
          *
          * @var DocumentInterface $Document
          */
         $Document       = $this->Container->get(DocumentInterface::class);
-        $Document->setDocumentName($document_name);
+        $Document->setDocumentName($tool_name);
         $Document->setApiName($api_name);
         $Document->setVersion($version);
         $Document->setRequestUris($this->Container->get(ApiRequestUrisInterface::class));

@@ -18,7 +18,7 @@ interface ApiResponseMetadataInterface
      *
      * @return ApiResponseParamsInterface
      */
-    public function setData(ApiResponseParamsInterface $ApiResponseParams) : ApiResponseMetadataInterface;
+    public function setData(?ApiResponseParamsInterface $ApiResponseParams) : ApiResponseMetadataInterface;
 
     /**
      * 获取 ApiResponse 返回的各个接口不一样的响应数据信息
