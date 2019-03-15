@@ -1,6 +1,6 @@
 {
 	"name" : "asbamboo/api",
-	"description" : "一个可以自动生成api文档的api模块",
+	"description" : "asbamboo/api 是用来简化Web API接口开发一个辅助模块",
 	"type" : "library",
 	"require" : {
 		"php" : "^7.2",
