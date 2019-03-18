@@ -50,7 +50,7 @@ class ApiStore implements ApiStoreInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\restfulApi\apiStore\ApiStoreInterface::getNamespace()
+     * @see \asbamboo\api\apiStore\ApiStoreInterface::getNamespace()
      */
     public function getNamespace() : string
     {
@@ -60,7 +60,7 @@ class ApiStore implements ApiStoreInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\restfulApi\apiStore\ApiStoreInterface::getDir()
+     * @see \asbamboo\api\apiStore\ApiStoreInterface::getDir()
      */
     public function getDir() : string
     {
@@ -70,7 +70,7 @@ class ApiStore implements ApiStoreInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\restfulApi\apiStore\ApiStoreInterface::findApiVersions()
+     * @see \asbamboo\api\apiStore\ApiStoreInterface::findApiVersions()
      */
     public function findApiVersions(int $sort_type = 0) : array
     {
@@ -84,7 +84,7 @@ class ApiStore implements ApiStoreInterface
      *  - 编写新的api版本时，不需要将所有的接口都复制。仅需要把修改，或者新增加，或者删除的接口放在新的版本目录中
      *
      * {@inheritDoc}
-     * @see \asbamboo\restfulApi\apiStore\ApiStoreInterface::findApiClass()
+     * @see \asbamboo\api\apiStore\ApiStoreInterface::findApiClass()
      */
     public function findApiClass(string $version, string $api_name) : string
     {
