@@ -29,25 +29,6 @@ http://www.github.com/asbamboo/openpay （asbamboo/openpay 聚合支付API）
 
 一个Web API接口应该对应一个 asbamboo\\api\\apiStore\\ApiClassInterface 实现类:
 
-* public function exec(ApiRequestParamsInterface $Params) : ?ApiResponseParamsInterface;
-
-    exec 方法用于处理接口程序的逻辑:
-
-    * $Params 接口接收到的参数
-
-        应该在接口类所在目录下，建立一个与接口名相同的文件夹，在该文件夹下创建RequestParams类（或者在接口类的注释块中使用@request注释声明RequestParams类的名称）
-
-        RequestParams类实现asbamboo\\api\\apiStore\\ApiRequestParamsInterface
-
-        RequestParams类用来声明该接口接受的请求参数列表。
-
-    * 接口返回的响应值
-
-        应该在接口类所在目录下，建立一个与接口名相同的文件夹，在该文件夹下创建ResponseParams类（或者在接口类的注释块中使用@response注释声明ResponseParams类的名称）
-
-        ResponseParams类实现asbamboo\\api\\apiStore\\ApiResponseParamsInterface
-
-        ResponseParams类用来声明接口响应的参数列表。
 
 通过 asbamboo\\api\\Controller 调用接口、查看文档、调试接口。
 
