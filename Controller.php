@@ -86,7 +86,9 @@ class Controller implements ControllerInterface
              * 事件触发 可以通过监听这个事件处理一些事情，比如:写入日志,校验请求参数等
              * 在api模块内，event-listener定义了几个监听器，如果你有需要的话，请使用EventScheduler::instance()->bind 方法绑定事件监听器
              */
-            EventScheduler::instance()->trigger(Event::API_CONTROLLER, $this, ...func_get_args());
+            $event_args     = func_get_args();
+            array_unshift($event_args, $this);
+            EventScheduler::instance()->trigger(Event::API_CONTROLLER, $event_args);
 
             /**
              * @var \asbamboo\api\apiStore\ApiClassInterface $Api
@@ -115,9 +117,9 @@ class Controller implements ControllerInterface
             $ApiResponseParams  = $e->getApiResponseParams();
         }
 
-        $response   = $ApiResponse->makeResponse($ApiResponseParams);
-        EventScheduler::instance()->trigger(Event::API_AFTER_EXEC, [$Api, $ApiResponseParams, $ApiResponse, $response]);
-        return $response;
+        $Response   = $ApiResponse->makeResponse($ApiResponseParams);
+        EventScheduler::instance()->trigger(Event::API_AFTER_EXEC, [$Api, $ApiResponseParams, $ApiResponse, $Response]);
+        return $Response;
     }
 
     /**
