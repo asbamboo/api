@@ -35,7 +35,7 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
      */
     public function setCode($code) : ApiResponseMetadataInterface
     {
-        $this->code   = $code;
+        $this->code   = (string) $code;
         return $this;
     }
 

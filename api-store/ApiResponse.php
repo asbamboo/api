@@ -5,7 +5,6 @@ use asbamboo\http\ResponseInterface;
 use asbamboo\api\apiStore\responseFormatter\ResponseFormatManagerInterface;
 use asbamboo\api\apiStore\responseFormatter\ResponseFormatManager;
 use asbamboo\api\apiStore\responseFormatter\JsonResponseFormatter;
-use asbamboo\api\apiStore\responseFormatter\ResponseFormatterInterface;
 
 /**
  * api响应信息

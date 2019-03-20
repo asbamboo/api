@@ -2,7 +2,6 @@
 namespace asbamboo\api\apiStore;
 
 use asbamboo\http\ServerRequest;
-use asbamboo\api\apiStore\traits\CommonApiRequestParamsTrait;
 
 /**
  * 请求参数管理

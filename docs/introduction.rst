@@ -1,5 +1,5 @@
-asbamboo/api
-============================
+asbamboo/api 简介
+==================================
 
 asbamboo/api 是用来简化Web API接口开发一个辅助模块。
 
@@ -15,7 +15,14 @@ http://www.github.com/asbamboo/framework-demo （asbamboo/framework 示例）
 
 http://www.github.com/asbamboo/openpay （asbamboo/openpay 聚合支付API）
 
-**更多说明请看** `帮助文档`_
+安装&依赖
+------------------------
+
+通过 `composer`_ 管理项目对 asbamboo/api 库的依赖
+
+::
+
+    composer require asbamboo/api
 
 
-.. _帮助文档: docs/index.rst
+.. _composer: https://getcomposer.org

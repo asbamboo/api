@@ -11,7 +11,7 @@ namespace asbamboo\api\apiStore;
 interface ApiResponseParamsInterface
 {
     /**
-     * 应该范围get_object_vars($this)
+     * 应该返回get_object_vars($this)
      *
      * @return array|NULL
      */

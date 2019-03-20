@@ -39,26 +39,6 @@ class RequestParams extends ApiRequestParamsAbstract
     private $format = ApiResponseInterface::FORMAT_JSON;
 
     /**
-     * api 名称
-     *
-     * @return string
-     */
-    public function getApiName() : string
-    {
-        return $this->api_name;
-    }
-
-    /**
-     * api 版本
-     *
-     * @return string
-     */
-    public function getVersion() : string
-    {
-        return $this->version;
-    }
-
-    /**
      * 获取返回格式
      *
      * @return string
