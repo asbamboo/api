@@ -18,16 +18,4 @@ http://www.github.com/asbamboo/openpay （asbamboo/openpay 聚合支付API）
 **更多说明请看** `帮助文档`_
 
 
-* public function api(string $version, string $api_name) : ResponseInterface;
-
-    api 方法用于接口请求：
-    
-    * $version 接口版本, 如果是empty， 那么默认最新版本优先。
-
-    * $api_name 接口名称。
-
-
-
-.. _composer: https://getcomposer.org
 .. _帮助文档: docs/index.rst
-.. _asbamboo/http: https://www.github.com/asbamboo/http
