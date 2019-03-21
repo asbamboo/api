@@ -4,7 +4,9 @@ asbamboo/api 文档索引
 #. `简介`_
 
     #. `安装`_
-    
+
+    #. asbamboo/api-strandard
+
 #. `接口编写`_
 
     #. `创建api仓库`_
@@ -35,13 +37,11 @@ asbamboo/api 文档索引
 
     #. `使用签名`_
 
-    #. 自定义api接口响应值元信息
+    #. `自定义响应值`_
 
-    #. 自定义响应值格式
+    #. `自定义文档页面`_
 
-    #. 自定义文档页面
-
-    #. 自定义调试工具页面
+    #. `自定义调试工具页面`_
 
 .. _简介: introduction.rst
 .. _安装: introduction.rst
@@ -61,3 +61,6 @@ asbamboo/api 文档索引
 .. _checker: advanced/checker.rst
 .. _请求参数过时失效: checker_
 .. _使用签名: checker_
+.. _自定义响应值: advanced/response.rst
+.. _自定义文档页面: advanced/document_template.rst
+.. _自定义调试工具页面: advanced/testtool_template.rst

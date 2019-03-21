@@ -13,7 +13,6 @@ use asbamboo\api\apiStore\ApiRequestUrisInterface;
 use asbamboo\api\view\TemplateInterface;
 use asbamboo\api\view\Template;
 use asbamboo\api\apiStore\ApiResponseInterface;
-use asbamboo\api\apiStore\ApiResponseSigned;
 
 /**
  * 文档生成器

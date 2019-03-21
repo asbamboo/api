@@ -30,8 +30,8 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
 
     /**
      *
-     * @param string $code
-     * @return ApiResponseMetadataInterface
+     * {@inheritDoc}
+     * @see \asbamboo\api\apiStore\ApiResponseMetadataInterface::setCode()
      */
     public function setCode($code) : ApiResponseMetadataInterface
     {
@@ -41,7 +41,8 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
 
     /**
      *
-     * @return string
+     * {@inheritDoc}
+     * @see \asbamboo\api\apiStore\ApiResponseMetadataInterface::getCode()
      */
     public function getCode() : string
     {
@@ -51,7 +52,7 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseInterface::setMessage()
+     * @see \asbamboo\api\apiStore\ApiResponseMetadataInterface::setMessage()
      */
     public function setMessage(string $message) : ApiResponseMetadataInterface
     {
@@ -62,7 +63,7 @@ class ApiResponseMetadata implements ApiResponseMetadataInterface
     /**
      *
      * {@inheritDoc}
-     * @see \asbamboo\api\apiStore\ApiResponseInterface::getMessage()
+     * @see \asbamboo\api\apiStore\ApiResponseMetadataInterface::getMessage()
      */
     public function getMessage() : string
     {

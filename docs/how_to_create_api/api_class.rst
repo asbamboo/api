@@ -138,6 +138,7 @@ api接口逻辑处理类
 :@uris: 接口请求的url *请见* `在线文档生成`_
 :@request: `指定接口参数映射类`_
 :@response: `指定接口响应值映射类`_
+:@delete: 如果该接口应该已经被删除的话需要在注释说明（* @delete true）
 
 
 使用asbamboo\\api\\apiStore\\Abstract\\ApiClassAbstract类

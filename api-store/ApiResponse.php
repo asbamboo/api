@@ -119,7 +119,7 @@ class ApiResponse implements ApiResponseInterface
 
         $this->getApiResponseMetadata()->setData($Params);
 
-        $ResponseFormatter  = $this->getResponseFormatManager()->getHandler(self::FORMAT_JSON);
+        $ResponseFormatter  = $this->getResponseFormatManager()->getHandler($this->getFormat());
         return $ResponseFormatter->handle($this->getApiResponseMetadata());
     }
 }

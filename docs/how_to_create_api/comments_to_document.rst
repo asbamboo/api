@@ -26,7 +26,7 @@ asbamboo/api 会解析逻辑处理类的类注释块、请求参数映射类的�
 
 :@request: `指定接口参数映射类`_
 :@response: `指定接口响应值映射类`_
-
+:@delete: 如果该接口应该已经被删除的话需要在注释说明（* @delete true）
 
 请求参数映射类的注释解析说明:
 
@@ -124,7 +124,7 @@ eval:expression 在文档解析时被执行成 eval(expression)。
     ...
 
     
-.. _响应值元信息类: ../advanced/response_metadata.rst
+.. _响应值元信息类: ../advanced/response.rst
 .. _指定接口参数映射类: request_params.rst
 .. _指定接口响应值映射类: response_params.rst
 .. _asbamboo/openpay: http://github.com/asbamboo/openpay
