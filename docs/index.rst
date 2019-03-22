@@ -5,7 +5,7 @@ asbamboo/api 文档索引
 
     #. `安装`_
 
-    #. asbamboo/api-strandard
+    #. `asbamboo/api-strandard`_
 
 #. `接口编写`_
 
@@ -44,7 +44,8 @@ asbamboo/api 文档索引
     #. `自定义调试工具页面`_
 
 .. _简介: introduction.rst
-.. _安装: introduction.rst
+.. _安装: 简介_
+.. _asbamboo/api-strandard: 简介_
 .. _接口编写: how_to_create_api.rst
 .. _创建api仓库: how_to_create_api/api_store.rst
 .. _创建api接口逻辑处理类: how_to_create_api/api_class.rst

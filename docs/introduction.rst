@@ -1,6 +1,10 @@
 asbamboo/api 简介
 ==================================
 
+#. `安装`_
+
+#. `asbamboo/api-strandard`_
+
 asbamboo/api 是用来简化Web API接口开发一个辅助模块。
 
 asbamboo/api 能：
@@ -24,5 +28,12 @@ http://www.github.com/asbamboo/openpay （asbamboo/openpay 聚合支付API）
 
     composer require asbamboo/api
 
+asbamboo/api-strandard
+--------------------------
+
+asbamboo/api-strandard(http://github.com/asbamboo/api-strandard) 是为了帮助开发者快速上手 asbamboo/api 建立的标准用例。
+
+
 
 .. _composer: https://getcomposer.org
+.. _安装: 安装&依赖_
