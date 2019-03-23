@@ -148,26 +148,28 @@ class Controller implements ControllerInterface
          * @var \asbamboo\api\apiStore\ApiRequestUriInterface $ApiRequestUri
          */
         if($Document->getApiName() && $Document->getVersion()){
-            $Router = $this->Container->get(RouterInterface::class);
-            $routes = $Router->getRouteCollection()->getIterator();
-            foreach($routes AS $Route){
-                if($Route->getCallback() == [$this, 'testTool']){
-                    $script_name    = $this->Request->getServerParams()['SCRIPT_NAME'] ?? "";
-                    $script_path    = dirname($script_name);
-                    $request_path   = $this->Request->getUri()->getPath();
-                    $test_tool_uri  = $Route->getPath();
-                    if($script_path != '/' && strpos($request_path, $script_name) === 0){
-                        $test_tool_uri  = $script_name . $test_tool_uri;
-                    }else if($script_path != '/' && strpos($request_path, $script_path) === 0){
-                        $test_tool_uri  = $script_path . $test_tool_uri;
-                    }
+            if($this->Container->has(RouterInterface::class)){
+                $Router = $this->Container->get(RouterInterface::class);
+                $routes = $Router->getRouteCollection()->getIterator();
+                foreach($routes AS $Route){
+                    if($Route->getCallback() == [$this, 'testTool']){
+                        $script_name    = $this->Request->getServerParams()['SCRIPT_NAME'] ?? "";
+                        $script_path    = dirname($script_name);
+                        $request_path   = $this->Request->getUri()->getPath();
+                        $test_tool_uri  = $Route->getPath();
+                        if($script_path != '/' && strpos($request_path, $script_name) === 0){
+                            $test_tool_uri  = $script_name . $test_tool_uri;
+                        }else if($script_path != '/' && strpos($request_path, $script_path) === 0){
+                            $test_tool_uri  = $script_path . $test_tool_uri;
+                        }
 
-                    foreach($Document->getRequestUris() AS $ApiRequestUri){
-                        $test_tool_uri  .= '?uri=' . urlencode($ApiRequestUri->getUri()) . '&version=' . $Document->getVersion() . '&api_name=' . $Document->getApiName();
+                        foreach($Document->getRequestUris() AS $ApiRequestUri){
+                            $test_tool_uri  .= '?uri=' . urlencode($ApiRequestUri->getUri()) . '&version=' . $Document->getVersion() . '&api_name=' . $Document->getApiName();
+                            break;
+                        }
+                        $Document->setTestToolUri($test_tool_uri);
                         break;
                     }
-                    $Document->setTestToolUri($test_tool_uri);
-                    break;
                 }
             }
         }
