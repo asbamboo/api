@@ -53,7 +53,7 @@ asbamboo/api中 asbamboo\\api\\apiStore\\ApiRequestParamsAbstract 类处理了�
     :@range: 取值范围
     :@example: 请求值示例
     
-* 你可以将属性的可访问性设置为private，在private的时候 你可以通过方法(get+属性名)，来获取该参数的值。
+* 你可以将属性的可访问性设置为protected，在protected的时候 你可以通过方法(get+属性名)，来获取该参数的值。
 
 在asbamboo/api中，定义了一个声明公共参数的trait: asbamboo\\api\\apiStore\\traits\\CommonApiRequestParamsTrait，它具有三个公共参数（如果你觉得有用的话你可以使用它）:
 
