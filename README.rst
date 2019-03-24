@@ -17,5 +17,7 @@ http://www.github.com/asbamboo/openpay （asbamboo/openpay 聚合支付API）
 
 **更多说明请看** `帮助文档`_
 
+除了帮助文档以外，我正在编写 `asbamboo/api-standard`_，用于例举 asbamboo/api 的使用。
 
 .. _帮助文档: docs/index.rst
+.. _asbamboo/api-standard: http://github.com/asbamboo/api-standard
