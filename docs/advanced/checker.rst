@@ -60,6 +60,12 @@ asbamboo/api 进阶（请求参数有效性验证）
 使用签名
 ------------------------------
 
+*如何生成签名？*
+
+#. 对所有API请求参数（包括公共参数和业务参数，但除去sign参数），根据参数名称的ASCII码表的升序排列。如：foo:1, bar:2, foo_bar:3, foobar:4排序后的顺序是bar:2, foo:1, foo_bar:3, foobar:4。
+#. 将排序好的参数名和参数值拼装在一起，根据上面的示例得到的结果为：bar2foo1foo_bar3foobar4。
+#. 把拼装好的字符串前加上应用的app secret后，使用签名MD5算法生成签名字符串，如：md5(app_secret+bar2foo1foo_bar3foobar4)。
+
 使用请求参数签名验证器。
 
 #. 首先 `api接口参数映射类`_ 使用 asbamboo\\api\\apiStore\\traits\\CommonApiRequestSignParamsTrait。
