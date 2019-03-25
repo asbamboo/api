@@ -261,7 +261,9 @@ class Document implements DocumentInterface
             foreach($api_versions AS $api_version){
                 if($api_version <= $this->getVersion()){
                     $version_dir        = rtrim($dir, DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR . str_replace('.', '_', $api_version);
-                    $this->api_lists    = array_merge($this->readApiListInfo($version_dir), $this->api_lists);
+                    foreach($this->readApiListInfo($version_dir) AS $api_name => $api_doc){
+                        $this->api_lists[$api_name] = $api_doc;
+                    }
                 }
             }
             ksort($this->api_lists);
