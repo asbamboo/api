@@ -92,10 +92,10 @@ class ApiStore implements ApiStoreInterface
         $version        = str_replace('.', '_', $version);
         $namespace      = rtrim( $this->getNamespace(), '\\' );
         $parse_paths    = explode('/', trim($path, '/'));
-        foreach($parse_paths AS $key => $parse_path){
-            $parse_paths[$key]  = implode('', array_map('ucfirst', explode('-', strtolower($parse_path))));
-        }
-
+        
+        $tmp_last_key               = key(array_slice($parse_paths, -1, 1, true));
+        $parse_paths[$tmp_last_key] = implode('', array_map('ucfirst', explode('-', strtolower($parse_paths[$tmp_last_key]))));
+        
         $path   = implode('\\', $parse_paths);
         $class  =  $namespace . '\\' . $version . '\\' . $path;
         if(!class_exists($class)){
